@@ -3,7 +3,7 @@ import UIKit
 import SceneKit
 import QuartzCore
 
-class ViewController2: UIViewController {
+class ViewController: UIViewController {
 	
 	var sceneView:SCNView!;
 	var scene:SCNScene!;
@@ -45,16 +45,14 @@ class ViewController2: UIViewController {
 		scene.rootNode.addChildNode(self.cubeNode);
 		scene.rootNode.addChildNode(planeNode);
 		
-		let modifier2 = "float a = 0.5 + sin(u_time);\n"
-			+ "if(_geometry.position.y > 0.4 && _geometry.position.y < 0.6){\n"
-			+ "_geometry.position.y += a;\n"
-			+ "}";
-		
-		cubeGeometry.shaderModifiers = [SCNShaderModifierEntryPointGeometry: modifier2];
-		SCNTransaction.begin()
-		SCNTransaction.setAnimationDuration(30)
-		cubeGeometry.setValue(0.0, forKey: "progress")
-		SCNTransaction.commit()
+		let path = NSBundle.mainBundle().pathForResource("wave", ofType: "shader");
+		if let modifier = try? String(contentsOfFile: path!) {
+			cubeGeometry.shaderModifiers = [SCNShaderModifierEntryPointGeometry: modifier];
+			SCNTransaction.begin()
+			SCNTransaction.setAnimationDuration(30)
+			cubeGeometry.setValue(0.0, forKey: "progress")
+			SCNTransaction.commit()
+		}
 	}
 	
 	func addLights(){
