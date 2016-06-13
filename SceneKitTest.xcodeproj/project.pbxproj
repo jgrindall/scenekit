@@ -18,16 +18,6 @@
 		80EE09C7196A4C4A00B77AB0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80EE09C6196A4C4A00B77AB0 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		80EE09CD196A4C4A00B77AB0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 80EE09B2196A4C4A00B77AB0 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 80EE09B9196A4C4A00B77AB0;
-			remoteInfo = CarbonVisualizer;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		5206617B1CFCDB3900156600 /* green2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green2.png; sourceTree = "<group>"; };
 		5206617C1CFCDB3900156600 /* rock.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = rock.jpg; sourceTree = "<group>"; };
@@ -39,18 +29,10 @@
 		80EE09BE196A4C4A00B77AB0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		80EE09BF196A4C4A00B77AB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		80EE09C6196A4C4A00B77AB0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		80EE09CC196A4C4A00B77AB0 /* SceneKitTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SceneKitTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		80EE09B7196A4C4A00B77AB0 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		80EE09C9196A4C4A00B77AB0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -72,7 +54,6 @@
 			isa = PBXGroup;
 			children = (
 				80EE09BA196A4C4A00B77AB0 /* SceneKitTest.app */,
-				80EE09CC196A4C4A00B77AB0 /* SceneKitTest.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -121,24 +102,6 @@
 			productReference = 80EE09BA196A4C4A00B77AB0 /* SceneKitTest.app */;
 			productType = "com.apple.product-type.application";
 		};
-		80EE09CB196A4C4A00B77AB0 /* SceneKitTestTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 80EE09D9196A4C4A00B77AB0 /* Build configuration list for PBXNativeTarget "SceneKitTestTests" */;
-			buildPhases = (
-				80EE09C8196A4C4A00B77AB0 /* Sources */,
-				80EE09C9196A4C4A00B77AB0 /* Frameworks */,
-				80EE09CA196A4C4A00B77AB0 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				80EE09CE196A4C4A00B77AB0 /* PBXTargetDependency */,
-			);
-			name = SceneKitTestTests;
-			productName = CarbonVisualizerTests;
-			productReference = 80EE09CC196A4C4A00B77AB0 /* SceneKitTest.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -151,10 +114,6 @@
 				TargetAttributes = {
 					80EE09B9196A4C4A00B77AB0 = {
 						CreatedOnToolsVersion = 6.0;
-					};
-					80EE09CB196A4C4A00B77AB0 = {
-						CreatedOnToolsVersion = 6.0;
-						TestTargetID = 80EE09B9196A4C4A00B77AB0;
 					};
 				};
 			};
@@ -172,7 +131,6 @@
 			projectRoot = "";
 			targets = (
 				80EE09B9196A4C4A00B77AB0 /* SceneKitTest */,
-				80EE09CB196A4C4A00B77AB0 /* SceneKitTestTests */,
 			);
 		};
 /* End PBXProject section */
@@ -192,13 +150,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		80EE09CA196A4C4A00B77AB0 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -211,22 +162,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		80EE09C8196A4C4A00B77AB0 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		80EE09CE196A4C4A00B77AB0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 80EE09B9196A4C4A00B77AB0 /* SceneKitTest */;
-			targetProxy = 80EE09CD196A4C4A00B77AB0 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		525F54551D0F47E1008C8396 /* LaunchScreen.storyboard */ = {
@@ -348,44 +284,6 @@
 			};
 			name = Release;
 		};
-		80EE09DA196A4C4A00B77AB0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CarbonVisualizer.app/CarbonVisualizer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = CarbonVisualizerTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				METAL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.raywenderlich.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = SceneKitTest;
-				TEST_HOST = "$(BUNDLE_LOADER)";
-			};
-			name = Debug;
-		};
-		80EE09DB196A4C4A00B77AB0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CarbonVisualizer.app/CarbonVisualizer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = CarbonVisualizerTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				METAL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.raywenderlich.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = SceneKitTest;
-				TEST_HOST = "$(BUNDLE_LOADER)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -403,15 +301,6 @@
 			buildConfigurations = (
 				80EE09D7196A4C4A00B77AB0 /* Debug */,
 				80EE09D8196A4C4A00B77AB0 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		80EE09D9196A4C4A00B77AB0 /* Build configuration list for PBXNativeTarget "SceneKitTestTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				80EE09DA196A4C4A00B77AB0 /* Debug */,
-				80EE09DB196A4C4A00B77AB0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
