@@ -48,10 +48,6 @@ class ViewController: UIViewController {
 		let path = NSBundle.mainBundle().pathForResource("wave", ofType: "shader");
 		if let modifier = try? String(contentsOfFile: path!) {
 			cubeGeometry.shaderModifiers = [SCNShaderModifierEntryPointGeometry: modifier];
-			SCNTransaction.begin()
-			SCNTransaction.setAnimationDuration(30)
-			cubeGeometry.setValue(0.0, forKey: "progress")
-			SCNTransaction.commit()
 		}
 	}
 	
@@ -88,6 +84,7 @@ class ViewController: UIViewController {
 		self.addLights();
 		self.addGeom();
 		self.constrain();
+		self.sceneView.playing = true;
 		
 	}
 }
