@@ -3,7 +3,7 @@ import UIKit
 import SceneKit
 import QuartzCore
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, SCNSceneRendererDelegate {
 	
 	var sceneView:SCNView!;
 	var scene:SCNScene!;
@@ -11,8 +11,19 @@ class ViewController: UIViewController {
 	var cubeNode:SCNNode!;
 	var lightNode:SCNNode!;
 	
+	func renderer(renderer: SCNSceneRenderer, updateAtTime time: NSTimeInterval) {
+		self.posCamera(time);
+	}
+	
+	func posCamera(t:Double){
+		let x = 3.0 * sinf(Float(t/10.0));
+		let z = 3.0 * cosf(Float(t/10.0));
+		self.cameraNode.position = SCNVector3Make(x, 3.0, z);
+	}
+	
 	func addScene(){
 		self.sceneView = SCNView(frame: self.view.frame);
+		self.sceneView.delegate = self;
 		self.view.addSubview(self.sceneView)
 		self.sceneView.showsStatistics = true
 		self.scene = SCNScene()
@@ -21,12 +32,15 @@ class ViewController: UIViewController {
 		let camera = SCNCamera()
 		self.cameraNode = SCNNode()
 		self.cameraNode.camera = camera;
-		self.cameraNode.position = SCNVector3Make(-3.0, 3.0, 3.0);
+		self.posCamera(0.5);
 		self.scene.rootNode.addChildNode(self.cameraNode);
 	}
 	
 	func addGeom(){
-		let cubeGeometry = SCNBox(width: 1.0, height: 1.0, length: 1.0, chamferRadius: 0.05)
+		let cubeGeometry = SCNBox(width: 1.0, height: 1.0, length: 1.0, chamferRadius: 0.0)
+		cubeGeometry.widthSegmentCount = 1;
+		cubeGeometry.heightSegmentCount = 1;
+		cubeGeometry.lengthSegmentCount = 1;
 		self.cubeNode = SCNNode(geometry: cubeGeometry)
 		
 		let planeGeometry = SCNPlane(width: 100.0, height: 100.0);
@@ -39,7 +53,7 @@ class ViewController: UIViewController {
 		cubeGeometry.materials = [redMaterial];
 		
 		let greenMaterial = SCNMaterial();
-		greenMaterial.diffuse.contents = UIColor.greenColor();
+		greenMaterial.diffuse.contents = UIColor.grayColor();
 		planeGeometry.materials = [greenMaterial];
 		
 		scene.rootNode.addChildNode(self.cubeNode);
@@ -52,9 +66,8 @@ class ViewController: UIViewController {
 		let imgPath = NSBundle.mainBundle().pathForResource("rock", ofType: "jpg");
 		let img = UIImage(contentsOfFile: imgPath!);
 		
-		let imgPath2 = NSBundle.mainBundle().pathForResource("green2", ofType: "png");
+		let imgPath2 = NSBundle.mainBundle().pathForResource("rock2", ofType: "jpg");
 		let img2 = UIImage(contentsOfFile: imgPath2!);
-		
 		
 		let mProp = SCNMaterialProperty(contents: img!);
 		let mProp2 = SCNMaterialProperty(contents: img2!);
@@ -64,17 +77,22 @@ class ViewController: UIViewController {
 			SCNShaderModifierEntryPointSurface: modifier2!,
 			SCNShaderModifierEntryPointGeometry: modifier!
 		];
-		SCNTransaction.begin()
-		SCNTransaction.setAnimationDuration(30)
 		cubeGeometry.setValue(mProp, forKey: "tex")
 		cubeGeometry.setValue(mProp2, forKey: "tex2")
-		SCNTransaction.commit()
 	}
 	
 	func addLights(){
 		let ambientLight = SCNLight();
 		ambientLight.type = SCNLightTypeAmbient;
-		ambientLight.color = UIColor(red: 0.8, green: 0.8, blue: 0.9, alpha: 1.0)
+		ambientLight.color = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+		
+		
+		let ambientLightNode = SCNNode()
+		ambientLightNode.light = ambientLight
+		scene.rootNode.addChildNode(ambientLightNode)
+		
+		
+		
 		
 		let light = SCNLight();
 		light.type = SCNLightTypeSpot;

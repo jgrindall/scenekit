@@ -14,6 +14,8 @@
 		525F54571D0F47E1008C8396 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 525F54551D0F47E1008C8396 /* LaunchScreen.storyboard */; };
 		525F54591D0F4925008C8396 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525F54581D0F4925008C8396 /* ViewController.swift */; };
 		52DC7CDF1D132CB10075C2D3 /* wave2.shader in Resources */ = {isa = PBXBuildFile; fileRef = 52DC7CDE1D132CB10075C2D3 /* wave2.shader */; };
+		52DC7CE11D134CF30075C2D3 /* blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 52DC7CE01D134CF30075C2D3 /* blue.png */; };
+		52DC7CE31D1358EC0075C2D3 /* rock2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 52DC7CE21D1358EC0075C2D3 /* rock2.jpg */; };
 		52FEBC9F1D0419D900B65511 /* wave.shader in Resources */ = {isa = PBXBuildFile; fileRef = 52FEBC9E1D0419D900B65511 /* wave.shader */; };
 		80EE09C0196A4C4A00B77AB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EE09BF196A4C4A00B77AB0 /* AppDelegate.swift */; };
 		80EE09C7196A4C4A00B77AB0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80EE09C6196A4C4A00B77AB0 /* Images.xcassets */; };
@@ -26,6 +28,8 @@
 		525F54561D0F47E1008C8396 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		525F54581D0F4925008C8396 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		52DC7CDE1D132CB10075C2D3 /* wave2.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wave2.shader; sourceTree = "<group>"; };
+		52DC7CE01D134CF30075C2D3 /* blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue.png; sourceTree = "<group>"; };
+		52DC7CE21D1358EC0075C2D3 /* rock2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = rock2.jpg; sourceTree = "<group>"; };
 		52FEBC9E1D0419D900B65511 /* wave.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wave.shader; sourceTree = "<group>"; };
 		80EE09BA196A4C4A00B77AB0 /* SceneKitTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SceneKitTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		80EE09BE196A4C4A00B77AB0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -63,6 +67,8 @@
 		80EE09BC196A4C4A00B77AB0 /* SceneKitTest */ = {
 			isa = PBXGroup;
 			children = (
+				52DC7CE21D1358EC0075C2D3 /* rock2.jpg */,
+				52DC7CE01D134CF30075C2D3 /* blue.png */,
 				52DC7CDE1D132CB10075C2D3 /* wave2.shader */,
 				525F54581D0F4925008C8396 /* ViewController.swift */,
 				522CD9EF1CE8FE810062C004 /* robot.dae */,
@@ -145,10 +151,12 @@
 			files = (
 				5206617D1CFCDB3900156600 /* green2.png in Resources */,
 				80EE09C7196A4C4A00B77AB0 /* Images.xcassets in Resources */,
+				52DC7CE11D134CF30075C2D3 /* blue.png in Resources */,
 				5206617E1CFCDB3900156600 /* rock.jpg in Resources */,
 				522CD9F01CE8FE810062C004 /* robot.dae in Resources */,
 				525F54571D0F47E1008C8396 /* LaunchScreen.storyboard in Resources */,
 				52FEBC9F1D0419D900B65511 /* wave.shader in Resources */,
+				52DC7CE31D1358EC0075C2D3 /* rock2.jpg in Resources */,
 				52DC7CDF1D132CB10075C2D3 /* wave2.shader in Resources */,
 				522CEBAA1D0F479700C197EE /* Info.plist in Resources */,
 			);
