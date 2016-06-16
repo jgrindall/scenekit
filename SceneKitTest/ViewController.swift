@@ -46,10 +46,18 @@ class ViewController: UIViewController {
 		scene.rootNode.addChildNode(planeNode);
 		
 		let path = NSBundle.mainBundle().pathForResource("wave", ofType: "shader");
+		
 		let path2 = NSBundle.mainBundle().pathForResource("wave2", ofType: "shader");
+		
 		let imgPath = NSBundle.mainBundle().pathForResource("rock", ofType: "jpg");
 		let img = UIImage(contentsOfFile: imgPath!);
+		
+		let imgPath2 = NSBundle.mainBundle().pathForResource("green2", ofType: "png");
+		let img2 = UIImage(contentsOfFile: imgPath2!);
+		
+		
 		let mProp = SCNMaterialProperty(contents: img!);
+		let mProp2 = SCNMaterialProperty(contents: img2!);
 		let modifier = try? String(contentsOfFile: path!)
 		let modifier2 = try? String(contentsOfFile: path2!)
 		cubeGeometry.shaderModifiers = [
@@ -59,6 +67,7 @@ class ViewController: UIViewController {
 		SCNTransaction.begin()
 		SCNTransaction.setAnimationDuration(30)
 		cubeGeometry.setValue(mProp, forKey: "tex")
+		cubeGeometry.setValue(mProp2, forKey: "tex2")
 		SCNTransaction.commit()
 	}
 	
