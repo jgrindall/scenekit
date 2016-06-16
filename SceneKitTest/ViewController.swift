@@ -46,16 +46,20 @@ class ViewController: UIViewController {
 		scene.rootNode.addChildNode(planeNode);
 		
 		let path = NSBundle.mainBundle().pathForResource("wave", ofType: "shader");
+		let path2 = NSBundle.mainBundle().pathForResource("wave2", ofType: "shader");
 		let imgPath = NSBundle.mainBundle().pathForResource("rock", ofType: "jpg");
 		let img = UIImage(contentsOfFile: imgPath!);
 		let mProp = SCNMaterialProperty(contents: img!);
-		if let modifier = try? String(contentsOfFile: path!) {
-			cubeGeometry.shaderModifiers = [SCNShaderModifierEntryPointGeometry: modifier];
-			SCNTransaction.begin()
-			SCNTransaction.setAnimationDuration(30)
-			cubeGeometry.setValue(mProp, forKey: "tex")
-			SCNTransaction.commit()
-		}
+		let modifier = try? String(contentsOfFile: path!)
+		let modifier2 = try? String(contentsOfFile: path2!)
+		cubeGeometry.shaderModifiers = [
+			SCNShaderModifierEntryPointSurface: modifier2!,
+			SCNShaderModifierEntryPointGeometry: modifier!
+		];
+		SCNTransaction.begin()
+		SCNTransaction.setAnimationDuration(30)
+		cubeGeometry.setValue(mProp, forKey: "tex")
+		SCNTransaction.commit()
 	}
 	
 	func addLights(){

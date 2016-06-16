@@ -14,6 +14,7 @@
 		525F54571D0F47E1008C8396 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 525F54551D0F47E1008C8396 /* LaunchScreen.storyboard */; };
 		525F54591D0F4925008C8396 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525F54581D0F4925008C8396 /* ViewController.swift */; };
 		525F545D1D0F6364008C8396 /* Assets.m in Sources */ = {isa = PBXBuildFile; fileRef = 525F545C1D0F6364008C8396 /* Assets.m */; };
+		52DC7CDF1D132CB10075C2D3 /* wave2.shader in Resources */ = {isa = PBXBuildFile; fileRef = 52DC7CDE1D132CB10075C2D3 /* wave2.shader */; };
 		52FEBC9F1D0419D900B65511 /* wave.shader in Resources */ = {isa = PBXBuildFile; fileRef = 52FEBC9E1D0419D900B65511 /* wave.shader */; };
 		80EE09C0196A4C4A00B77AB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EE09BF196A4C4A00B77AB0 /* AppDelegate.swift */; };
 		80EE09C7196A4C4A00B77AB0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80EE09C6196A4C4A00B77AB0 /* Images.xcassets */; };
@@ -28,6 +29,7 @@
 		525F545A1D0F6363008C8396 /* SceneKitTest-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SceneKitTest-Bridging-Header.h"; sourceTree = "<group>"; };
 		525F545B1D0F6364008C8396 /* Assets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Assets.h; sourceTree = "<group>"; };
 		525F545C1D0F6364008C8396 /* Assets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Assets.m; sourceTree = "<group>"; };
+		52DC7CDE1D132CB10075C2D3 /* wave2.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wave2.shader; sourceTree = "<group>"; };
 		52FEBC9E1D0419D900B65511 /* wave.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wave.shader; sourceTree = "<group>"; };
 		80EE09BA196A4C4A00B77AB0 /* SceneKitTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SceneKitTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		80EE09BE196A4C4A00B77AB0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -65,6 +67,7 @@
 		80EE09BC196A4C4A00B77AB0 /* SceneKitTest */ = {
 			isa = PBXGroup;
 			children = (
+				52DC7CDE1D132CB10075C2D3 /* wave2.shader */,
 				525F545B1D0F6364008C8396 /* Assets.h */,
 				525F545C1D0F6364008C8396 /* Assets.m */,
 				525F54581D0F4925008C8396 /* ViewController.swift */,
@@ -153,6 +156,7 @@
 				522CD9F01CE8FE810062C004 /* robot.dae in Resources */,
 				525F54571D0F47E1008C8396 /* LaunchScreen.storyboard in Resources */,
 				52FEBC9F1D0419D900B65511 /* wave.shader in Resources */,
+				52DC7CDF1D132CB10075C2D3 /* wave2.shader in Resources */,
 				522CEBAA1D0F479700C197EE /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
