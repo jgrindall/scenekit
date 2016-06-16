@@ -25,7 +25,6 @@
 		522CD9EF1CE8FE810062C004 /* robot.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = robot.dae; sourceTree = "<group>"; };
 		525F54561D0F47E1008C8396 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		525F54581D0F4925008C8396 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		525F545A1D0F6363008C8396 /* SceneKitTest-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SceneKitTest-Bridging-Header.h"; sourceTree = "<group>"; };
 		52DC7CDE1D132CB10075C2D3 /* wave2.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wave2.shader; sourceTree = "<group>"; };
 		52FEBC9E1D0419D900B65511 /* wave.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wave.shader; sourceTree = "<group>"; };
 		80EE09BA196A4C4A00B77AB0 /* SceneKitTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SceneKitTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,7 +72,6 @@
 				80EE09BF196A4C4A00B77AB0 /* AppDelegate.swift */,
 				80EE09C6196A4C4A00B77AB0 /* Images.xcassets */,
 				80EE09BD196A4C4A00B77AB0 /* Supporting Files */,
-				525F545A1D0F6363008C8396 /* SceneKitTest-Bridging-Header.h */,
 			);
 			path = SceneKitTest;
 			sourceTree = "<group>";
@@ -274,7 +272,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jgrindall.scenekit;
 				PRODUCT_NAME = SceneKitTest;
-				SWIFT_OBJC_BRIDGING_HEADER = "SceneKitTest/SceneKitTest-Bridging-Header.h";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -291,7 +290,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jgrindall.scenekit;
 				PRODUCT_NAME = SceneKitTest;
-				SWIFT_OBJC_BRIDGING_HEADER = "SceneKitTest/SceneKitTest-Bridging-Header.h";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Release;
 		};
