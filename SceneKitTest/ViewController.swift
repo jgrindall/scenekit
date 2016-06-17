@@ -37,7 +37,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	}
 	
 	func addGeom(){
-		let cubeGeometry = SCNBox(width: 1.0, height: 1.0, length: 1.0, chamferRadius: 0.0)
+		let cubeGeometry = SCNBox(width: 1.0, height: 1.0, length: 1.0, chamferRadius: 0.05)
 		cubeGeometry.widthSegmentCount = 1;
 		cubeGeometry.heightSegmentCount = 1;
 		cubeGeometry.lengthSegmentCount = 1;
