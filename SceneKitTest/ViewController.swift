@@ -43,6 +43,47 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		cubeGeometry.lengthSegmentCount = 1;
 		self.cubeNode = SCNNode(geometry: cubeGeometry)
 		
+		var s:Float = 0.5;
+		let positions = [
+			SCNVector3Make(-s, -s,  s),
+			SCNVector3Make( s, -s,  s),
+			SCNVector3Make(-s, -s, -s),
+			SCNVector3Make( s, -s, -s),
+			SCNVector3Make(-s,  s,  s),
+			SCNVector3Make( s,  s,  s),
+			SCNVector3Make(-s,  s, -s),
+			SCNVector3Make( s,  s, -s)
+		];
+		
+		let indices = [
+			// bottom
+			0, 2, 1,
+			1, 2, 3,
+			// back
+			2, 6, 3,
+			3, 6, 7,
+			// left
+			0, 4, 2,
+			2, 4, 6,
+			// right
+			1, 3, 5,
+			3, 7, 5,
+			// front
+			0, 1, 4,
+			1, 5, 4,
+			// top
+			4, 5, 6,
+			5, 7, 6
+		];
+		
+		let vertexSource = SCNGeometrySource(vertices: positions, count:8);
+		
+		let indexData = NSData(bytes: indices, length: 12*3*sizeof(Int));
+		
+		let element = SCNGeometryElement(data: indexData, primitiveType: SCNGeometryPrimitiveType.Triangles, primitiveCount: 12, bytesPerIndex: sizeof(Int));
+		
+		let gameGeometry = SCNGeometry(sources: [vertexSource], elements: [element]);
+		
 		let planeGeometry = SCNPlane(width: 100.0, height: 100.0);
 		let planeNode = SCNNode(geometry: planeGeometry)
 		planeNode.eulerAngles = SCNVector3Make(GLKMathDegreesToRadians(-90.0), 0, 0);
@@ -56,8 +97,16 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		greenMaterial.diffuse.contents = UIColor.grayColor();
 		planeGeometry.materials = [greenMaterial];
 		
+		let blueMaterial = SCNMaterial();
+		blueMaterial.diffuse.contents = UIColor.blueColor();
+		gameGeometry.materials = [blueMaterial];
+		
+		let gameNode = SCNNode(geometry: gameGeometry);
+		gameNode.position = SCNVector3Make(1.0, 0.7, 0.6);
+		
 		scene.rootNode.addChildNode(self.cubeNode);
 		scene.rootNode.addChildNode(planeNode);
+		scene.rootNode.addChildNode(gameNode);
 		
 		let path = NSBundle.mainBundle().pathForResource("wave", ofType: "shader");
 		
