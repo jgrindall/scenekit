@@ -12,25 +12,63 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	var lightNode:SCNNode!;
 	
 	struct Tri {
-		var a: Int
-		var b: Int
-		var c: Int
+		var a: Int;
+		var b: Int;
+		var c: Int;
 	}
 	
-	func makeTopology(m:Int, n:Int){
-		var a:Array<Int> = [Int]();
-		var b:Array<Int> = [Int]();
+	struct Sqr {
+		var a: Int;
+		var b: Int;
+		var c: Int;
+		var d: Int;
+	}
+	
+	func makeTopology(m:Int, n:Int) -> SCNGeometry{
+		var size:Float = 0.5;
+		var a:Array<SCNVector3> = [SCNVector3]();
 		for i in 0...n{
 			for j in 0...m{
-				
+				a.append(SCNVector3Make(Float(j)*size, Float(i)*size, 0));
 			}
 		}
-		
+		for i in 0...n{
+			for j in 0...m{
+				a.append(SCNVector3Make(Float(j)*size, Float(i)*size, 1));
+			}
+		}
+		var sqrs:Array<Sqr> = [Sqr]();
+		//add sqr
+		func getIndexA(i:Int, j:Int) -> Int{
+			return i*m + j;
+		}
+		func getIndexB(i:Int, j:Int) -> Int{
+			return getIndexA(i, j: j) + (m * n);
+		}
+		var sqr:Sqr;
+		for i in 0...n - 1{
+			for j in 0...m - 1{
+				sqr = Sqr(a: getIndexA(i, j: j), b: getIndexA(i + 1, j: j), c: getIndexA(i + 1, j: j + 1), d: getIndexA(i, j: j + 1));
+				sqrs.append(sqr);
+				sqr = Sqr(a: getIndexB(i, j: j), b: getIndexB(i + 1, j: j), c: getIndexB(i + 1, j: j + 1), d: getIndexB(i, j: j + 1));
+				sqrs.append(sqr);
+			}
+		}
+		return makeGeometryWithPointsAndSquares(a, sqrs: sqrs);
+	}
+	
+	func makeGeometryWithPointsAndSquares(positions:Array<SCNVector3>, sqrs:Array<Sqr>) -> SCNGeometry{
+		var tris = [Tri]();
+		for s:Sqr in sqrs{
+			tris.append(Tri(a: s.a, b: s.b, c: s.c));
+			tris.append(Tri(a: s.c, b: s.d, c: s.a));
+		}
+		return makeGeometryWithPointsAndTriangles(positions, tris: tris);
 	}
 	
 	func makeGeometryWithPointsAndTriangles(positions:Array<SCNVector3>, tris:Array<Tri>) -> SCNGeometry{
 		var indices:Array<Int> = [Int]();
-		for v in tris{
+		for v:Tri in tris{
 			indices.append(v.a);
 			indices.append(v.b);
 			indices.append(v.c);
@@ -102,6 +140,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		
 		let gameGeometry = makeGeometryWithPointsAndTriangles(positions, tris: tris);
 		
+		let newGeometry:SCNGeometry = makeTopology(5, n: 4);
+		
 		let planeGeometry = SCNPlane(width: 100.0, height: 100.0);
 		let planeNode = SCNNode(geometry: planeGeometry)
 		planeNode.eulerAngles = SCNVector3Make(GLKMathDegreesToRadians(-90.0), 0, 0);
@@ -119,12 +159,18 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		blueMaterial.diffuse.contents = UIColor.blueColor();
 		gameGeometry.materials = [blueMaterial];
 		
+		newGeometry.materials = [blueMaterial];
+		
 		let gameNode = SCNNode(geometry: gameGeometry);
 		gameNode.position = SCNVector3Make(1.0, 0.7, 0.6);
+		
+		let newNode = SCNNode(geometry: newGeometry);
+		newNode.position = SCNVector3Make(1.0, 0.7, 0.6);
 		
 		scene.rootNode.addChildNode(self.cubeNode);
 		scene.rootNode.addChildNode(planeNode);
 		scene.rootNode.addChildNode(gameNode);
+		scene.rootNode.addChildNode(newNode);
 		
 		let path = NSBundle.mainBundle().pathForResource("wave", ofType: "shader");
 		
