@@ -11,6 +11,36 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	var cubeNode:SCNNode!;
 	var lightNode:SCNNode!;
 	
+	struct Tri {
+		var a: Int
+		var b: Int
+		var c: Int
+	}
+	
+	func makeTopology(m:Int, n:Int){
+		var a:Array<Int> = [Int]();
+		var b:Array<Int> = [Int]();
+		for i in 0...n{
+			for j in 0...m{
+				
+			}
+		}
+		
+	}
+	
+	func makeGeometryWithPointsAndTriangles(positions:Array<SCNVector3>, tris:Array<Tri>) -> SCNGeometry{
+		var indices:Array<Int> = [Int]();
+		for v in tris{
+			indices.append(v.a);
+			indices.append(v.b);
+			indices.append(v.c);
+		}
+		let vertexSource = SCNGeometrySource(vertices: positions, count:positions.count);
+		let indexData = NSData(bytes: indices, length: indices.count * sizeof(Int));
+		let element = SCNGeometryElement(data: indexData, primitiveType: SCNGeometryPrimitiveType.Triangles, primitiveCount: indices.count, bytesPerIndex: sizeof(Int));
+		return SCNGeometry(sources: [vertexSource], elements: [element]);
+	}
+	
 	func renderer(renderer: SCNSceneRenderer, updateAtTime time: NSTimeInterval) {
 		self.posCamera(time);
 	}
@@ -43,7 +73,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		cubeGeometry.lengthSegmentCount = 1;
 		self.cubeNode = SCNNode(geometry: cubeGeometry)
 		
-		var s:Float = 0.5;
+		let s:Float = 0.5;
 		let positions = [
 			SCNVector3Make(-s, -s,  s),
 			SCNVector3Make( s, -s,  s),
@@ -55,34 +85,22 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 			SCNVector3Make( s,  s, -s)
 		];
 		
-		let indices = [
-			// bottom
-			0, 2, 1,
-			1, 2, 3,
-			// back
-			2, 6, 3,
-			3, 6, 7,
-			// left
-			0, 4, 2,
-			2, 4, 6,
-			// right
-			1, 3, 5,
-			3, 7, 5,
-			// front
-			0, 1, 4,
-			1, 5, 4,
-			// top
-			4, 5, 6,
-			5, 7, 6
+		let tris = [
+			Tri(a: 0, b: 2, c: 1),
+			Tri(a: 1, b: 2, c: 3),
+			Tri(a: 2, b: 6, c: 3),
+			Tri(a: 3, b: 6, c: 7),
+			Tri(a: 0, b: 4, c: 2),
+			Tri(a: 2, b: 4, c: 6),
+			Tri(a: 1, b: 3, c: 5),
+			Tri(a: 3, b: 7, c: 5),
+			Tri(a: 0, b: 1, c: 4),
+			Tri(a: 1, b: 5, c: 4),
+			Tri(a: 4, b: 5, c: 6),
+			Tri(a: 5, b: 7, c: 6)
 		];
 		
-		let vertexSource = SCNGeometrySource(vertices: positions, count:8);
-		
-		let indexData = NSData(bytes: indices, length: 12*3*sizeof(Int));
-		
-		let element = SCNGeometryElement(data: indexData, primitiveType: SCNGeometryPrimitiveType.Triangles, primitiveCount: 12, bytesPerIndex: sizeof(Int));
-		
-		let gameGeometry = SCNGeometry(sources: [vertexSource], elements: [element]);
+		let gameGeometry = makeGeometryWithPointsAndTriangles(positions, tris: tris);
 		
 		let planeGeometry = SCNPlane(width: 100.0, height: 100.0);
 		let planeNode = SCNNode(geometry: planeGeometry)
