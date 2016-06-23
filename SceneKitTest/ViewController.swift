@@ -10,6 +10,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	var cameraNode:SCNNode!;
 	var cubeNode:SCNNode!;
 	var lightNode:SCNNode!;
+	var newNode:SCNNode!;
 	
 	struct Tri {
 		var a: Int;
@@ -84,9 +85,10 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	}
 	
 	func posCamera(t:Double){
-		let x = 3.0 * sinf(Float(t/10.0));
-		let z = 3.0 * cosf(Float(t/10.0));
-		self.cameraNode.position = SCNVector3Make(x, 3.0, z);
+		var r:Float = 10.0;
+		let x = r * sinf(Float(t/10.0));
+		let z = r * cosf(Float(t/10.0));
+		self.cameraNode.position = SCNVector3Make(x, r, z);
 	}
 	
 	func addScene(){
@@ -105,6 +107,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	}
 	
 	func addGeom(){
+		/*
 		let cubeGeometry = SCNBox(width: 1.0, height: 1.0, length: 1.0, chamferRadius: 0.05)
 		cubeGeometry.widthSegmentCount = 1;
 		cubeGeometry.heightSegmentCount = 1;
@@ -137,8 +140,9 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 			Tri(a: 4, b: 5, c: 6),
 			Tri(a: 5, b: 7, c: 6)
 		];
+		*/
 		
-		let gameGeometry = makeGeometryWithPointsAndTriangles(positions, tris: tris);
+		//let gameGeometry = makeGeometryWithPointsAndTriangles(positions, tris: tris);
 		
 		let newGeometry:SCNGeometry = makeTopology(5, n: 4);
 		
@@ -149,27 +153,27 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		
 		let redMaterial = SCNMaterial();
 		redMaterial.diffuse.contents = UIColor.redColor();
-		cubeGeometry.materials = [redMaterial];
+		//cubeGeometry.materials = [redMaterial];
 		
 		let greenMaterial = SCNMaterial();
 		greenMaterial.diffuse.contents = UIColor.grayColor();
-		planeGeometry.materials = [greenMaterial];
+		//planeGeometry.materials = [greenMaterial];
 		
 		let blueMaterial = SCNMaterial();
 		blueMaterial.diffuse.contents = UIColor.blueColor();
-		gameGeometry.materials = [blueMaterial];
+		//gameGeometry.materials = [blueMaterial];
 		
-		newGeometry.materials = [blueMaterial];
+		newGeometry.materials = [blueMaterial, greenMaterial, redMaterial];
 		
-		let gameNode = SCNNode(geometry: gameGeometry);
-		gameNode.position = SCNVector3Make(1.0, 0.7, 0.6);
+		//let gameNode = SCNNode(geometry: gameGeometry);
+		//gameNode.position = SCNVector3Make(1.0, 0.7, 0.6);
 		
-		let newNode = SCNNode(geometry: newGeometry);
-		newNode.position = SCNVector3Make(1.0, 0.7, 0.6);
+		self.newNode = SCNNode(geometry: newGeometry);
+		self.newNode.position = SCNVector3Make(-1.0, 1.3, -0.6);
 		
-		scene.rootNode.addChildNode(self.cubeNode);
+		//scene.rootNode.addChildNode(self.cubeNode);
 		scene.rootNode.addChildNode(planeNode);
-		scene.rootNode.addChildNode(gameNode);
+		//scene.rootNode.addChildNode(gameNode);
 		scene.rootNode.addChildNode(newNode);
 		
 		let path = NSBundle.mainBundle().pathForResource("wave", ofType: "shader");
@@ -186,12 +190,20 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		let mProp2 = SCNMaterialProperty(contents: img2!);
 		let modifier = try? String(contentsOfFile: path!)
 		let modifier2 = try? String(contentsOfFile: path2!)
+		/*
 		cubeGeometry.shaderModifiers = [
 			SCNShaderModifierEntryPointSurface: modifier2!,
 			SCNShaderModifierEntryPointGeometry: modifier!
 		];
 		cubeGeometry.setValue(mProp, forKey: "tex")
 		cubeGeometry.setValue(mProp2, forKey: "tex2")
+		*/
+		newGeometry.shaderModifiers = [
+			SCNShaderModifierEntryPointSurface: modifier2!,
+			SCNShaderModifierEntryPointGeometry: modifier!
+		];
+		newGeometry.setValue(mProp, forKey: "tex");
+		newGeometry.setValue(mProp2, forKey: "tex2");
 	}
 	
 	func addLights(){
@@ -222,7 +234,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	}
 	
 	func constrain(){
-		let constraint = SCNLookAtConstraint(target: self.cubeNode)
+		let constraint = SCNLookAtConstraint(target: self.newNode)
 		constraint.gimbalLockEnabled = true;
 		self.cameraNode.constraints = [constraint];
 		self.lightNode.constraints = [constraint];
