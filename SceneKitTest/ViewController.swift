@@ -12,21 +12,24 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	var lightNode:SCNNode!;
 	var newNode:SCNNode!;
 	
+	var m:CInt = 2;
+	var n:CInt = 2;
+	
 	struct Tri {
-		var a: Int;
-		var b: Int;
-		var c: Int;
+		var a: CInt;
+		var b: CInt;
+		var c: CInt;
 	}
 	
 	struct Sqr {
-		var a: Int;
-		var b: Int;
-		var c: Int;
-		var d: Int;
+		var a: CInt;
+		var b: CInt;
+		var c: CInt;
+		var d: CInt;
 	}
 	
-	func makeTopology(m:Int, n:Int) -> SCNGeometry{
-		var size:Float = 0.5;
+	func makeTopology(m:CInt, n:CInt) -> SCNGeometry{
+		var size:Float = 1.0;
 		var a:Array<SCNVector3> = [SCNVector3]();
 		for i in 0...n{
 			for j in 0...m{
@@ -40,21 +43,29 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		}
 		var sqrs:Array<Sqr> = [Sqr]();
 		//add sqr
-		func getIndexA(i:Int, j:Int) -> Int{
-			return i*m + j;
+		func getIndexA(i:CInt, j:CInt) -> CInt{
+			return i * (m + 1) + j;
 		}
-		func getIndexB(i:Int, j:Int) -> Int{
-			return getIndexA(i, j: j) + (m * n);
+		func getIndexB(i:CInt, j:CInt) -> CInt{
+			return getIndexA(i, j: j) + (m + 1) * (n + 1);
 		}
-		var sqr:Sqr;
 		for i in 0...n - 1{
 			for j in 0...m - 1{
-				sqr = Sqr(a: getIndexA(i, j: j), b: getIndexA(i + 1, j: j), c: getIndexA(i + 1, j: j + 1), d: getIndexA(i, j: j + 1));
-				sqrs.append(sqr);
-				sqr = Sqr(a: getIndexB(i, j: j), b: getIndexB(i + 1, j: j), c: getIndexB(i + 1, j: j + 1), d: getIndexB(i, j: j + 1));
-				sqrs.append(sqr);
+				sqrs.append(Sqr(a: getIndexA(i, j: j),			b: getIndexA(i + 1, j: j),		c: getIndexA(i + 1, j: j + 1),	d: getIndexA(i, j: j + 1)));
+				sqrs.append(Sqr(a: getIndexB(i + 1, j: j),		b: getIndexB(i, j: j),			c: getIndexB(i, j: j + 1),		d: getIndexB(i + 1, j: j + 1)));
 			}
 		}
+		for i in 0...n - 1{
+			for j in 0...m - 1{
+				sqrs.append(Sqr(a: getIndexA(i + 1, j: j),		b: getIndexA(i, j: j),			c: getIndexB(i, j: j),			d: getIndexB(i + 1, j: j)));
+				sqrs.append(Sqr(a: getIndexA(i + 1, j: j + 1),	b: getIndexA(i + 1, j: j),		c: getIndexB(i + 1, j: j),		d: getIndexB(i + 1, j: j + 1)));
+				sqrs.append(Sqr(a: getIndexA(i, j: j + 1),		b: getIndexA(i + 1, j: j + 1),	c: getIndexB(i + 1, j: j + 1),	d: getIndexB(i, j: j + 1)));
+				sqrs.append(Sqr(a: getIndexA(i, j: j),			b: getIndexA(i, j: j + 1),		c: getIndexB(i, j: j + 1),		d: getIndexB(i, j: j)));
+			}
+		}
+		print (sqrs);
+		print (a);
+		print(a.count);
 		return makeGeometryWithPointsAndSquares(a, sqrs: sqrs);
 	}
 	
@@ -68,15 +79,20 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	}
 	
 	func makeGeometryWithPointsAndTriangles(positions:Array<SCNVector3>, tris:Array<Tri>) -> SCNGeometry{
-		var indices:Array<Int> = [Int]();
+		var indices:Array<CInt> = [CInt]();
+		var primCount = 0;
 		for v:Tri in tris{
 			indices.append(v.a);
 			indices.append(v.b);
 			indices.append(v.c);
+			primCount += 1;
 		}
-		let vertexSource = SCNGeometrySource(vertices: positions, count:positions.count);
-		let indexData = NSData(bytes: indices, length: indices.count * sizeof(Int));
-		let element = SCNGeometryElement(data: indexData, primitiveType: SCNGeometryPrimitiveType.Triangles, primitiveCount: indices.count, bytesPerIndex: sizeof(Int));
+		let vertexCount:Int = Int(2 * (self.m + 1) * (self.n + 1));
+		let vertexSource = SCNGeometrySource(vertices: positions, count:vertexCount);
+		print("count ");
+		print(vertexCount);
+		let indexData = NSData(bytes: indices, length: indices.count * sizeof(CInt));
+		let element = SCNGeometryElement(data: indexData, primitiveType: SCNGeometryPrimitiveType.Triangles, primitiveCount: primCount, bytesPerIndex: sizeof(CInt));
 		return SCNGeometry(sources: [vertexSource], elements: [element]);
 	}
 	
@@ -144,7 +160,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		
 		//let gameGeometry = makeGeometryWithPointsAndTriangles(positions, tris: tris);
 		
-		let newGeometry:SCNGeometry = makeTopology(5, n: 4);
+		let newGeometry:SCNGeometry = makeTopology(self.m, n: self.n);
 		
 		let planeGeometry = SCNPlane(width: 100.0, height: 100.0);
 		let planeNode = SCNNode(geometry: planeGeometry)
