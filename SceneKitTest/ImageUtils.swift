@@ -12,54 +12,30 @@ import QuartzCore
 
 class ImageUtils {
 	
-	static func makeHeightMap(inputImage:UIImage) -> UIImage{
-		let inputCGImage     = inputImage.CGImage;
+	static var context:CGContext = ImageUtils.initHeightMap(500, h: 200);
+	
+	static func editHeightMap(pos:Int, ht:UInt8){
+		let pixelBuffer = UnsafeMutablePointer<UInt32>(CGBitmapContextGetData(ImageUtils.context));
+		var currentPixel = pixelBuffer;
+		for _ in 0 ..< pos{
+			currentPixel = currentPixel.successor();
+		}
+		let newColor:UInt32 = (UInt32(ht) << 24) | (UInt32(ht) << 16) | (UInt32(ht) << 8) | (UInt32(ht) << 0);
+		currentPixel.memory = newColor;
+	}
+	
+	static func initHeightMap(w:Int, h:Int) -> CGContext{
 		let colorSpace       = CGColorSpaceCreateDeviceRGB();
-		let width            = CGImageGetWidth(inputCGImage);
-		let height           = CGImageGetHeight(inputCGImage);
 		let bytesPerPixel    = 4;
 		let bitsPerComponent = 8;
-		let bytesPerRow      = bytesPerPixel * width;
+		let bytesPerRow      = bytesPerPixel * w;
 		let bitmapInfo       = CGImageAlphaInfo.PremultipliedFirst.rawValue | CGBitmapInfo.ByteOrder32Little.rawValue;
-		let context = CGBitmapContextCreate(nil, width, height, bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo)!;
-		CGContextDrawImage(context, CGRectMake(0, 0, CGFloat(width), CGFloat(height)), inputCGImage);
-		let pixelBuffer = UnsafeMutablePointer<UInt32>(CGBitmapContextGetData(context));
-		var currentPixel = pixelBuffer;
-		for i in 0 ..< Int(height){
-			for j in 0 ..< Int(width) {
-				let pixel = currentPixel.memory;
-				currentPixel = currentPixel.successor();
-			}
-		}
-		let outputCGImage = CGBitmapContextCreateImage(context)
-		let outputImage = UIImage(CGImage: outputCGImage!, scale: inputImage.scale, orientation: inputImage.imageOrientation)
-		return outputImage
+		return CGBitmapContextCreate(nil, w, h, bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo)!;
 	}
 	
-	/*
-	func alpha(color: UInt32) -> UInt8 {
-	return UInt8((color >> 24) & 255)
-	}
-	
-	func red(color: UInt32) -> UInt8 {
-	return UInt8((color >> 16) & 255)
-	}
-	
-	func green(color: UInt32) -> UInt8 {
-	return UInt8((color >> 8) & 255)
-	}
-	
-	func blue(color: UInt32) -> UInt8 {
-	return UInt8((color >> 0) & 255)
-	}
-	
-	func rgba(red red: UInt8, green: UInt8, blue: UInt8, alpha: UInt8) -> UInt32 {
-	return (UInt32(alpha) << 24) | (UInt32(red) << 16) | (UInt32(green) << 8) | (UInt32(blue) << 0)
-	}
-	*/
-	
-	static func makeEmptyImage(w:Int, h:Int) -> UIImage{
-		return ImageUtils.getImageWithColor(UIColor.clearColor(), size: CGSizeMake(CGFloat(w), CGFloat(h)));
+	static func getHeightMap() -> UIImage{
+		let outputCGImage = CGBitmapContextCreateImage(ImageUtils.context);
+		return UIImage(CGImage: outputCGImage!);
 	}
 	
 	static func getImageWithColor(color: UIColor, size: CGSize) -> UIImage {
@@ -70,4 +46,11 @@ class ImageUtils {
 		UIGraphicsEndImageContext()
 		return image
 	}
+	
+
+	static func tint(source:UIImage, r:int, g:int, b:int) -> UIImage{
+
+	}
+	
+	
 }

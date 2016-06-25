@@ -140,6 +140,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		/*
 		self.addScene();
 		self.addLights();
 		self.addPlane();
@@ -148,6 +149,16 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		self.sceneView.playing = true;
 		let panGesture = UIPanGestureRecognizer(target: self, action:("handlePanGesture:"))
 		self.view.addGestureRecognizer(panGesture);
+		*/
+		var img:UIImage = ImageUtils.getHeightMap();
+		for _ in 0 ... 20{
+			ImageUtils.editHeightMap(Int(arc4random() % (500 * 200)), ht:100);
+		}
+		img = ImageUtils.getHeightMap();
+		var imgView:UIImageView = UIImageView(image: img);
+		self.view.addSubview(imgView);
+		
+		
 		
 	}
 }
