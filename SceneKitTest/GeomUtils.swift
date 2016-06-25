@@ -104,13 +104,10 @@ class GeomUtils {
 		CGContextDrawImage(context, CGRectMake(0, 0, CGFloat(width), CGFloat(height)), inputCGImage);
 		let pixelBuffer = UnsafeMutablePointer<UInt32>(CGBitmapContextGetData(context));
 		var currentPixel = pixelBuffer;
-		for (var i = 0; i < Int(height); i++){
-			for (var j = 0; j < Int(width); j++) {
+		for i in 0 ..< Int(height){
+			for j in 0 ..< Int(width) {
 				let pixel = currentPixel.memory;
-				if (red(pixel) == 0 && green(pixel) == 0 && blue(pixel) == 0) {
-					currentPixel.memory = rgba(red: 255, green: 0, blue: 0, alpha: 255);
-				}
-				currentPixel++;
+				currentPixel = currentPixel.successor();
 			}
 		}
 		let outputCGImage = CGBitmapContextCreateImage(context)
@@ -118,6 +115,7 @@ class GeomUtils {
 		return outputImage
 	}
 	
+	/*
 	func alpha(color: UInt32) -> UInt8 {
 		return UInt8((color >> 24) & 255)
 	}
@@ -137,8 +135,9 @@ class GeomUtils {
 	func rgba(red red: UInt8, green: UInt8, blue: UInt8, alpha: UInt8) -> UInt32 {
 		return (UInt32(alpha) << 24) | (UInt32(red) << 16) | (UInt32(green) << 8) | (UInt32(blue) << 0)
 	}
+	*/
 	
-	static func makeEmptyImage(w:Int, h:Int){
+	static func makeEmptyImage(w:Int, h:Int) -> UIImage{
 		return GeomUtils.getImageWithColor(UIColor.clearColor(), size: CGSizeMake(CGFloat(w), CGFloat(h)));
 	}
 	
