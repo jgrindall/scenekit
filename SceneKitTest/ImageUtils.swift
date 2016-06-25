@@ -46,11 +46,4 @@ class ImageUtils {
 		UIGraphicsEndImageContext()
 		return image
 	}
-	
-
-	static func tint(source:UIImage, r:int, g:int, b:int) -> UIImage{
-
-	}
-	
-	
 }

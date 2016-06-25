@@ -28,14 +28,24 @@ class Assets{
 		return try! String(contentsOfFile: wavePath);
 	}
 	
-	static func getRock() -> SCNMaterialProperty{
+	static func getRockImage() -> UIImage{
 		let imgPath = NSBundle.mainBundle().pathForResource("rock", ofType: "jpg");
-		return SCNMaterialProperty(contents: UIImage(contentsOfFile: imgPath!)!);
+		return UIImage(contentsOfFile: imgPath!)!;
+	}
+	
+	static func getRock() -> SCNMaterialProperty{
+		let img = Assets.getRockImage();
+		return SCNMaterialProperty(contents: img);
+	}
+	
+	static func getRock2Image() -> UIImage{
+		let imgPath = NSBundle.mainBundle().pathForResource("rock2", ofType: "jpg");
+		return UIImage(contentsOfFile: imgPath!)!;
 	}
 	
 	static func getRock2() -> SCNMaterialProperty{
-		let imgPath = NSBundle.mainBundle().pathForResource("rock2", ofType: "jpg");
-		return SCNMaterialProperty(contents: UIImage(contentsOfFile: imgPath!)!);
+		let img = Assets.getRock2Image();
+		return SCNMaterialProperty(contents: img);
 	}
 	
 	static func getBlue() -> SCNMaterialProperty{

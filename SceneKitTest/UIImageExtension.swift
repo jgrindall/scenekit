@@ -31,9 +31,8 @@ private extension UIImage {
 }
 
 extension  UIImage {
-	typealias RawColorType = (newRedColor:UInt8, newgreenColor:UInt8, newblueColor:UInt8,  newalphaValue:UInt8)
 	
-	func setPixelColorAtPoint(point:CGPoint, color: RawColorType) -> UIImage? {
+	func setPixelColorAtPoint(point:CGPoint, r: UInt8, g:UInt8, b:UInt8, a:UInt8) -> UIImage? {
 		self.sanitizePoint(point)
 		let inImage:CGImageRef = self.CGImage!
 		let context = self.createARGBBitmapContext(inImage)
@@ -45,10 +44,10 @@ extension  UIImage {
 		let data = CGBitmapContextGetData(context)
 		let dataType = UnsafeMutablePointer<UInt8>(data)
 		let offset = 4*((Int(pixelsWide) * Int(point.y)) + Int(point.x))
-		dataType[offset]   = color.newalphaValue
-		dataType[offset+1] = color.newRedColor
-		dataType[offset+2] = color.newgreenColor
-		dataType[offset+3] = color.newblueColor
+		dataType[offset]   = r;
+		dataType[offset+1] = g;
+		dataType[offset+2] = b;
+		dataType[offset+3] = a;
 		let colorSpace = CGColorSpaceCreateDeviceRGB()
 		let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedFirst.rawValue)
 		let bitmapBytesPerRow = Int(pixelsWide) * 4

@@ -150,16 +150,14 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		let panGesture = UIPanGestureRecognizer(target: self, action:("handlePanGesture:"))
 		self.view.addGestureRecognizer(panGesture);
 		*/
-		var img:UIImage = ImageUtils.getHeightMap();
-		for _ in 0 ... 20{
-			ImageUtils.editHeightMap(Int(arc4random() % (500 * 200)), ht:100);
+		var img:UIImage = Assets.getRock2Image();
+		for i in 0 ... 99{
+			var p:CGPoint = CGPointMake(CGFloat(i), CGFloat(i));
+			img = img.setPixelColorAtPoint(p, r: 255, g: 255, b: 0, a: 255)!;
 		}
-		img = ImageUtils.getHeightMap();
 		var imgView:UIImageView = UIImageView(image: img);
+		imgView.frame = CGRectMake(200, 200, 100, 100);
 		self.view.addSubview(imgView);
-		
-		
-		
 	}
 }
 
