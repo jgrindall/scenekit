@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SceneKitTest/ViewController.swift"
-            timestampString = "488410268.81063"
+            timestampString = "488539975.134178"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
             landmarkName = "addGeom()"
             landmarkType = "5">
          </BreakpointContent>
