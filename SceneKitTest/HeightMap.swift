@@ -26,7 +26,7 @@ class HeightMap{
 	func setHeightAt(i:Int, j:Int, h:Int){
 		let offset:Int = i * Int(self._maxJ) + j;
 		self._data[offset] = h;
-		self._cache.setPixelColorAtPoint(i, y: j, r: 255, g: 255, b: 0, a: 255);
+		self._cache.setPixelColorAtPoint(i, y: j, r: 255, g: 0, b: 0, a: 255);
 	}
 	
 	func get() -> UIImage{

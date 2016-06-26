@@ -12,14 +12,8 @@ import SceneKit
 
 class Assets{
 	
-	static var _modifier:String = Assets.getModifier();
-	static var _modifier2:String = Assets.getModifier2();
-	static var _rock:SCNMaterialProperty = Assets.getRock();
-	static var _rock2:SCNMaterialProperty = Assets.getRock2();
-	static var _blue:SCNMaterialProperty = Assets.getBlue();
-	
-	static func getModifier() -> String{
-		let wavePath:String = NSBundle.mainBundle().pathForResource("wave", ofType: "shader")!;
+	static func getGeomModifier() -> String{
+		let wavePath:String = NSBundle.mainBundle().pathForResource("geom", ofType: "shader")!;
 		return try! String(contentsOfFile: wavePath);
 	}
 	
@@ -28,29 +22,13 @@ class Assets{
 		return try! String(contentsOfFile: wavePath);
 	}
 	
-	static func getRockImage() -> UIImage{
-		let imgPath = NSBundle.mainBundle().pathForResource("rock", ofType: "jpg");
-		return UIImage(contentsOfFile: imgPath!)!;
-	}
-	
-	static func getRock() -> SCNMaterialProperty{
-		let img = Assets.getRockImage();
-		return SCNMaterialProperty(contents: img);
-	}
-	
-	static func getRock2Image() -> UIImage{
-		let imgPath = NSBundle.mainBundle().pathForResource("rock2", ofType: "jpg");
-		return UIImage(contentsOfFile: imgPath!)!;
-	}
-	
-	static func getRock2() -> SCNMaterialProperty{
-		let img = Assets.getRock2Image();
-		return SCNMaterialProperty(contents: img);
-	}
-	
 	static func getBlue() -> SCNMaterialProperty{
 		let imgPath = NSBundle.mainBundle().pathForResource("blue", ofType: "jpg");
 		return SCNMaterialProperty(contents: UIImage(contentsOfFile: imgPath!)!);
+	}
+	
+	static func getValueForImage(img: UIImage) -> SCNMaterialProperty{
+		return SCNMaterialProperty(contents: img);
 	}
 }
 

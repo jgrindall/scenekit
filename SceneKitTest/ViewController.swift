@@ -85,16 +85,12 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		self.newNode = SCNNode(geometry: newGeometry);
 		self.newNode.position = SCNVector3Make(-Float(self.maxJ)*self.size/2.0, 2.0, -Float(self.maxI)*self.size/2.0);
 		scene.rootNode.addChildNode(newNode);
-		let mProp = Assets.getRock();
-		let mProp2 = Assets.getRock2();
-		let modifier = Assets.getModifier();
-		let modifier2 = Assets.getModifier2();
 		newGeometry.shaderModifiers = [
-			SCNShaderModifierEntryPointSurface: modifier2,
-			SCNShaderModifierEntryPointGeometry: modifier
+			SCNShaderModifierEntryPointGeometry: Assets.getGeomModifier()
 		];
-		newGeometry.setValue(mProp, forKey: "tex");
-		newGeometry.setValue(mProp2, forKey: "tex2");
+		//SCNShaderModifierEntryPointSurface: modifier2
+		newGeometry.setValue(Assets.getValueForImage(self.heightMap.get()), forKey: "tex");
+		//newGeometry.setValue(mProp2, forKey: "tex2");
 	}
 	
 	func addLights(){
@@ -121,13 +117,11 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	}
 	
 	func addHeights(){
-		//self.heightMap = HeightMap(maxI: self.maxI, maxJ: self.maxJ);
-		self.heightMap = HeightMap(maxI: 400, maxJ: 400);
-		for k in 0 ... 100{
-			self.heightMap.setHeightAt(k, j: k, h: 0);
-		}
+		self.heightMap = HeightMap(maxI: self.maxI, maxJ: self.maxJ);
+		self.heightMap.setHeightAt(1, j: 1, h: 1);
 		let imgView:UIImageView = UIImageView(image: self.heightMap.get());
-		imgView.frame = CGRectMake(200, 200, 400, 400);
+		imgView.contentMode = UIViewContentMode.ScaleAspectFill;
+		imgView.frame = CGRectMake(50, 100, 100, 100);
 		self.view.addSubview(imgView);
 	}
 	
