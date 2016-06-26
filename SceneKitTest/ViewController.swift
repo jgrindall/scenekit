@@ -13,6 +13,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	var lightNode:SCNNode!;
 	var originNode:SCNNode!;
 	var time0:Float = 0.0;
+	var heightMap:HeightMap!;
 	
 	var maxI:CInt = 5;
 	var maxJ:CInt = 3;
@@ -138,26 +139,33 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		self.scene.rootNode.addChildNode(self.lightNode);
 	}
 	
-	override func viewDidLoad() {
-		super.viewDidLoad()
+	func addGestures(){
+		let panGesture = UIPanGestureRecognizer(target: self, action:(#selector(ViewController.handlePanGesture(_:))))
+		self.view.addGestureRecognizer(panGesture);
+	}
+	
+	func addHeights(){
+		//self.heightMap = HeightMap(maxI: self.maxI, maxJ: self.maxJ);
+		self.heightMap = HeightMap(maxI: 400, maxJ: 400);
+		for k in 0 ... 100{
+			self.heightMap.setHeightAt(k, j: k, h: 0);
+		}
+		let imgView:UIImageView = UIImageView(image: self.heightMap.get());
+		imgView.frame = CGRectMake(200, 200, 400, 400);
+		self.view.addSubview(imgView);
 		
+	}
+	
+	override func viewDidLoad() {
+		super.viewDidLoad();
 		self.addScene();
 		self.addLights();
 		self.addPlane();
+		self.addHeights();
 		self.addGeom();
 		self.addCamera();
+		self.addGestures();
 		self.sceneView.playing = true;
-		let panGesture = UIPanGestureRecognizer(target: self, action:(#selector(ViewController.handlePanGesture(_:))))
-		self.view.addGestureRecognizer(panGesture);
-		
-		ImageUtils.initImg(400, h: 400);
-		for i in 0 ... 99{
-			let p:CGPoint = CGPointMake(CGFloat(i), CGFloat(i));
-			ImageUtils.setPixelColorAtPoint2(p, r: 255, g: 255, b: 0, a: 255);
-		}
-		let imgView:UIImageView = UIImageView(image: ImageUtils.get());
-		imgView.frame = CGRectMake(200, 200, 400, 400);
-		self.view.addSubview(imgView);
 	}
 }
 

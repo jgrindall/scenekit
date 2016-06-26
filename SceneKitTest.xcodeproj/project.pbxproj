@@ -18,6 +18,8 @@
 		52E0C85F1D1E7BBA00B59FC9 /* GeomUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E0C85E1D1E7BBA00B59FC9 /* GeomUtils.swift */; };
 		52E0C8611D1E95ED00B59FC9 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E0C8601D1E95ED00B59FC9 /* Assets.swift */; };
 		52E0C8631D1EA74100B59FC9 /* ImageUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E0C8621D1EA74100B59FC9 /* ImageUtils.swift */; };
+		52E0C8671D20475D00B59FC9 /* HeightMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E0C8661D20475D00B59FC9 /* HeightMap.swift */; };
+		52E0C8691D2048A100B59FC9 /* CachedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E0C8681D2048A100B59FC9 /* CachedImage.swift */; };
 		52FEBC9F1D0419D900B65511 /* wave.shader in Resources */ = {isa = PBXBuildFile; fileRef = 52FEBC9E1D0419D900B65511 /* wave.shader */; };
 		80EE09C0196A4C4A00B77AB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EE09BF196A4C4A00B77AB0 /* AppDelegate.swift */; };
 		80EE09C7196A4C4A00B77AB0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80EE09C6196A4C4A00B77AB0 /* Images.xcassets */; };
@@ -35,6 +37,8 @@
 		52E0C85E1D1E7BBA00B59FC9 /* GeomUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeomUtils.swift; sourceTree = "<group>"; };
 		52E0C8601D1E95ED00B59FC9 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		52E0C8621D1EA74100B59FC9 /* ImageUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUtils.swift; sourceTree = "<group>"; };
+		52E0C8661D20475D00B59FC9 /* HeightMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeightMap.swift; sourceTree = "<group>"; };
+		52E0C8681D2048A100B59FC9 /* CachedImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedImage.swift; sourceTree = "<group>"; };
 		52FEBC9E1D0419D900B65511 /* wave.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wave.shader; sourceTree = "<group>"; };
 		80EE09BA196A4C4A00B77AB0 /* SceneKitTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SceneKitTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		80EE09BE196A4C4A00B77AB0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -75,6 +79,8 @@
 				52DC7CE21D1358EC0075C2D3 /* rock2.jpg */,
 				52DC7CE01D134CF30075C2D3 /* blue.png */,
 				52DC7CDE1D132CB10075C2D3 /* wave2.shader */,
+				52E0C8681D2048A100B59FC9 /* CachedImage.swift */,
+				52E0C8661D20475D00B59FC9 /* HeightMap.swift */,
 				52E0C8621D1EA74100B59FC9 /* ImageUtils.swift */,
 				525F54581D0F4925008C8396 /* ViewController.swift */,
 				52E0C8601D1E95ED00B59FC9 /* Assets.swift */,
@@ -177,7 +183,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				525F54591D0F4925008C8396 /* ViewController.swift in Sources */,
+				52E0C8671D20475D00B59FC9 /* HeightMap.swift in Sources */,
 				52E0C85F1D1E7BBA00B59FC9 /* GeomUtils.swift in Sources */,
+				52E0C8691D2048A100B59FC9 /* CachedImage.swift in Sources */,
 				52E0C8611D1E95ED00B59FC9 /* Assets.swift in Sources */,
 				52E0C8631D1EA74100B59FC9 /* ImageUtils.swift in Sources */,
 				80EE09C0196A4C4A00B77AB0 /* AppDelegate.swift in Sources */,
