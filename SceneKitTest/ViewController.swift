@@ -76,30 +76,6 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		scene.rootNode.addChildNode(planeNode);
 	}
 	
-	func addGeom2(){
-		/*
-		let blockGeometry:SCNGeometry = SCNBox(width: 1.0, height: 1.0, length: 1.0, chamferRadius: 0.0);
-		let blockNode = SCNNode(geometry: blockGeometry);
-		let mProp = Assets.getRock();
-		let mProp2 = Assets.getRock2();
-		let modifier = Assets.getModifier();
-		let modifier2 = Assets.getModifier2();
-		for i in 0 ... self.maxI{
-			for j in 0 ... self.maxJ {
-				let node = blockNode.clone();
-				node.geometry!.shaderModifiers = [
-					SCNShaderModifierEntryPointSurface: modifier2,
-					SCNShaderModifierEntryPointGeometry: modifier
-				];
-				node.geometry!.setValue(mProp, forKey: "tex");
-				node.geometry!.setValue(mProp2, forKey: "tex2");
-				node.position = SCNVector3Make(Float(i), 1.3, Float(j));
-				scene.rootNode.addChildNode(node);
-			}
-		}
-*/
-	}
-	
 	func addGeom(){
 		let newGeometry:SCNGeometry = GeomUtils.makeTopology(self.maxI, maxJ: self.maxJ, size:self.size, height:self.height);
 		let blueMaterial = SCNMaterial();
@@ -153,7 +129,6 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		let imgView:UIImageView = UIImageView(image: self.heightMap.get());
 		imgView.frame = CGRectMake(200, 200, 400, 400);
 		self.view.addSubview(imgView);
-		
 	}
 	
 	override func viewDidLoad() {
