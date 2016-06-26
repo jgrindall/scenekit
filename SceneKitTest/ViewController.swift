@@ -140,23 +140,23 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		/*
+		
 		self.addScene();
 		self.addLights();
 		self.addPlane();
 		self.addGeom();
 		self.addCamera();
 		self.sceneView.playing = true;
-		let panGesture = UIPanGestureRecognizer(target: self, action:("handlePanGesture:"))
+		let panGesture = UIPanGestureRecognizer(target: self, action:(#selector(ViewController.handlePanGesture(_:))))
 		self.view.addGestureRecognizer(panGesture);
-		*/
-		var img:UIImage = Assets.getRock2Image();
+		
+		ImageUtils.initImg(400, h: 400);
 		for i in 0 ... 99{
-			var p:CGPoint = CGPointMake(CGFloat(i), CGFloat(i));
-			img = img.setPixelColorAtPoint(p, r: 255, g: 255, b: 0, a: 255)!;
+			let p:CGPoint = CGPointMake(CGFloat(i), CGFloat(i));
+			ImageUtils.setPixelColorAtPoint2(p, r: 255, g: 255, b: 0, a: 255);
 		}
-		var imgView:UIImageView = UIImageView(image: img);
-		imgView.frame = CGRectMake(200, 200, 100, 100);
+		let imgView:UIImageView = UIImageView(image: ImageUtils.get());
+		imgView.frame = CGRectMake(200, 200, 400, 400);
 		self.view.addSubview(imgView);
 	}
 }
