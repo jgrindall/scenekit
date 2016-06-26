@@ -17,8 +17,8 @@ class Assets{
 		return try! String(contentsOfFile: wavePath);
 	}
 	
-	static func getModifier2() -> String{
-		let wavePath:String = NSBundle.mainBundle().pathForResource("wave2", ofType: "shader")!;
+	static func getSurfModifier() -> String{
+		let wavePath:String = NSBundle.mainBundle().pathForResource("surf", ofType: "shader")!;
 		return try! String(contentsOfFile: wavePath);
 	}
 	
@@ -30,5 +30,11 @@ class Assets{
 	static func getValueForImage(img: UIImage) -> SCNMaterialProperty{
 		return SCNMaterialProperty(contents: img);
 	}
+	
+	static func getRock2() -> SCNMaterialProperty{
+		let imgPath = NSBundle.mainBundle().pathForResource("rock2", ofType: "jpg");
+		return SCNMaterialProperty(contents: UIImage(contentsOfFile: imgPath!)!);
+	}
+
 }
 

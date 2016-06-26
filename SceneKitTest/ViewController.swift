@@ -14,9 +14,10 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	var originNode:SCNNode!;
 	var time0:Float = 0.0;
 	var heightMap:HeightMap!;
+	var geom:SCNGeometry!;
 	
-	var maxI:CInt = 5;
-	var maxJ:CInt = 3;
+	var maxI:CInt = 30;
+	var maxJ:CInt = 50;
 	var size:Float = 1.0;
 	var height:Float = 1.0;
 	
@@ -59,7 +60,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	func addCamera(){
 		self.cameraNode = SCNNode();
 		self.cameraNode.camera = SCNCamera();
-		self.cameraNode.position = SCNVector3(x: 0, y: 0, z: 20);
+		self.cameraNode.position = SCNVector3(x: 0, y: 0, z: 70);
 		self.cameraOrbit = SCNNode();
 		self.cameraOrbit.addChildNode(self.cameraNode);
 		self.scene.rootNode.addChildNode(self.cameraOrbit);
@@ -77,20 +78,20 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	}
 	
 	func addGeom(){
-		let newGeometry:SCNGeometry = GeomUtils.makeTopology(self.maxI, maxJ: self.maxJ, size:self.size, height:self.height);
+		self.geom = GeomUtils.makeTopology(self.maxI, maxJ: self.maxJ, size:self.size, height:self.height);
 		let blueMaterial = SCNMaterial();
 		blueMaterial.diffuse.contents = UIColor.blueColor();
 		blueMaterial.doubleSided = true;
-		newGeometry.materials = [blueMaterial];
-		self.newNode = SCNNode(geometry: newGeometry);
+		self.geom.materials = [blueMaterial];
+		self.newNode = SCNNode(geometry: self.geom);
 		self.newNode.position = SCNVector3Make(-Float(self.maxJ)*self.size/2.0, 2.0, -Float(self.maxI)*self.size/2.0);
 		scene.rootNode.addChildNode(newNode);
-		newGeometry.shaderModifiers = [
-			SCNShaderModifierEntryPointGeometry: Assets.getGeomModifier()
+		self.geom.shaderModifiers = [
+			SCNShaderModifierEntryPointGeometry: Assets.getGeomModifier(),
+			SCNShaderModifierEntryPointSurface: Assets.getSurfModifier()
 		];
-		//SCNShaderModifierEntryPointSurface: modifier2
-		newGeometry.setValue(Assets.getValueForImage(self.heightMap.get()), forKey: "tex");
-		//newGeometry.setValue(mProp2, forKey: "tex2");
+		self.geom.setValue(Assets.getRock2(), forKey: "tex2");
+		self.geom.setValue(self.heightMap.get(), forKey: "tex");
 	}
 	
 	func addLights(){
@@ -118,10 +119,20 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	
 	func addHeights(){
 		self.heightMap = HeightMap(maxI: self.maxI, maxJ: self.maxJ);
-		self.heightMap.setHeightAt(1, j: 1, h: 1);
 		let imgView:UIImageView = UIImageView(image: self.heightMap.get());
 		imgView.contentMode = UIViewContentMode.ScaleAspectFill;
-		imgView.frame = CGRectMake(50, 100, 100, 100);
+		imgView.frame = CGRectMake(50, 100, 25, 15);
+		self.view.addSubview(imgView);
+		NSTimer.scheduledTimerWithTimeInterval(10.0, target: self, selector:(#selector(ViewController.edit)) , userInfo: nil, repeats: true);
+	}
+	
+	func edit(){
+		print("edit");
+		self.heightMap.setHeightAt(0, j: 0, h: 1);
+		self.geom.setValue(self.heightMap.get(), forKey: "tex");
+		let imgView:UIImageView = UIImageView(image: self.heightMap.get());
+		imgView.contentMode = UIViewContentMode.ScaleAspectFill;
+		imgView.frame = CGRectMake(250, 100, 25, 15);
 		self.view.addSubview(imgView);
 	}
 	

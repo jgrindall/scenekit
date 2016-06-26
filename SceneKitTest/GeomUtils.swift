@@ -31,9 +31,6 @@ class GeomUtils {
 		for i in 0 ..< maxI{
 			for j in 0 ..< maxJ{
 				var h:Float = 0.0;
-				if(i == 1 && j == 1){
-					h = 1.0;
-				}
 				a.append(SCNVector3Make(Float(j)*size + eps, h, Float(i)*size + eps));
 				a.append(SCNVector3Make(Float(j + 1)*size - eps, h, Float(i)*size + eps));
 				a.append(SCNVector3Make(Float(j + 1)*size - eps, h, Float(i + 1)*size - eps));
@@ -71,8 +68,6 @@ class GeomUtils {
 				}
 			}
 		}
-		print(a);
-		print(sqrs);
 		return GeomUtils.makeGeometryWithPointsAndSquares(a, sqrs: sqrs);
 	}
 	

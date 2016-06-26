@@ -12,7 +12,7 @@
 		522CD9F01CE8FE810062C004 /* robot.dae in Resources */ = {isa = PBXBuildFile; fileRef = 522CD9EF1CE8FE810062C004 /* robot.dae */; };
 		525F54571D0F47E1008C8396 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 525F54551D0F47E1008C8396 /* LaunchScreen.storyboard */; };
 		525F54591D0F4925008C8396 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525F54581D0F4925008C8396 /* ViewController.swift */; };
-		52DC7CDF1D132CB10075C2D3 /* wave2.shader in Resources */ = {isa = PBXBuildFile; fileRef = 52DC7CDE1D132CB10075C2D3 /* wave2.shader */; };
+		52DC7CDF1D132CB10075C2D3 /* surf.shader in Resources */ = {isa = PBXBuildFile; fileRef = 52DC7CDE1D132CB10075C2D3 /* surf.shader */; };
 		52DC7CE11D134CF30075C2D3 /* blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 52DC7CE01D134CF30075C2D3 /* blue.png */; };
 		52DC7CE31D1358EC0075C2D3 /* rock2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 52DC7CE21D1358EC0075C2D3 /* rock2.jpg */; };
 		52E0C85F1D1E7BBA00B59FC9 /* GeomUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E0C85E1D1E7BBA00B59FC9 /* GeomUtils.swift */; };
@@ -31,7 +31,7 @@
 		522CD9EF1CE8FE810062C004 /* robot.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = robot.dae; sourceTree = "<group>"; };
 		525F54561D0F47E1008C8396 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		525F54581D0F4925008C8396 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		52DC7CDE1D132CB10075C2D3 /* wave2.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wave2.shader; sourceTree = "<group>"; };
+		52DC7CDE1D132CB10075C2D3 /* surf.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = surf.shader; sourceTree = "<group>"; };
 		52DC7CE01D134CF30075C2D3 /* blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue.png; sourceTree = "<group>"; };
 		52DC7CE21D1358EC0075C2D3 /* rock2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = rock2.jpg; sourceTree = "<group>"; };
 		52E0C85E1D1E7BBA00B59FC9 /* GeomUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeomUtils.swift; sourceTree = "<group>"; };
@@ -78,7 +78,7 @@
 			children = (
 				52DC7CE21D1358EC0075C2D3 /* rock2.jpg */,
 				52DC7CE01D134CF30075C2D3 /* blue.png */,
-				52DC7CDE1D132CB10075C2D3 /* wave2.shader */,
+				52DC7CDE1D132CB10075C2D3 /* surf.shader */,
 				52E0C8681D2048A100B59FC9 /* CachedImage.swift */,
 				52E0C8661D20475D00B59FC9 /* HeightMap.swift */,
 				52E0C8621D1EA74100B59FC9 /* ImageUtils.swift */,
@@ -171,7 +171,7 @@
 				525F54571D0F47E1008C8396 /* LaunchScreen.storyboard in Resources */,
 				52FEBC9F1D0419D900B65511 /* geom.shader in Resources */,
 				52DC7CE31D1358EC0075C2D3 /* rock2.jpg in Resources */,
-				52DC7CDF1D132CB10075C2D3 /* wave2.shader in Resources */,
+				52DC7CDF1D132CB10075C2D3 /* surf.shader in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
