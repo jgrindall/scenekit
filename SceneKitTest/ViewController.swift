@@ -16,7 +16,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	var heightMap:HeightMap!;
 	var geom:SCNGeometry!;
 	
-	var maxI:CInt = 30;
+	var maxI:CInt = 50;
 	var maxJ:CInt = 50;
 	var size:Float = 1.0;
 	
@@ -136,6 +136,32 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		self.view.addSubview(imgView);
 		self.geom.setValue(Assets.getValueForImage(self.heightMap.get()), forKey: "tex");
 		SCNTransaction.commit();
+	}
+	
+	func checkImg(){
+		let _cache = CachedImage(w: 200, h: 200);
+		var imgView = UIImageView(image: _cache.get());
+		imgView.frame = CGRectMake(0, 100, 200, 200);
+		self.view.addSubview(imgView);
+		
+		for k in 0 ... 10{
+			for l in 0 ... 10{
+				_cache.setPixelColorAtPoint(k, y: l, r: 255, g: 0, b: 0, a: 255);
+			}
+		}
+		for k in 11 ... 20{
+			for l in 11 ... 20{
+				_cache.setPixelColorAtPoint(k, y: l, r: 0, g: 255, b: 0, a: 255);
+			}
+		}
+		for k in 21 ... 30{
+			for l in 21 ... 30{
+				_cache.setPixelColorAtPoint(k, y: l, r: 0, g: 0, b: 255, a: 255);
+			}
+		}
+		imgView = UIImageView(image: _cache.get());
+		imgView.frame = CGRectMake(300, 100, 200, 200);
+		self.view.addSubview(imgView);
 	}
 	
 	override func viewDidLoad() {
