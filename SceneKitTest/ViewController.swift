@@ -19,7 +19,6 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	var maxI:CInt = 30;
 	var maxJ:CInt = 50;
 	var size:Float = 1.0;
-	var height:Float = 1.0;
 	
 	var slideVel:CGPoint = CGPointZero;
 	
@@ -78,7 +77,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	}
 	
 	func addGeom(){
-		self.geom = GeomUtils.makeTopology(self.maxI, maxJ: self.maxJ, size:self.size, height:self.height);
+		self.geom = GeomUtils.makeTopology(self.maxI, maxJ: self.maxJ, size:self.size);
 		let blueMaterial = SCNMaterial();
 		blueMaterial.diffuse.contents = UIColor.blueColor();
 		blueMaterial.doubleSided = true;
@@ -91,7 +90,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 			SCNShaderModifierEntryPointSurface: Assets.getSurfModifier()
 		];
 		self.geom.setValue(Assets.getRock2(), forKey: "tex2");
-		self.geom.setValue(self.heightMap.get(), forKey: "tex");
+		self.geom.setValue(Assets.getValueForImage(self.heightMap.get()), forKey: "tex");
 	}
 	
 	func addLights(){
@@ -119,21 +118,24 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	
 	func addHeights(){
 		self.heightMap = HeightMap(maxI: self.maxI, maxJ: self.maxJ);
-		let imgView:UIImageView = UIImageView(image: self.heightMap.get());
-		imgView.contentMode = UIViewContentMode.ScaleAspectFill;
-		imgView.frame = CGRectMake(50, 100, 25, 15);
-		self.view.addSubview(imgView);
-		NSTimer.scheduledTimerWithTimeInterval(10.0, target: self, selector:(#selector(ViewController.edit)) , userInfo: nil, repeats: true);
+		NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector:(#selector(ViewController.edit)) , userInfo: nil, repeats: false);
 	}
 	
 	func edit(){
-		print("edit");
 		self.heightMap.setHeightAt(0, j: 0, h: 1);
-		self.geom.setValue(self.heightMap.get(), forKey: "tex");
-		let imgView:UIImageView = UIImageView(image: self.heightMap.get());
-		imgView.contentMode = UIViewContentMode.ScaleAspectFill;
-		imgView.frame = CGRectMake(250, 100, 25, 15);
+		self.heightMap.setHeightAt(1, j: 1, h: 1);
+		self.heightMap.setHeightAt(2, j: 2, h: 1);
+		self.heightMap.setHeightAt(3, j: 3, h: 1);
+		self.heightMap.setHeightAt(4, j: 4, h: 1);
+		self.heightMap.setHeightAt(5, j: 5, h: 1);
+		self.heightMap.setHeightAt(16, j: 16, h: 1);
+		SCNTransaction.begin();
+		let img:UIImage = self.heightMap.get();
+		let imgView = UIImageView(image: img);
+		imgView.frame = CGRectMake(100, 100, 250, 250);
 		self.view.addSubview(imgView);
+		self.geom.setValue(Assets.getValueForImage(self.heightMap.get()), forKey: "tex");
+		SCNTransaction.commit();
 	}
 	
 	override func viewDidLoad() {

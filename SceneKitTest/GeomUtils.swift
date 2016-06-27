@@ -25,7 +25,7 @@ struct Sqr {
 
 class GeomUtils {
 
-	static func makeTopology(maxI:CInt, maxJ:CInt, size:Float, height:Float) -> SCNGeometry{
+	static func makeTopology(maxI:CInt, maxJ:CInt, size:Float) -> SCNGeometry{
 		var a:Array<SCNVector3> = [SCNVector3]();
 		let eps:Float = 0.01;
 		for i in 0 ..< maxI{

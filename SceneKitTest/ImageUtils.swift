@@ -12,7 +12,7 @@ import QuartzCore
 
 class ImageUtils {
 	
-	static func createARGBBitmapContext(inImage: CGImageRef?) -> CGContext {
+	static func createBitmapContext(inImage: CGImageRef?) -> CGContext {
 		var pixelsWide:Int = 1;
 		var pixelsHigh:Int = 1;
 		if((inImage) != nil){
@@ -22,7 +22,7 @@ class ImageUtils {
 		let bitmapBytesPerRow = Int(pixelsWide) * 4;
 		let colorSpace = CGColorSpaceCreateDeviceRGB();
 		let bitmapData:UnsafeMutablePointer<Void> = nil;
-		let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedFirst.rawValue);
+		let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue);
 		let context = CGBitmapContextCreate(bitmapData, pixelsWide, pixelsHigh, 8, bitmapBytesPerRow, colorSpace, bitmapInfo.rawValue);
 		return context!;
 	}

@@ -21,10 +21,10 @@ class CachedImage{
 	var _h:Int;
 	
 	init(w:Int, h:Int){
-		let clr:UIColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0);
+		let clr:UIColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0);
 		self._img = ImageUtils.getImageWithColor(clr, size: CGSizeMake(CGFloat(w), CGFloat(h)));
 		let inImage:CGImageRef = self._img.CGImage!;
-		self._context = ImageUtils.createARGBBitmapContext(inImage);
+		self._context = ImageUtils.createBitmapContext(inImage);
 		self._w = w;
 		self._h = h;
 		self._w4 = 4 * self._w;
@@ -37,7 +37,7 @@ class CachedImage{
 	
 	deinit {
 		self._img = ImageUtils.getImageWithColor(UIColor.clearColor(), size: CGSizeMake(1, 1));
-		self._context = ImageUtils.createARGBBitmapContext(nil);
+		self._context = ImageUtils.createBitmapContext(nil);
 		self._data = nil;
 		self._dataArray = nil;
 	}
@@ -47,14 +47,13 @@ class CachedImage{
 	}
 	
 	func setPixelColorAtPoint(x:Int, y:Int, r: UInt8, g:UInt8, b:UInt8, a:UInt8){
-		let offset = 4*(Int(self._w) * y) + x;
-		print("Set", x, y, r, g, b, a, offset);
+		let offset = 4 * (Int(self._w) * y) + x;
 		self._dataArray[offset]   = r;
 		self._dataArray[offset + 1] = g;
 		self._dataArray[offset + 2] = b;
 		self._dataArray[offset + 3] = a;
 		let colorSpace = CGColorSpaceCreateDeviceRGB();
-		let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedFirst.rawValue);
+		let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue);
 		let bitmapBytesPerRow = self._w4;
 		let context = CGBitmapContextCreate(self._data, self._w, self._h, 8, bitmapBytesPerRow, colorSpace, bitmapInfo.rawValue);
 		let imageRef = CGBitmapContextCreateImage(context);
