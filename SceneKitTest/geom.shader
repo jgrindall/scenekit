@@ -1,5 +1,8 @@
 uniform sampler2D tex;
-float j = floor(_geometry.position.x) / 50.0;
-float i = floor(_geometry.position.z) / 50.0;
-_geometry.position.y += 10.0*texture2D(tex, vec2(i, j)).b;
+uniform float maxI;
+uniform float maxJ;
+uniform float size;
+float j = floor(_geometry.position.x) / maxJ;
+float i = floor(_geometry.position.z) / maxI;
+_geometry.position.y = 20.0*texture2D(tex, vec2(i, j)).r;
 

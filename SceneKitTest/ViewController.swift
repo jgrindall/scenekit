@@ -16,9 +16,9 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	var heightMap:HeightMap!;
 	var geom:SCNGeometry!;
 	
-	var maxI:CInt = 50;
-	var maxJ:CInt = 50;
-	var size:Float = 1.0;
+	var maxI:CInt = 2;
+	var maxJ:CInt = 2;
+	var size:Float = 20.0;
 	
 	var slideVel:CGPoint = CGPointZero;
 	
@@ -83,14 +83,18 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		blueMaterial.doubleSided = true;
 		self.geom.materials = [blueMaterial];
 		self.newNode = SCNNode(geometry: self.geom);
-		self.newNode.position = SCNVector3Make(-Float(self.maxJ)*self.size/2.0, 2.0, -Float(self.maxI)*self.size/2.0);
+		self.newNode.castsShadow = true;
+		//self.newNode.position = SCNVector3Make(-Float(self.maxJ)*self.size/2.0, 2.0, -Float(self.maxI)*self.size/2.0);
 		scene.rootNode.addChildNode(newNode);
+		//self.geom.setValue(Assets.getRock2(), forKey: "tex2");
+		//self.geom.setValue(Assets.getValueForImage(self.heightMap.get()), forKey: "tex");
+		self.geom.setValue(Float(self.maxI), forKey: "maxI");
+		self.geom.setValue(Float(self.maxJ), forKey: "maxJ");
+		self.geom.setValue(Float(self.size), forKey: "size");
+		//SCNShaderModifierEntryPointGeometry: Assets.getGeomModifier(),
 		self.geom.shaderModifiers = [
-			SCNShaderModifierEntryPointGeometry: Assets.getGeomModifier(),
 			SCNShaderModifierEntryPointSurface: Assets.getSurfModifier()
 		];
-		self.geom.setValue(Assets.getRock2(), forKey: "tex2");
-		self.geom.setValue(Assets.getValueForImage(self.heightMap.get()), forKey: "tex");
 	}
 	
 	func addLights(){
@@ -118,24 +122,27 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	
 	func addHeights(){
 		self.heightMap = HeightMap(maxI: self.maxI, maxJ: self.maxJ);
-		NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector:(#selector(ViewController.edit)) , userInfo: nil, repeats: false);
+		//NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector:(#selector(ViewController.edit)) , userInfo: nil, repeats: false);
 	}
 	
 	func edit(){
-		self.heightMap.setHeightAt(0, j: 0, h: 1);
-		self.heightMap.setHeightAt(1, j: 1, h: 1);
-		self.heightMap.setHeightAt(2, j: 2, h: 1);
-		self.heightMap.setHeightAt(3, j: 3, h: 1);
-		self.heightMap.setHeightAt(4, j: 4, h: 1);
-		self.heightMap.setHeightAt(5, j: 5, h: 1);
-		self.heightMap.setHeightAt(16, j: 16, h: 1);
+		for k in 0 ... 20{
+			for l in 0 ... 20{
+				self.heightMap.setHeightAt(k, j: l, h: 1);
+			}
+		}
+		for k in 30 ... 40{
+			for l in 30 ... 40{
+				self.heightMap.setHeightAt(k, j: l, h: 1);
+			}
+		}
 		SCNTransaction.begin();
-		let img:UIImage = self.heightMap.get();
-		let imgView = UIImageView(image: img);
-		imgView.frame = CGRectMake(100, 100, 250, 250);
-		self.view.addSubview(imgView);
 		self.geom.setValue(Assets.getValueForImage(self.heightMap.get()), forKey: "tex");
 		SCNTransaction.commit();
+		let img:UIImage = self.heightMap.get();
+		let imgView = UIImageView(image: img);
+		imgView.frame = CGRectMake(100, 100, 200, 200);
+		self.view.addSubview(imgView);
 	}
 	
 	func checkImg(){

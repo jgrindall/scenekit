@@ -68,6 +68,11 @@ class GeomUtils {
 				}
 			}
 		}
+		print("pts", a);
+		print(a.count);
+		print("---------");
+		print("sqrs", sqrs);
+		print(sqrs.count);
 		return GeomUtils.makeGeometryWithPointsAndSquares(a, sqrs: sqrs);
 	}
 	
