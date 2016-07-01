@@ -87,12 +87,12 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		//self.newNode.position = SCNVector3Make(-Float(self.maxJ)*self.size/2.0, 2.0, -Float(self.maxI)*self.size/2.0);
 		scene.rootNode.addChildNode(newNode);
 		//self.geom.setValue(Assets.getRock2(), forKey: "tex2");
-		//self.geom.setValue(Assets.getValueForImage(self.heightMap.get()), forKey: "tex");
+		self.geom.setValue(Assets.getValueForImage(self.heightMap.get()), forKey: "tex");
 		self.geom.setValue(Float(self.maxI), forKey: "maxI");
 		self.geom.setValue(Float(self.maxJ), forKey: "maxJ");
 		self.geom.setValue(Float(self.size), forKey: "size");
-		//SCNShaderModifierEntryPointGeometry: Assets.getGeomModifier(),
 		self.geom.shaderModifiers = [
+			SCNShaderModifierEntryPointGeometry: Assets.getGeomModifier(),
 			SCNShaderModifierEntryPointSurface: Assets.getSurfModifier()
 		];
 	}
@@ -122,11 +122,13 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	
 	func addHeights(){
 		self.heightMap = HeightMap(maxI: self.maxI, maxJ: self.maxJ);
-		//NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector:(#selector(ViewController.edit)) , userInfo: nil, repeats: false);
+		NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector:(#selector(ViewController.edit)) , userInfo: nil, repeats: false);
 	}
 	
 	func edit(){
-		for k in 0 ... 20{
+		self.heightMap.setHeightAt(0, j: 0, h: 1);
+		self.heightMap.setHeightAt(1, j: 1, h: 1);
+		/*for k in 0 ... 20{
 			for l in 0 ... 20{
 				self.heightMap.setHeightAt(k, j: l, h: 1);
 			}
@@ -136,6 +138,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 				self.heightMap.setHeightAt(k, j: l, h: 1);
 			}
 		}
+		*/
 		SCNTransaction.begin();
 		self.geom.setValue(Assets.getValueForImage(self.heightMap.get()), forKey: "tex");
 		SCNTransaction.commit();
