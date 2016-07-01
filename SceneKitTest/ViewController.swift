@@ -63,6 +63,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		self.cameraOrbit = SCNNode();
 		self.cameraOrbit.addChildNode(self.cameraNode);
 		self.scene.rootNode.addChildNode(self.cameraOrbit);
+		self.scene.rootNode.castsShadow = true;
 	}
 	
 	func addPlane(){
@@ -101,7 +102,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		ambientLight.type = SCNLightTypeAmbient;
 		ambientLight.color = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 		let ambientLightNode = SCNNode()
-		ambientLightNode.light = ambientLight
+		ambientLightNode.light = ambientLight;
+		ambientLight.castsShadow = true;
 		scene.rootNode.addChildNode(ambientLightNode)
 		let light = SCNLight();
 		light.type = SCNLightTypeSpot;
@@ -110,7 +112,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		light.castsShadow = true;
 		self.lightNode = SCNNode()
 		self.lightNode.light = light;
-		self.lightNode.position = SCNVector3Make(2.0, 5.5, 1.5);
+		self.lightNode.position = SCNVector3Make(2.0, 50.5, 1.5);
 		self.scene.rootNode.addChildNode(self.lightNode);
 	}
 	
