@@ -27,7 +27,13 @@ class GeomUtils {
 
 	static func makeTopology(maxI:CInt, maxJ:CInt, size:Float) -> SCNGeometry{
 		var a:Array<SCNVector3> = [SCNVector3]();
-		let eps:Float = 0.01;
+		let eps:Float = size*20/100; // 20 percent
+		for i in 0 ... maxI{
+			for j in 0 ... maxJ{
+				var h:Float = 0.0;
+				a.append(SCNVector3Make(Float(j)*size, h, Float(i)*size));
+			}
+		}
 		for i in 0 ..< maxI{
 			for j in 0 ..< maxJ{
 				var h:Float = 0.0;
@@ -38,34 +44,24 @@ class GeomUtils {
 			}
 		}
 		var sqrs:Array<Sqr> = [Sqr]();
-		func getIndex(i:CInt, j:CInt, k:CInt) -> CInt{
-			return 4*(i * maxJ + j) + k;
+		func getIndex(i:CInt, j:CInt) -> CInt{
+			return (i * (maxJ + 1) + j);
+		}
+		func getInnerIndex(i:CInt, j:CInt, k:CInt) -> CInt{
+			return (maxI + 1) * (maxJ + 1) + 4*(i * maxJ + j) + k;
 		}
 		for i in 0 ..< maxI{
 			for j in 0 ..< maxJ{
-				// add the top
-				sqrs.append(Sqr(a: getIndex(i, j: j, k: 0),		b: getIndex(i, j: j, k: 1),			c: getIndex(i, j: j, k: 2),		d: getIndex(i, j: j, k: 3)));
+				// add the tops
+				sqrs.append(Sqr(a: getInnerIndex(i, j: j, k: 0),		b: getInnerIndex(i, j: j, k: 1),			c: getInnerIndex(i, j: j, k: 2),		d: getInnerIndex(i, j: j, k: 3)));
 			}
 		}
 		for i in 0 ..< maxI{
 			for j in 0 ..< maxJ{
-				// add the sides
-				if(j>=1){
-					//left
-					sqrs.append(Sqr(a: getIndex(i, j: j - 1, k: 2),		b: getIndex(i, j: j - 1, k: 1),			c: getIndex(i, j: j, k: 0),			d: getIndex(i, j: j, k: 3)));
-				}
-				if(i>=1){
-					// bottom
-					sqrs.append(Sqr(a: getIndex(i, j: j, k: 0),			b: getIndex(i - 1, j: j, k: 3),			c: getIndex(i - 1, j: j, k: 2),		d: getIndex(i, j: j, k: 1)));
-				}
-				if(j<maxJ - 1){
-					//right
-					sqrs.append(Sqr(a: getIndex(i, j: j, k: 2),			b: getIndex(i, j: j, k: 1),				c: getIndex(i, j: j + 1, k: 0),		d: getIndex(i, j: j + 1, k: 3)));
-				}
-				if(i<maxI - 1){
-					//top
-					sqrs.append(Sqr(a: getIndex(i + 1, j: j, k: 0),		b: getIndex(i, j: j, k: 3),				c: getIndex(i, j: j, k: 2),			d: getIndex(i + 1, j: j, k: 1)));
-				}
+				sqrs.append(Sqr(a: getIndex(i, j: j),				b: getInnerIndex(i, j: j, k: 0),			c: getInnerIndex(i, j: j, k: 3),			d: getIndex(i + 1, j: j)));
+				sqrs.append(Sqr(a: getIndex(i + 1, j: j),			b: getInnerIndex(i, j: j, k: 3),			c: getInnerIndex(i, j: j, k: 2),			d: getIndex(i + 1, j: j + 1)));
+				sqrs.append(Sqr(a: getIndex(i + 1, j: j + 1),		b: getInnerIndex(i, j: j, k: 2),			c: getInnerIndex(i, j: j, k: 1),			d: getIndex(i, j: j + 1)));
+				sqrs.append(Sqr(a: getIndex(i, j: j + 1),			b: getInnerIndex(i, j: j, k: 1),			c: getInnerIndex(i, j: j, k: 0),			d: getIndex(i, j: j)));
 			}
 		}
 		print("pts", a);

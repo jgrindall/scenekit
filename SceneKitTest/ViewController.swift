@@ -91,6 +91,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		self.geom.setValue(Float(self.maxI), forKey: "maxI");
 		self.geom.setValue(Float(self.maxJ), forKey: "maxJ");
 		self.geom.setValue(Float(self.size), forKey: "size");
+		let eps:Float = 0.2; // 20 percent
+		self.geom.setValue(Float(eps), forKey: "eps");
 		self.geom.shaderModifiers = [
 			SCNShaderModifierEntryPointGeometry: Assets.getGeomModifier(),
 			SCNShaderModifierEntryPointSurface: Assets.getSurfModifier()
