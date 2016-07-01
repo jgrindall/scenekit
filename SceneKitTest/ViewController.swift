@@ -16,9 +16,9 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	var heightMap:HeightMap!;
 	var geom:SCNGeometry!;
 	
-	var maxI:CInt = 2;
-	var maxJ:CInt = 2;
-	var size:Float = 20.0;
+	var maxI:CInt = 20;
+	var maxJ:CInt = 20;
+	var size:Float = 6.0;
 	
 	var slideVel:CGPoint = CGPointZero;
 	
@@ -84,15 +84,12 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		self.geom.materials = [blueMaterial];
 		self.newNode = SCNNode(geometry: self.geom);
 		self.newNode.castsShadow = true;
-		//self.newNode.position = SCNVector3Make(-Float(self.maxJ)*self.size/2.0, 2.0, -Float(self.maxI)*self.size/2.0);
 		scene.rootNode.addChildNode(newNode);
-		//self.geom.setValue(Assets.getRock2(), forKey: "tex2");
 		self.geom.setValue(Assets.getValueForImage(self.heightMap.get()), forKey: "tex");
 		self.geom.setValue(Float(self.maxI), forKey: "maxI");
 		self.geom.setValue(Float(self.maxJ), forKey: "maxJ");
 		self.geom.setValue(Float(self.size), forKey: "size");
-		let eps:Float = 0.2; // 20 percent
-		self.geom.setValue(Float(eps), forKey: "eps");
+		self.geom.setValue(Float(GeomUtils.Constants.EPSILON), forKey: "eps");
 		self.geom.shaderModifiers = [
 			SCNShaderModifierEntryPointGeometry: Assets.getGeomModifier(),
 			SCNShaderModifierEntryPointSurface: Assets.getSurfModifier()
@@ -129,6 +126,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	
 	func edit(){
 		self.heightMap.setHeightAt(0, j: 0, h: 1);
+		self.heightMap.setHeightAt(0, j: 1, h: 1);
+		self.heightMap.setHeightAt(1, j: 0, h: 1);
 		self.heightMap.setHeightAt(1, j: 1, h: 1);
 		/*for k in 0 ... 20{
 			for l in 0 ... 20{
@@ -144,36 +143,6 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		SCNTransaction.begin();
 		self.geom.setValue(Assets.getValueForImage(self.heightMap.get()), forKey: "tex");
 		SCNTransaction.commit();
-		let img:UIImage = self.heightMap.get();
-		let imgView = UIImageView(image: img);
-		imgView.frame = CGRectMake(100, 100, 200, 200);
-		self.view.addSubview(imgView);
-	}
-	
-	func checkImg(){
-		let _cache = CachedImage(w: 200, h: 200);
-		var imgView = UIImageView(image: _cache.get());
-		imgView.frame = CGRectMake(0, 100, 200, 200);
-		self.view.addSubview(imgView);
-		
-		for k in 0 ... 10{
-			for l in 0 ... 10{
-				_cache.setPixelColorAtPoint(k, y: l, r: 255, g: 0, b: 0, a: 255);
-			}
-		}
-		for k in 11 ... 20{
-			for l in 11 ... 20{
-				_cache.setPixelColorAtPoint(k, y: l, r: 0, g: 255, b: 0, a: 255);
-			}
-		}
-		for k in 21 ... 30{
-			for l in 21 ... 30{
-				_cache.setPixelColorAtPoint(k, y: l, r: 0, g: 0, b: 255, a: 255);
-			}
-		}
-		imgView = UIImageView(image: _cache.get());
-		imgView.frame = CGRectMake(300, 100, 200, 200);
-		self.view.addSubview(imgView);
 	}
 	
 	override func viewDidLoad() {

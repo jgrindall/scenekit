@@ -24,10 +24,14 @@ struct Sqr {
 }
 
 class GeomUtils {
-
+	
+	struct Constants {
+		static let EPSILON:Float = 0.1
+	}
+	
 	static func makeTopology(maxI:CInt, maxJ:CInt, size:Float) -> SCNGeometry{
 		var a:Array<SCNVector3> = [SCNVector3]();
-		let eps:Float = size*20/100; // 20 percent
+		let eps:Float = size * GeomUtils.Constants.EPSILON;
 		for i in 0 ... maxI{
 			for j in 0 ... maxJ{
 				var h:Float = 0.0;
@@ -58,17 +62,13 @@ class GeomUtils {
 		}
 		for i in 0 ..< maxI{
 			for j in 0 ..< maxJ{
+				// and the sides
 				sqrs.append(Sqr(a: getIndex(i, j: j),				b: getInnerIndex(i, j: j, k: 0),			c: getInnerIndex(i, j: j, k: 3),			d: getIndex(i + 1, j: j)));
 				sqrs.append(Sqr(a: getIndex(i + 1, j: j),			b: getInnerIndex(i, j: j, k: 3),			c: getInnerIndex(i, j: j, k: 2),			d: getIndex(i + 1, j: j + 1)));
 				sqrs.append(Sqr(a: getIndex(i + 1, j: j + 1),		b: getInnerIndex(i, j: j, k: 2),			c: getInnerIndex(i, j: j, k: 1),			d: getIndex(i, j: j + 1)));
 				sqrs.append(Sqr(a: getIndex(i, j: j + 1),			b: getInnerIndex(i, j: j, k: 1),			c: getInnerIndex(i, j: j, k: 0),			d: getIndex(i, j: j)));
 			}
 		}
-		print("pts", a);
-		print(a.count);
-		print("---------");
-		print("sqrs", sqrs);
-		print(sqrs.count);
 		return GeomUtils.makeGeometryWithPointsAndSquares(a, sqrs: sqrs);
 	}
 	
