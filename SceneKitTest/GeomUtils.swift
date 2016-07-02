@@ -26,7 +26,7 @@ struct Sqr {
 class GeomUtils {
 	
 	struct Constants {
-		static let EPSILON:Float = 0.1
+		static let EPSILON:Float = 0.02;
 	}
 	
 	static func makeTopology(maxI:CInt, maxJ:CInt, size:Float) -> SCNGeometry{

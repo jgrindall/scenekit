@@ -1,8 +1,9 @@
-uniform sampler2D tex;
+uniform sampler2D heightMapTexture;
 uniform float maxI;
 uniform float maxJ;
 uniform float size;
-uniform float eps;   // 0.2
+uniform float eps;
+
 float j = _geometry.position.x / size;	// from 0 to maxJ
 float i = _geometry.position.z / size;	// from 0 to maxI
 
@@ -16,6 +17,6 @@ float dx = j - rnd_j;
 float dy = i - rnd_i;
 
 if(dx > eps/2.0 && dx < 1.0 - eps/2.0 && dy > eps/2.0 && dy < 1.0 - eps/2.0){
-	_geometry.position.y += 20.0 * texture2D(tex, vec2(pix_j, pix_i)).r;
+	_geometry.position.y += 20.0 * texture2D(heightMapTexture, vec2(pix_j, pix_i)).r;
 }
 

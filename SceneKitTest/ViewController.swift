@@ -9,12 +9,10 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	var scene:SCNScene!;
 	var cameraNode:SCNNode!;
 	var cameraOrbit:SCNNode!;
-	var newNode:SCNNode!;
 	var lightNode:SCNNode!;
 	var originNode:SCNNode!;
 	var time0:Float = 0.0;
-	var heightMap:HeightMap!;
-	var geom:SCNGeometry!;
+	var terrain:Terrain!;
 	
 	var maxI:CInt = 20;
 	var maxJ:CInt = 20;
@@ -77,24 +75,9 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		scene.rootNode.addChildNode(planeNode);
 	}
 	
-	func addGeom(){
-		self.geom = GeomUtils.makeTopology(self.maxI, maxJ: self.maxJ, size:self.size);
-		let blueMaterial = SCNMaterial();
-		blueMaterial.diffuse.contents = UIColor.blueColor();
-		blueMaterial.doubleSided = true;
-		self.geom.materials = [blueMaterial];
-		self.newNode = SCNNode(geometry: self.geom);
-		self.newNode.castsShadow = true;
-		scene.rootNode.addChildNode(newNode);
-		self.geom.setValue(Assets.getValueForImage(self.heightMap.get()), forKey: "tex");
-		self.geom.setValue(Float(self.maxI), forKey: "maxI");
-		self.geom.setValue(Float(self.maxJ), forKey: "maxJ");
-		self.geom.setValue(Float(self.size), forKey: "size");
-		self.geom.setValue(Float(GeomUtils.Constants.EPSILON), forKey: "eps");
-		self.geom.shaderModifiers = [
-			SCNShaderModifierEntryPointGeometry: Assets.getGeomModifier(),
-			SCNShaderModifierEntryPointSurface: Assets.getSurfModifier()
-		];
+	func addTerrain(){
+		self.terrain = Terrain(maxI: self.maxI, maxJ: self.maxJ, size: self.size);
+		scene.rootNode.addChildNode(self.terrain.getNode());
 	}
 	
 	func addLights(){
@@ -121,30 +104,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		self.view.addGestureRecognizer(panGesture);
 	}
 	
-	func addHeights(){
-		self.heightMap = HeightMap(maxI: self.maxI, maxJ: self.maxJ);
-		NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector:(#selector(ViewController.edit)) , userInfo: nil, repeats: false);
-	}
-	
 	func edit(){
-		self.heightMap.setHeightAt(0, j: 0, h: 1);
-		self.heightMap.setHeightAt(0, j: 1, h: 1);
-		self.heightMap.setHeightAt(1, j: 0, h: 1);
-		self.heightMap.setHeightAt(1, j: 1, h: 1);
-		/*for k in 0 ... 20{
-			for l in 0 ... 20{
-				self.heightMap.setHeightAt(k, j: l, h: 1);
-			}
-		}
-		for k in 30 ... 40{
-			for l in 30 ... 40{
-				self.heightMap.setHeightAt(k, j: l, h: 1);
-			}
-		}
-		*/
-		SCNTransaction.begin();
-		self.geom.setValue(Assets.getValueForImage(self.heightMap.get()), forKey: "tex");
-		SCNTransaction.commit();
+		self.terrain.edit();
 	}
 	
 	override func viewDidLoad() {
@@ -152,11 +113,11 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		self.addScene();
 		self.addLights();
 		self.addPlane();
-		self.addHeights();
-		self.addGeom();
+		self.addTerrain();
 		self.addCamera();
 		self.addGestures();
 		self.sceneView.playing = true;
+		NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector:(#selector(ViewController.edit)) , userInfo: nil, repeats: false);
 	}
 }
 
