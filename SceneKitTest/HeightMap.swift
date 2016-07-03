@@ -11,10 +11,10 @@ import UIKit
 
 class HeightMap{
 	
-	var _maxI:CInt;
-	var _maxJ:CInt;
-	var _data : Array<Int>;
-	var _cache: CachedImage;
+	private var _maxI:CInt;
+	private var _maxJ:CInt;
+	private var _data : Array<Int>;
+	private var _cache: CachedImage;
 	
 	init(maxI:CInt, maxJ:CInt){
 		self._maxI = maxI;

@@ -11,47 +11,23 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	var cameraOrbit:SCNNode!;
 	var lightNode:SCNNode!;
 	var originNode:SCNNode!;
-	var time0:Float = 0.0;
 	var terrain:Terrain!;
+	var gestureHandler:GestureHandler!;
 	
 	var maxI:CInt = 20;
 	var maxJ:CInt = 20;
 	var size:Float = 6.0;
 	
-	var slideVel:CGPoint = CGPointZero;
-	
-	func renderer(renderer: SCNSceneRenderer, updateAtTime time: NSTimeInterval) {
-		let old:SCNMatrix4 = self.cameraNode.transform;
-		let rX:SCNMatrix4 = SCNMatrix4MakeRotation(-Float(self.slideVel.x)/10000.0, 0, 1, 0);
-		let rY:SCNMatrix4 = SCNMatrix4MakeRotation(-Float(self.slideVel.y)/10000.0, 1, 0, 0);
-		let netRot:SCNMatrix4 = SCNMatrix4Mult(rX, rY);
-		self.cameraNode.transform = SCNMatrix4Mult(old, netRot);
-		if (self.slideVel.x > -0.1 && self.slideVel.x < 0.1) {
-			self.slideVel.x = 0;
-		}
-		else {
-			self.slideVel.x += (self.slideVel.x > 0) ? -1 : 1;
-		}
-		
-		if (self.slideVel.y > -0.1 && self.slideVel.y < 0.1) {
-			self.slideVel.y = 0;
-		}
-		else {
-			self.slideVel.y += (self.slideVel.y > 0) ? -1 : 1;
-		}
-	}
-	
-	func handlePanGesture(panGesture: UIPanGestureRecognizer){
-		self.slideVel = panGesture.velocityInView(self.view);
-	};
-	
 	func addScene(){
 		self.sceneView = SCNView(frame: self.view.frame);
-		self.sceneView.delegate = self;
 		self.view.addSubview(self.sceneView);
 		self.sceneView.showsStatistics = true;
 		self.scene = SCNScene();
 		self.sceneView.scene = scene;
+	}
+	
+	func renderer(renderer: SCNSceneRenderer, updateAtTime time: NSTimeInterval) {
+		
 	}
 	
 	func addCamera(){
@@ -100,8 +76,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	}
 	
 	func addGestures(){
-		let panGesture = UIPanGestureRecognizer(target: self, action:(#selector(ViewController.handlePanGesture(_:))))
-		self.view.addGestureRecognizer(panGesture);
+		self.gestureHandler = GestureHandler(target: self, camera: self.cameraNode);
+		self.sceneView.delegate = self.gestureHandler;
 	}
 	
 	func edit(){

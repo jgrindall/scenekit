@@ -12,17 +12,16 @@ import QuartzCore
 
 class CachedImage{
 	
-	var _img:UIImage;
-	var _context: CGContext;
-	var _data:UnsafeMutablePointer<Void>;
-	var _dataArray:UnsafeMutablePointer<UInt8>;
-	var _w:Int;
-	var _w4:Int;
-	var _h:Int;
-	static var _black = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0);
+	private var _img:UIImage;
+	private var _context: CGContext;
+	private var _data:UnsafeMutablePointer<Void>;
+	private var _dataArray:UnsafeMutablePointer<UInt8>;
+	private var _w:Int;
+	private var _w4:Int;
+	private var _h:Int;
+	private static var _black = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0);
 	
 	init(w:Int, h:Int){
-		print("init", w, h);
 		let clr:UIColor = CachedImage._black;
 		self._img = ImageUtils.getImageWithColor(clr, size: CGSizeMake(CGFloat(w), CGFloat(h)));
 		let inImage:CGImageRef = self._img.CGImage!;
@@ -38,7 +37,6 @@ class CachedImage{
 	}
 	
 	deinit {
-		print("deinit");
 		let clr:UIColor = CachedImage._black;
 		self._img = ImageUtils.getImageWithColor(clr, size: CGSizeMake(1, 1));
 		self._context = ImageUtils.createBitmapContext(nil);

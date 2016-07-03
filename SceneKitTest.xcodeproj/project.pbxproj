@@ -11,6 +11,7 @@
 		525F54571D0F47E1008C8396 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 525F54551D0F47E1008C8396 /* LaunchScreen.storyboard */; };
 		525F54591D0F4925008C8396 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525F54581D0F4925008C8396 /* ViewController.swift */; };
 		52861D581D27F4BC002441B7 /* Terrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52861D571D27F4BC002441B7 /* Terrain.swift */; };
+		52861D5A1D27F80A002441B7 /* GestureHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52861D591D27F80A002441B7 /* GestureHandler.swift */; };
 		52DC7CDF1D132CB10075C2D3 /* surf.shader in Resources */ = {isa = PBXBuildFile; fileRef = 52DC7CDE1D132CB10075C2D3 /* surf.shader */; };
 		52E0C85F1D1E7BBA00B59FC9 /* GeomUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E0C85E1D1E7BBA00B59FC9 /* GeomUtils.swift */; };
 		52E0C8611D1E95ED00B59FC9 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E0C8601D1E95ED00B59FC9 /* Assets.swift */; };
@@ -27,6 +28,7 @@
 		525F54561D0F47E1008C8396 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		525F54581D0F4925008C8396 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		52861D571D27F4BC002441B7 /* Terrain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Terrain.swift; sourceTree = "<group>"; };
+		52861D591D27F80A002441B7 /* GestureHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GestureHandler.swift; sourceTree = "<group>"; };
 		52DC7CDE1D132CB10075C2D3 /* surf.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = surf.shader; sourceTree = "<group>"; };
 		52E0C85E1D1E7BBA00B59FC9 /* GeomUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeomUtils.swift; sourceTree = "<group>"; };
 		52E0C8601D1E95ED00B59FC9 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 		80EE09BC196A4C4A00B77AB0 /* SceneKitTest */ = {
 			isa = PBXGroup;
 			children = (
+				52861D591D27F80A002441B7 /* GestureHandler.swift */,
 				52861D571D27F4BC002441B7 /* Terrain.swift */,
 				52DC7CDE1D132CB10075C2D3 /* surf.shader */,
 				52E0C8681D2048A100B59FC9 /* CachedImage.swift */,
@@ -177,6 +180,7 @@
 				52861D581D27F4BC002441B7 /* Terrain.swift in Sources */,
 				52E0C8631D1EA74100B59FC9 /* ImageUtils.swift in Sources */,
 				80EE09C0196A4C4A00B77AB0 /* AppDelegate.swift in Sources */,
+				52861D5A1D27F80A002441B7 /* GestureHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
