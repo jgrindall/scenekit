@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class HeightMap{
+class ColorMap{
 	
 	private var _cache: CachedImage;
 	
@@ -17,9 +17,8 @@ class HeightMap{
 		self._cache = CachedImage(w: Int(maxJ), h: Int(maxI));
 	}
 	
-	func setHeightAt(i:Int, j:Int, h:UInt8){
-		// h from 0 to 255
-		self._cache.setPixelColorAtPoint(i, y: j, r: h, g: h, b: h, a: h);
+	func setColorAt(i:Int, j:Int, colorIndex:UInt8){
+		self._cache.setPixelColorAtPoint(i, y: j, r: colorIndex, g: colorIndex, b: colorIndex, a: colorIndex);
 	}
 	
 	func get() -> UIImage{

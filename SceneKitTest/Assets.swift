@@ -22,8 +22,13 @@ class Assets{
 		return try! String(contentsOfFile: wavePath);
 	}
 	
-	static func getBlue() -> SCNMaterialProperty{
-		let imgPath = NSBundle.mainBundle().pathForResource("blue", ofType: "jpg");
+	static func getStone() -> SCNMaterialProperty{
+		let imgPath = NSBundle.mainBundle().pathForResource("stone", ofType: "png");
+		return SCNMaterialProperty(contents: UIImage(contentsOfFile: imgPath!)!);
+	}
+	
+	static func getGrass() -> SCNMaterialProperty{
+		let imgPath = NSBundle.mainBundle().pathForResource("grass", ofType: "png");
 		return SCNMaterialProperty(contents: UIImage(contentsOfFile: imgPath!)!);
 	}
 	

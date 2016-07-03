@@ -28,7 +28,6 @@ class ImageUtils {
 	}
 	
 	static func getImageWithColor(color: UIColor, size: CGSize) -> UIImage {
-		print("init clr", color);
 		UIGraphicsBeginImageContextWithOptions(size, false, 0);
 		color.setFill();
 		UIRectFill(CGRectMake(0, 0, size.width, size.height));

@@ -25,11 +25,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		self.scene = SCNScene();
 		self.sceneView.scene = scene;
 	}
-	
-	func renderer(renderer: SCNSceneRenderer, updateAtTime time: NSTimeInterval) {
-		
-	}
-	
+
 	func addCamera(){
 		self.cameraNode = SCNNode();
 		self.cameraNode.camera = SCNCamera();
