@@ -12,14 +12,23 @@ import SceneKit
 
 class Assets{
 	
+	static func getShared() -> String{
+		let path:String = NSBundle.mainBundle().pathForResource("shared", ofType: "txt")!;
+		return try! String(contentsOfFile: path);
+	}
+	
 	static func getGeomModifier() -> String{
-		let wavePath:String = NSBundle.mainBundle().pathForResource("geom", ofType: "shader")!;
-		return try! String(contentsOfFile: wavePath);
+		let path:String = NSBundle.mainBundle().pathForResource("geom", ofType: "shader")!;
+		let s:String = try! String(contentsOfFile: path);
+		let newS = s.stringByReplacingOccurrencesOfString("%shared%", withString: Assets.getShared());
+		return newS;
 	}
 	
 	static func getSurfModifier() -> String{
-		let wavePath:String = NSBundle.mainBundle().pathForResource("surf", ofType: "shader")!;
-		return try! String(contentsOfFile: wavePath);
+		let path:String = NSBundle.mainBundle().pathForResource("surf", ofType: "shader")!;
+		let s:String = try! String(contentsOfFile: path);
+		let newS = s.stringByReplacingOccurrencesOfString("%shared%", withString: Assets.getShared());
+		return newS;
 	}
 	
 	static func getStone() -> SCNMaterialProperty{

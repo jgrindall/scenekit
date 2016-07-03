@@ -1,0 +1,11 @@
+float j = pos.x / size;			// from 0 to maxJ
+float i = pos.z / size;			// from 0 to maxI
+
+float rnd_j = floor(j);
+float rnd_i = floor(i);
+
+float pix_j = (rnd_j + 0.5) / maxJ;
+float pix_i = (rnd_i + 0.5) / maxI;
+
+float dx = j - rnd_j;
+float dy = i - rnd_i;

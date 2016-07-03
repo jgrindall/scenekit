@@ -6,24 +6,12 @@ uniform float maxJ;
 uniform float size;
 uniform float eps;
 
-vec2 sincos(float t) { return vec2(sin(t), cos(t)); }
-
 #pragma body
 
-vec4 pos = vec4(_surface.position, 1.0);
-vec4 pos2 = u_inverseViewTransform * pos;
+vec4 surfacePos = vec4(_surface.position, 1.0);
+vec4 pos = u_inverseViewTransform * surfacePos;
 
-float j = pos2.x / size;	// from 0 to maxJ
-float i = pos2.z / size;	// from 0 to maxI
-
-float rnd_j = floor(j);
-float rnd_i = floor(i);
-
-float pix_j = (rnd_j + 0.5) / maxJ;
-float pix_i = (rnd_i + 0.5) / maxI;
-
-float dx = j - rnd_j;
-float dy = i - rnd_i;
+%shared%
 
 float colorIndex;
 
