@@ -5,6 +5,11 @@ uniform float maxI;
 uniform float maxJ;
 uniform float size;
 uniform float eps;
+
+vec2 sincos(float t) { return vec2(sin(t), cos(t)); }
+
+#pragma body
+
 vec4 pos = vec4(_surface.position, 1.0);
 vec4 pos2 = u_inverseViewTransform * pos;
 
