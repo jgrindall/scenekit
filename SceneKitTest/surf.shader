@@ -25,9 +25,14 @@ float pix_i = (rnd_i + 0.5) / maxI;
 float dx = j - rnd_j;
 float dy = i - rnd_i;
 
+float colorIndex;
+
 if(dx > eps && dx < 1.0 - eps && dy > eps && dy < 1.0 - eps){
-    _surface.diffuse = texture2D(texture1, vec2(dx, dy));
-    if(mod(rnd_j + rnd_i, 2.0) < 0.5){
-        _surface.diffuse = texture2D(texture0, vec2(dx, dy));
+    colorIndex = texture2D(colorMapTexture, vec2(pix_j, pix_i)).r;
+	if(colorIndex < 0.5){
+		_surface.diffuse = texture2D(texture0, vec2(dx, dy));
+	}
+	else{
+		_surface.diffuse = texture2D(texture1, vec2(dx, dy));
 	}
 }

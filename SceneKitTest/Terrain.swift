@@ -64,8 +64,10 @@ class Terrain{
 		self.heightMap.setHeightAt(0, j: 1, h: 100);
 		self.heightMap.setHeightAt(1, j: 0, h: 200);
 		self.heightMap.setHeightAt(1, j: 1, h: 80);
+		self.colorMap.setColorAt(1, j: 1, colorIndex: 255);
 		SCNTransaction.begin();
 		self.geom.setValue(Assets.getValueForImage(self.heightMap.get()), forKey: "heightMapTexture");
+		self.geom.setValue(Assets.getValueForImage(self.colorMap.get()), forKey: "colorMapTexture");
 		SCNTransaction.commit();
 	}
 	
