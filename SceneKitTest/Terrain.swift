@@ -33,7 +33,6 @@ class Terrain{
 		self.geom = GeomUtils.makeTopology(self.maxI, maxJ: self.maxJ, size:self.size);
 		let blueMaterial = SCNMaterial();
 		blueMaterial.diffuse.contents = UIColor.blueColor();
-		//blueMaterial.doubleSided = true;
 		self.geom.materials = [blueMaterial];
 		self.node = SCNNode(geometry: self.geom);
 		self.node.castsShadow = true;
@@ -68,11 +67,11 @@ class Terrain{
 	}
 	
 	func edit(){
-		self.heightMap.setHeightAt(0, j: 0, h: 50);
-		self.heightMap.setHeightAt(0, j: 1, h: 100);
-		self.heightMap.setHeightAt(1, j: 0, h: 200);
-		self.heightMap.setHeightAt(1, j: 1, h: 80);
-		self.colorMap.setColorAt(1, j: 1, colorIndex: 255);
+		let i:Int = Int(arc4random_uniform(10));
+		let j:Int = Int(arc4random_uniform(10));
+		let h:UInt8 = UInt8(arc4random_uniform(255));
+		self.heightMap.setHeightAt(i, j: j, h: h);
+		self.colorMap.setColorAt(i, j: j, colorIndex: h);
 		SCNTransaction.begin();
 		self.updateColor();
 		self.updateHeight();

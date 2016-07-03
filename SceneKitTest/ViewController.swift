@@ -89,7 +89,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		self.addCamera();
 		self.addGestures();
 		self.sceneView.playing = true;
-		NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector:(#selector(ViewController.edit)) , userInfo: nil, repeats: false);
+		NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector:(#selector(ViewController.edit)) , userInfo: nil, repeats: true);
 	}
 }
 
