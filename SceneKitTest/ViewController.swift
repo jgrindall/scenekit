@@ -82,8 +82,6 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad();
-		print(Assets.getGeomModifier());
-		
 		self.addScene();
 		self.addLights();
 		self.addPlane();

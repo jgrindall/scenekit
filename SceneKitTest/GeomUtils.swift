@@ -57,16 +57,16 @@ class GeomUtils {
 		for i in 0 ..< maxI{
 			for j in 0 ..< maxJ{
 				// add the tops
-				sqrs.append(Sqr(a: getInnerIndex(i, j: j, k: 0),		b: getInnerIndex(i, j: j, k: 1),			c: getInnerIndex(i, j: j, k: 2),		d: getInnerIndex(i, j: j, k: 3)));
+				sqrs.append(Sqr(a: getInnerIndex(i, j: j, k: 3),		b: getInnerIndex(i, j: j, k: 2),			c: getInnerIndex(i, j: j, k: 1),		d: getInnerIndex(i, j: j, k: 0)));
 			}
 		}
 		for i in 0 ..< maxI{
 			for j in 0 ..< maxJ{
 				// and the sides
-				sqrs.append(Sqr(a: getIndex(i, j: j),				b: getInnerIndex(i, j: j, k: 0),			c: getInnerIndex(i, j: j, k: 3),			d: getIndex(i + 1, j: j)));
-				sqrs.append(Sqr(a: getIndex(i + 1, j: j),			b: getInnerIndex(i, j: j, k: 3),			c: getInnerIndex(i, j: j, k: 2),			d: getIndex(i + 1, j: j + 1)));
-				sqrs.append(Sqr(a: getIndex(i + 1, j: j + 1),		b: getInnerIndex(i, j: j, k: 2),			c: getInnerIndex(i, j: j, k: 1),			d: getIndex(i, j: j + 1)));
-				sqrs.append(Sqr(a: getIndex(i, j: j + 1),			b: getInnerIndex(i, j: j, k: 1),			c: getInnerIndex(i, j: j, k: 0),			d: getIndex(i, j: j)));
+				sqrs.append(Sqr(a: getIndex(i + 1, j: j),				b: getInnerIndex(i, j: j, k: 3),			c: getInnerIndex(i, j: j, k: 0),			d: getIndex(i, j: j)));
+				sqrs.append(Sqr(a: getIndex(i + 1, j: j + 1),			b: getInnerIndex(i, j: j, k: 2),			c: getInnerIndex(i, j: j, k: 3),			d: getIndex(i + 1, j: j)));
+				sqrs.append(Sqr(a: getIndex(i, j: j + 1),				b: getInnerIndex(i, j: j, k: 1),			c: getInnerIndex(i, j: j, k: 2),			d: getIndex(i + 1, j: j + 1)));
+				sqrs.append(Sqr(a: getIndex(i, j: j),					b: getInnerIndex(i, j: j, k: 0),			c: getInnerIndex(i, j: j, k: 1),			d: getIndex(i, j: j + 1)));
 			}
 		}
 		return GeomUtils.makeGeometryWithPointsAndSquares(a, sqrs: sqrs);

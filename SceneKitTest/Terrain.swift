@@ -33,12 +33,12 @@ class Terrain{
 		self.geom = GeomUtils.makeTopology(self.maxI, maxJ: self.maxJ, size:self.size);
 		let blueMaterial = SCNMaterial();
 		blueMaterial.diffuse.contents = UIColor.blueColor();
-		blueMaterial.doubleSided = true;
+		//blueMaterial.doubleSided = true;
 		self.geom.materials = [blueMaterial];
 		self.node = SCNNode(geometry: self.geom);
 		self.node.castsShadow = true;
-		self.geom.setValue(Assets.getValueForImage(self.heightMap.get()), forKey: "heightMapTexture");
-		self.geom.setValue(Assets.getValueForImage(self.colorMap.get()), forKey: "colorMapTexture");
+		self.updateColor();
+		self.updateHeight();
 		self.geom.setValue(Assets.getGrass(), forKey: "texture0");
 		self.geom.setValue(Assets.getStone(), forKey: "texture1");
 		self.geom.setValue(Float(self.maxI), forKey: "maxI");
@@ -49,6 +49,14 @@ class Terrain{
 			SCNShaderModifierEntryPointGeometry: Assets.getGeomModifier(),
 			SCNShaderModifierEntryPointSurface: Assets.getSurfModifier()
 		];
+	}
+	
+	private func updateHeight(){
+		self.geom.setValue(Assets.getValueForImage(self.heightMap.get()), forKey: "heightMapTexture");
+	}
+	
+	private func updateColor(){
+		self.geom.setValue(Assets.getValueForImage(self.colorMap.get()), forKey: "colorMapTexture");
 	}
 	
 	private func initHeightMap(){
@@ -66,8 +74,8 @@ class Terrain{
 		self.heightMap.setHeightAt(1, j: 1, h: 80);
 		self.colorMap.setColorAt(1, j: 1, colorIndex: 255);
 		SCNTransaction.begin();
-		self.geom.setValue(Assets.getValueForImage(self.heightMap.get()), forKey: "heightMapTexture");
-		self.geom.setValue(Assets.getValueForImage(self.colorMap.get()), forKey: "colorMapTexture");
+		self.updateColor();
+		self.updateHeight();
 		SCNTransaction.commit();
 	}
 	
