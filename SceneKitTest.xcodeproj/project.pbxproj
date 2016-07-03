@@ -59,6 +59,44 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		52861D611D29ADC7002441B7 /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				52DC7CDE1D132CB10075C2D3 /* surf.shader */,
+				52FEBC9E1D0419D900B65511 /* geom.shader */,
+			);
+			name = shaders;
+			sourceTree = "<group>";
+		};
+		52861D621D29ADD3002441B7 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				52E0C8601D1E95ED00B59FC9 /* Assets.swift */,
+				52E0C8621D1EA74100B59FC9 /* ImageUtils.swift */,
+				52E0C85E1D1E7BBA00B59FC9 /* GeomUtils.swift */,
+			);
+			name = utils;
+			sourceTree = "<group>";
+		};
+		52861D631D29ADE1002441B7 /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				522CD9EF1CE8FE810062C004 /* robot.dae */,
+				52861D5D1D29A8BA002441B7 /* grass.png */,
+				52861D5E1D29A8BA002441B7 /* stone.png */,
+			);
+			name = assets;
+			sourceTree = "<group>";
+		};
+		52861D641D29ADEA002441B7 /* maps */ = {
+			isa = PBXGroup;
+			children = (
+				52861D5B1D29A40D002441B7 /* ColorMap.swift */,
+				52E0C8661D20475D00B59FC9 /* HeightMap.swift */,
+			);
+			name = maps;
+			sourceTree = "<group>";
+		};
 		80EE09B1196A4C4A00B77AB0 = {
 			isa = PBXGroup;
 			children = (
@@ -78,20 +116,14 @@
 		80EE09BC196A4C4A00B77AB0 /* SceneKitTest */ = {
 			isa = PBXGroup;
 			children = (
-				52861D5D1D29A8BA002441B7 /* grass.png */,
-				52861D5E1D29A8BA002441B7 /* stone.png */,
-				52861D5B1D29A40D002441B7 /* ColorMap.swift */,
+				52861D631D29ADE1002441B7 /* assets */,
+				52861D641D29ADEA002441B7 /* maps */,
 				52861D591D27F80A002441B7 /* GestureHandler.swift */,
 				52861D571D27F4BC002441B7 /* Terrain.swift */,
-				52DC7CDE1D132CB10075C2D3 /* surf.shader */,
+				52861D611D29ADC7002441B7 /* shaders */,
 				52E0C8681D2048A100B59FC9 /* CachedImage.swift */,
-				52E0C8661D20475D00B59FC9 /* HeightMap.swift */,
-				52E0C8621D1EA74100B59FC9 /* ImageUtils.swift */,
+				52861D621D29ADD3002441B7 /* utils */,
 				525F54581D0F4925008C8396 /* ViewController.swift */,
-				52E0C8601D1E95ED00B59FC9 /* Assets.swift */,
-				52E0C85E1D1E7BBA00B59FC9 /* GeomUtils.swift */,
-				522CD9EF1CE8FE810062C004 /* robot.dae */,
-				52FEBC9E1D0419D900B65511 /* geom.shader */,
 				80EE09BF196A4C4A00B77AB0 /* AppDelegate.swift */,
 				80EE09C6196A4C4A00B77AB0 /* Images.xcassets */,
 				80EE09BD196A4C4A00B77AB0 /* Supporting Files */,
