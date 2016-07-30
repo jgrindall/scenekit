@@ -11,12 +11,35 @@ import SceneKit
 import QuartzCore
 
 struct Tri {
+	init(a:CInt, b:CInt, c:CInt){
+		self.a = a;
+		self.b = b;
+		self.c = c;
+	}
+	init(a:Int, b:Int, c:Int){
+		self.a = CInt(a);
+		self.b = CInt(b);
+		self.c = CInt(c);
+	}
+
 	var a: CInt;
 	var b: CInt;
 	var c: CInt;
 }
 
 struct Sqr {
+	init(a:CInt, b:CInt, c:CInt, d:CInt){
+		self.a = a;
+		self.b = b;
+		self.c = c;
+		self.d = d;
+	}
+	init(a:Int, b:Int, c:Int, d:Int){
+		self.a = CInt(a);
+		self.b = CInt(b);
+		self.c = CInt(c);
+		self.d = CInt(d);
+	}
 	var a: CInt;
 	var b: CInt;
 	var c: CInt;
@@ -29,8 +52,33 @@ class GeomUtils {
 		static let EPSILON:Float = 0.02;
 	}
 	
+	static func randomTris(size:Float, numPerSide:Int, inout vertices:Array<Vertex>, inout tris:Array<Tri>){
+		let d:Double = Double(size) / Double(numPerSide);
+		for i in 0 ..< numPerSide{
+			for j in 0 ..< numPerSide{
+				vertices.append(Vertex(x: Double(i) * d, y: Double(j) * d));
+			}
+		}
+		let delTris:Array<Triangle> = Delaunay().triangulate(vertices);
+		for t:Triangle in delTris{
+			tris.append(Tri(a: t.vertex1.findIn(vertices), b: t.vertex2.findIn(vertices), c: t.vertex3.findIn(vertices)));
+		}
+	}
+	
+	static func getBase(size:Float, numPerSide:Int) -> SCNGeometry{
+		var vertices:Array<Vertex> = [Vertex]();
+		var tris:Array<Tri> = Array<Tri>();
+		GeomUtils.randomTris(size, numPerSide: numPerSide, vertices: &vertices, tris: &tris);
+		let a:Array<SCNVector3> = vertices.map({
+			(v: Vertex) -> SCNVector3 in
+			return SCNVector3Make(Float(v.x), -10.0 - Float(arc4random() % 40), Float(v.y));
+		});
+		return GeomUtils.makeGeometryWithPointsAndTriangles(a, tris: tris);
+	}
+	
 	static func makeTopology(maxI:CInt, maxJ:CInt, size:Float) -> SCNGeometry{
 		var a:Array<SCNVector3> = [SCNVector3]();
+		var sqrs:Array<Sqr> = [Sqr]();
 		let eps:Float = size * GeomUtils.Constants.EPSILON;
 		for i in 0 ... maxI{
 			for j in 0 ... maxJ{
@@ -47,7 +95,6 @@ class GeomUtils {
 				a.append(SCNVector3Make(Float(j)*size + eps, h, Float(i + 1)*size - eps));
 			}
 		}
-		var sqrs:Array<Sqr> = [Sqr]();
 		func getIndex(i:CInt, j:CInt) -> CInt{
 			return (i * (maxJ + 1) + j);
 		}

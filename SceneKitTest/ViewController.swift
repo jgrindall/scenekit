@@ -11,6 +11,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	var cameraOrbit:SCNNode!;
 	var lightNode:SCNNode!;
 	var originNode:SCNNode!;
+	var base:SCNNode!;
 	var terrain:Terrain!;
 	var gestureHandler:GestureHandler!;
 	
@@ -29,6 +30,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	func addCamera(){
 		self.cameraNode = SCNNode();
 		self.cameraNode.camera = SCNCamera();
+		//self.cameraNode.camera?.usesOrthographicProjection = true;
 		self.cameraNode.position = SCNVector3(x: 0, y: 0, z: 70);
 		self.cameraOrbit = SCNNode();
 		self.cameraOrbit.addChildNode(self.cameraNode);
@@ -80,12 +82,22 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		self.terrain.edit();
 	}
 	
+	func addBase(){
+		let baseGeom:SCNGeometry = GeomUtils.getBase(120.0, numPerSide: 4);
+		let blueMaterial = SCNMaterial();
+		blueMaterial.diffuse.contents = UIColor.orangeColor();
+		baseGeom.materials = [blueMaterial];
+		self.base = SCNNode(geometry: baseGeom);
+		self.scene.rootNode.addChildNode(self.base);
+	}
+	
 	override func viewDidLoad() {
 		super.viewDidLoad();
 		self.addScene();
 		self.addLights();
 		self.addPlane();
 		self.addTerrain();
+		self.addBase();
 		self.addCamera();
 		self.addGestures();
 		self.sceneView.playing = true;

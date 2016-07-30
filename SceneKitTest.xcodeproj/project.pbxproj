@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		521F677F1D4C022A00DF997D /* Circumcircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521F677A1D4C022A00DF997D /* Circumcircle.swift */; };
+		521F67801D4C022A00DF997D /* DelaunayError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521F677B1D4C022A00DF997D /* DelaunayError.swift */; };
+		521F67811D4C022A00DF997D /* DelaunaySwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521F677C1D4C022A00DF997D /* DelaunaySwift.swift */; };
+		521F67821D4C022A00DF997D /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521F677D1D4C022A00DF997D /* Triangle.swift */; };
+		521F67831D4C022A00DF997D /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521F677E1D4C022A00DF997D /* Vertex.swift */; };
 		522CD9F01CE8FE810062C004 /* robot.dae in Resources */ = {isa = PBXBuildFile; fileRef = 522CD9EF1CE8FE810062C004 /* robot.dae */; };
 		525F54571D0F47E1008C8396 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 525F54551D0F47E1008C8396 /* LaunchScreen.storyboard */; };
 		525F54591D0F4925008C8396 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525F54581D0F4925008C8396 /* ViewController.swift */; };
@@ -28,6 +33,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		521F677A1D4C022A00DF997D /* Circumcircle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Circumcircle.swift; sourceTree = "<group>"; };
+		521F677B1D4C022A00DF997D /* DelaunayError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelaunayError.swift; sourceTree = "<group>"; };
+		521F677C1D4C022A00DF997D /* DelaunaySwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelaunaySwift.swift; sourceTree = "<group>"; };
+		521F677D1D4C022A00DF997D /* Triangle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
+		521F677E1D4C022A00DF997D /* Vertex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vertex.swift; sourceTree = "<group>"; };
 		522CD9EF1CE8FE810062C004 /* robot.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = robot.dae; sourceTree = "<group>"; };
 		525F54561D0F47E1008C8396 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		525F54581D0F4925008C8396 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -61,6 +71,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		521F67791D4C01D600DF997D /* Delauney */ = {
+			isa = PBXGroup;
+			children = (
+				521F677A1D4C022A00DF997D /* Circumcircle.swift */,
+				521F677B1D4C022A00DF997D /* DelaunayError.swift */,
+				521F677C1D4C022A00DF997D /* DelaunaySwift.swift */,
+				521F677D1D4C022A00DF997D /* Triangle.swift */,
+				521F677E1D4C022A00DF997D /* Vertex.swift */,
+			);
+			name = Delauney;
+			sourceTree = "<group>";
+		};
 		52861D611D29ADC7002441B7 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
@@ -119,6 +141,7 @@
 		80EE09BC196A4C4A00B77AB0 /* SceneKitTest */ = {
 			isa = PBXGroup;
 			children = (
+				521F67791D4C01D600DF997D /* Delauney */,
 				52861D631D29ADE1002441B7 /* assets */,
 				52861D641D29ADEA002441B7 /* maps */,
 				52861D591D27F80A002441B7 /* GestureHandler.swift */,
@@ -222,7 +245,12 @@
 				525F54591D0F4925008C8396 /* ViewController.swift in Sources */,
 				52E0C8671D20475D00B59FC9 /* HeightMap.swift in Sources */,
 				52861D5C1D29A40D002441B7 /* ColorMap.swift in Sources */,
+				521F67801D4C022A00DF997D /* DelaunayError.swift in Sources */,
 				52E0C85F1D1E7BBA00B59FC9 /* GeomUtils.swift in Sources */,
+				521F67821D4C022A00DF997D /* Triangle.swift in Sources */,
+				521F67811D4C022A00DF997D /* DelaunaySwift.swift in Sources */,
+				521F677F1D4C022A00DF997D /* Circumcircle.swift in Sources */,
+				521F67831D4C022A00DF997D /* Vertex.swift in Sources */,
 				52E0C8691D2048A100B59FC9 /* CachedImage.swift in Sources */,
 				52E0C8611D1E95ED00B59FC9 /* Assets.swift in Sources */,
 				52861D581D27F4BC002441B7 /* Terrain.swift in Sources */,
