@@ -17,16 +17,18 @@ public class GestureHandler : NSObject, SCNSceneRendererDelegate, UIGestureRecog
 	private var _slideVel:CGPoint = CGPointZero;
 	private var _target:UIViewController!;
 	private var _cameraNode:SCNNode!;
+	private var _lights:Array<SCNNode>!;
 	
 	struct Consts {
 		static let VEL_SCALE:Float = 12000.0;
 		static let MIN_VEL:CGFloat = 0.1;
 	}
 	
-	init(target:UIViewController, camera:SCNNode){
+	init(target:UIViewController, camera:SCNNode, lights:Array<SCNNode>? = nil){
 		super.init();
 		self._target = target;
 		self._cameraNode = camera;
+		self._lights = lights;
 		self.add();
 	}
 	
@@ -59,6 +61,11 @@ public class GestureHandler : NSObject, SCNSceneRendererDelegate, UIGestureRecog
 			self._slideVel.y += (self._slideVel.y > 0) ? -INC : INC;
 		}
 		self._cameraNode.transform = SCNMatrix4Mult(old, netRot);
+		if(self._lights != nil){
+			for n in self._lights{
+				n.transform = self._cameraNode.transform;
+			}
+		}
 	}
 	
 	@objc public func handlePanGesture(panGesture: UIPanGestureRecognizer){

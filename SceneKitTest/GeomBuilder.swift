@@ -45,8 +45,11 @@ class GeomBuilder{
 		self._vertices.append(v2);
 		var normal:SCNVector3 = (v1 - v0).cross(v2 - v0);
 		normal.normalize();
+		print(normal);
 		if(self._centre != nil){
+			print(self._centre);
 			let dot:Float = normal.dot(self._centre - v0);
+			print(dot);
 			if(dot >= 0.0){
 				normal.negate();
 			}
@@ -56,7 +59,7 @@ class GeomBuilder{
 		self._normals.append(normal);
 		self._normals.append(normal);
 		
-		print(normal);
+		
 		self._textureCoords.append(CGPoint(x: 0.0, y: 0.0));
 		self._textureCoords.append(CGPoint(x: 1.0, y: 0.0));
 		self._textureCoords.append(CGPoint(x: 1.0, y: 1.0));

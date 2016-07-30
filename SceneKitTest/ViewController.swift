@@ -55,27 +55,17 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		let ambientLightNode = SCNNode()
 		ambientLightNode.light = ambientLight;
 		ambientLight.castsShadow = true;
-		scene.rootNode.addChildNode(ambientLightNode)
-		let light = SCNLight();
-		light.type = SCNLightTypeSpot;
-		light.spotInnerAngle = 0.0;
-		light.spotOuterAngle = 120.0;
-		light.castsShadow = true;
-		self.lightNode = SCNNode()
-		self.lightNode.light = light;
-		self.lightNode.position = SCNVector3Make(2.0, 50.5, 1.5);
+		scene.rootNode.addChildNode(ambientLightNode);
+		let myDirectLight = SCNLight();
+		myDirectLight.type = SCNLightTypeDirectional;
+		myDirectLight.color = UIColor.whiteColor();
+		self.lightNode = SCNNode();
+		self.lightNode.light = myDirectLight;
 		self.scene.rootNode.addChildNode(self.lightNode);
-		let myDirectLight = SCNLight()
-		myDirectLight.type = SCNLightTypeDirectional
-		myDirectLight.color = UIColor.yellowColor()
-		let myDirectLightNode = SCNNode()
-		myDirectLightNode.light = myDirectLight
-		myDirectLightNode.orientation = SCNQuaternion(x: 0, y: 0, z: 1, w: 0)
-		self.scene.rootNode.addChildNode(myDirectLightNode)
 	}
 	
 	func addGestures(){
-		self.gestureHandler = GestureHandler(target: self, camera: self.cameraNode);
+		self.gestureHandler = GestureHandler(target: self, camera: self.cameraNode, lights:[self.lightNode]);
 		self.sceneView.delegate = self.gestureHandler;
 	}
 	
@@ -84,7 +74,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	}
 	
 	func addBase(){
-		let baseGeom:SCNGeometry = GeomUtils.getBase(Float(self.maxI) * self.size, numPerSide: 3);
+		let baseGeom:SCNGeometry = GeomUtils.getBase(Float(self.maxI) * self.size, numPerSide: 8);
 		let blueMaterial = SCNMaterial();
 		blueMaterial.diffuse.contents = UIColor.orangeColor();
 		blueMaterial.locksAmbientWithDiffuse   = true;
@@ -127,12 +117,33 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		self.scene.rootNode.addChildNode(self.base);
 	}
 	
+	func addRandom(){
+		let baseGeom:SCNGeometry = GeomUtils.makeGeometryWithPointsAndTriangles(
+			[
+				SCNVector3(0, 0, 0),
+				SCNVector3(100, 0, 0),
+				SCNVector3(0, 0, 100),
+			],
+			tris: [
+				Tri(a: 0, b: 1, c: 2)
+			]
+		);
+		let blueMaterial = SCNMaterial();
+		blueMaterial.diffuse.contents = UIColor.orangeColor();
+		blueMaterial.locksAmbientWithDiffuse   = true;
+		//blueMaterial.doubleSided = true;
+		baseGeom.materials = [blueMaterial];
+		self.base = SCNNode(geometry: baseGeom);
+		self.scene.rootNode.addChildNode(self.base);
+	}
+	
 	override func viewDidLoad() {
 		super.viewDidLoad();
 		self.addScene();
 		self.addLights();
 		//self.addTerrain();
 		self.addBase();
+		//self.addRandom();
 		self.addCamera();
 		self.addGestures();
 		self.sceneView.playing = true;
