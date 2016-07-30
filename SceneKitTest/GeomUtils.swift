@@ -97,9 +97,9 @@ class GeomUtils {
 				a.append(SCNVector3Make(Float(j)*size, h, Float(i)*size));
 			}
 		}
+		var h:Float = 0.0;
 		for i in 0 ..< maxI{
 			for j in 0 ..< maxJ{
-				var h:Float = 0.0;
 				a.append(SCNVector3Make(Float(j)*size + eps, h, Float(i)*size + eps));
 				a.append(SCNVector3Make(Float(j + 1)*size - eps, h, Float(i)*size + eps));
 				a.append(SCNVector3Make(Float(j + 1)*size - eps, h, Float(i + 1)*size - eps));

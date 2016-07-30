@@ -43,7 +43,7 @@ public class GestureHandler : NSObject, SCNSceneRendererDelegate, UIGestureRecog
 		let old:SCNMatrix4 = self._cameraNode.transform;
 		let dx:Float = Float(self._slideVel.x)/GestureHandler.Consts.VEL_SCALE;
 		let dy:Float = Float(self._slideVel.y)/GestureHandler.Consts.VEL_SCALE;
-		let INC:CGFloat = 1;
+		let INC:CGFloat = 0.97;
 		let rX:SCNMatrix4 = SCNMatrix4MakeRotation(-dx, 0, 1, 0);
 		let rY:SCNMatrix4 = SCNMatrix4MakeRotation(-dy, 1, 0, 0);
 		let netRot:SCNMatrix4 = SCNMatrix4Mult(rX, rY);
@@ -51,14 +51,14 @@ public class GestureHandler : NSObject, SCNSceneRendererDelegate, UIGestureRecog
 			self._slideVel.x = 0;
 		}
 		else {
-			self._slideVel.x += (self._slideVel.x > 0) ? -INC : INC;
+			self._slideVel.x *= INC;
 		}
 		
 		if (fabs(self._slideVel.y) < GestureHandler.Consts.MIN_VEL) {
 			self._slideVel.y = 0;
 		}
 		else {
-			self._slideVel.y += (self._slideVel.y > 0) ? -INC : INC;
+			self._slideVel.y *= INC;
 		}
 		self._cameraNode.transform = SCNMatrix4Mult(old, netRot);
 		if(self._lights != nil){

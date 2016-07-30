@@ -45,7 +45,7 @@ class GeomBuilder{
 		self._vertices.append(v2);
 		var normal:SCNVector3 = (v1 - v0).cross(v2 - v0);
 		normal.normalize();
-		print(normal);
+		//print(normal);
 		if(self._centre != nil){
 			print(self._centre);
 			let dot:Float = normal.dot(self._centre - v0);
@@ -72,10 +72,10 @@ class GeomBuilder{
 	
 	func getSCNGeometry() -> SCNGeometry{
 		
-		print(self._vertices);
-		print(self._normals);
-		print(self._indices);
-		print(self._primitiveCount);
+		//print(self._vertices);
+		//print(self._normals);
+		//print(self._indices);
+		//print(self._primitiveCount);
 		
 		
 		let geomSourceVertices = SCNGeometrySource(vertices: self._vertices,				count: self._vertices.count);

@@ -84,70 +84,16 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		self.scene.rootNode.addChildNode(self.base);
 	}
 	
-	func addCube(){
-		let baseGeom:SCNGeometry = GeomUtils.makeGeometryWithPointsAndTriangles(
-			[
-				SCNVector3(0, 0, 0),
-				SCNVector3(100, 0, 0),
-				SCNVector3(100, 100, 0),
-				SCNVector3(0, 100, 0),
-				
-				SCNVector3(0, 0, 100),
-				SCNVector3(100, 0, 100),
-				SCNVector3(100, 100, 100),
-				SCNVector3(0, 100, 100)
-			],
-			tris: [
-				Tri(a: 0, b: 1, c: 2),
-				Tri(a: 0, b: 2, c: 3),
-				Tri(a: 1, b: 6, c: 2),
-				Tri(a: 1, b: 5, c: 6),
-				Tri(a: 5, b: 7, c: 6),
-				Tri(a: 7, b: 5, c: 4),
-				Tri(a: 4, b: 3, c: 7),
-				Tri(a: 3, b: 4, c: 0)
-			]
-		);
-		let blueMaterial = SCNMaterial();
-		blueMaterial.diffuse.contents = UIColor.orangeColor();
-		blueMaterial.locksAmbientWithDiffuse   = true;
-		//blueMaterial.doubleSided = true;
-		baseGeom.materials = [blueMaterial];
-		self.base = SCNNode(geometry: baseGeom);
-		self.scene.rootNode.addChildNode(self.base);
-	}
-	
-	func addRandom(){
-		let baseGeom:SCNGeometry = GeomUtils.makeGeometryWithPointsAndTriangles(
-			[
-				SCNVector3(0, 0, 0),
-				SCNVector3(100, 0, 0),
-				SCNVector3(0, 0, 100),
-			],
-			tris: [
-				Tri(a: 0, b: 1, c: 2)
-			]
-		);
-		let blueMaterial = SCNMaterial();
-		blueMaterial.diffuse.contents = UIColor.orangeColor();
-		blueMaterial.locksAmbientWithDiffuse   = true;
-		//blueMaterial.doubleSided = true;
-		baseGeom.materials = [blueMaterial];
-		self.base = SCNNode(geometry: baseGeom);
-		self.scene.rootNode.addChildNode(self.base);
-	}
-	
 	override func viewDidLoad() {
 		super.viewDidLoad();
 		self.addScene();
 		self.addLights();
-		//self.addTerrain();
+		self.addTerrain();
 		self.addBase();
-		//self.addRandom();
 		self.addCamera();
 		self.addGestures();
 		self.sceneView.playing = true;
-		//NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector:(#selector(ViewController.edit)) , userInfo: nil, repeats: true);
+		NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector:(#selector(ViewController.edit)) , userInfo: nil, repeats: true);
 	}
 }
 
