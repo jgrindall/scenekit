@@ -53,7 +53,7 @@ class GeomUtils {
 	}
 	
 	static func randomTris(size:Float, numPerSide:Int, inout vertices:Array<Vertex>, inout tris:Array<Tri>){
-		let d:Double = Double(size) / Double(numPerSide);
+		let d:Double = Double(size) / Double(numPerSide - 1);
 		for i in 0 ..< numPerSide{
 			for j in 0 ..< numPerSide{
 				vertices.append(Vertex(x: Double(i) * d, y: Double(j) * d));
@@ -71,9 +71,20 @@ class GeomUtils {
 		GeomUtils.randomTris(size, numPerSide: numPerSide, vertices: &vertices, tris: &tris);
 		let a:Array<SCNVector3> = vertices.map({
 			(v: Vertex) -> SCNVector3 in
-			return SCNVector3Make(Float(v.x), -10.0 - Float(arc4random() % 40), Float(v.y));
+			var newY:Float = -10.0;
+			let fx:Float = Float(v.x);
+			let fy:Float = Float(v.y);
+			if(fx > 0 && fx < size && fy > 0 && fy < size){
+				let dx:Float = fx - size/2;
+				let dy:Float = fy - size/2;
+				let rSqr:Float = dx*dx + dy*dy;
+				let maxRSqr:Float = size*size/4;
+				print(fx, fy, size, rSqr);
+				newY = newY - 50.0*(1.0 - (rSqr/maxRSqr));
+			}
+			return SCNVector3Make(Float(v.x), newY, Float(v.y));
 		});
-		return GeomUtils.makeGeometryWithPointsAndTriangles(a, tris: tris);
+		return GeomUtils.makeGeometryWithPointsAndTriangles(a, tris: tris, centre: SCNVector3(size/2, 10.0, size/2));
 	}
 	
 	static func makeTopology(maxI:CInt, maxJ:CInt, size:Float) -> SCNGeometry{
@@ -119,27 +130,24 @@ class GeomUtils {
 		return GeomUtils.makeGeometryWithPointsAndSquares(a, sqrs: sqrs);
 	}
 	
-	static func makeGeometryWithPointsAndSquares(positions:Array<SCNVector3>, sqrs:Array<Sqr>) -> SCNGeometry{
+	static func makeGeometryWithPointsAndSquares(positions:Array<SCNVector3>, sqrs:Array<Sqr>, centre: SCNVector3? = nil) -> SCNGeometry{
 		var tris = [Tri]();
 		for s:Sqr in sqrs{
 			tris.append(Tri(a: s.a, b: s.b, c: s.c));
 			tris.append(Tri(a: s.c, b: s.d, c: s.a));
 		}
-		return GeomUtils.makeGeometryWithPointsAndTriangles(positions, tris: tris);
+		return GeomUtils.makeGeometryWithPointsAndTriangles(positions, tris: tris, centre: centre);
 	}
 	
-	static func makeGeometryWithPointsAndTriangles(positions:Array<SCNVector3>, tris:Array<Tri>) -> SCNGeometry{
-		var indices:Array<CInt> = [CInt]();
-		var primCount = 0;
-		for v:Tri in tris{
-			indices.append(v.a);
-			indices.append(v.b);
-			indices.append(v.c);
-			primCount += 1;
+	static func makeGeometryWithPointsAndTriangles(positions:Array<SCNVector3>, tris:Array<Tri>, centre: SCNVector3? = nil) -> SCNGeometry{
+		let geomBuilder:GeomBuilder = GeomBuilder();
+		if(centre != nil){
+			geomBuilder.addCentre(centre!);
 		}
-		let vertexSource = SCNGeometrySource(vertices: positions, count:positions.count);
-		let indexData = NSData(bytes: indices, length: indices.count * sizeof(CInt));
-		let element = SCNGeometryElement(data: indexData, primitiveType: SCNGeometryPrimitiveType.Triangles, primitiveCount: primCount, bytesPerIndex: sizeof(CInt));
-		return SCNGeometry(sources: [vertexSource], elements: [element]);
+		for v:Tri in tris{
+			geomBuilder.addTri(positions[Int(v.a)], v1:positions[Int(v.b)], v2:positions[Int(v.c)]);
+		}
+		return geomBuilder.getSCNGeometry();
 	}
 }
+
