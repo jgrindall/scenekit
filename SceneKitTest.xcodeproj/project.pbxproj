@@ -21,6 +21,7 @@
 		52861D5F1D29A8BA002441B7 /* grass.png in Resources */ = {isa = PBXBuildFile; fileRef = 52861D5D1D29A8BA002441B7 /* grass.png */; };
 		52861D601D29A8BA002441B7 /* stone.png in Resources */ = {isa = PBXBuildFile; fileRef = 52861D5E1D29A8BA002441B7 /* stone.png */; };
 		52861D661D29AE5D002441B7 /* shared.txt in Resources */ = {isa = PBXBuildFile; fileRef = 52861D651D29AE5D002441B7 /* shared.txt */; };
+		52946C271D57D09A00A6D54B /* soil.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 52946C261D57D09A00A6D54B /* soil.jpg */; };
 		529743371D4D264E00557DA9 /* GeomBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529743361D4D264E00557DA9 /* GeomBuilder.swift */; };
 		529743391D4D2C1600557DA9 /* SCNVector3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529743381D4D2C1600557DA9 /* SCNVector3Extensions.swift */; };
 		52DC7CDF1D132CB10075C2D3 /* surf.shader in Resources */ = {isa = PBXBuildFile; fileRef = 52DC7CDE1D132CB10075C2D3 /* surf.shader */; };
@@ -29,7 +30,6 @@
 		52E0C8631D1EA74100B59FC9 /* ImageUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E0C8621D1EA74100B59FC9 /* ImageUtils.swift */; };
 		52E0C8671D20475D00B59FC9 /* HeightMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E0C8661D20475D00B59FC9 /* HeightMap.swift */; };
 		52E0C8691D2048A100B59FC9 /* CachedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E0C8681D2048A100B59FC9 /* CachedImage.swift */; };
-		52ECBDA21D57703800129B4A /* stones1.png in Resources */ = {isa = PBXBuildFile; fileRef = 52ECBDA11D57703800129B4A /* stones1.png */; };
 		52FEBC9F1D0419D900B65511 /* geom.shader in Resources */ = {isa = PBXBuildFile; fileRef = 52FEBC9E1D0419D900B65511 /* geom.shader */; };
 		80EE09C0196A4C4A00B77AB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EE09BF196A4C4A00B77AB0 /* AppDelegate.swift */; };
 		80EE09C7196A4C4A00B77AB0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80EE09C6196A4C4A00B77AB0 /* Images.xcassets */; };
@@ -50,6 +50,7 @@
 		52861D5D1D29A8BA002441B7 /* grass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grass.png; sourceTree = "<group>"; };
 		52861D5E1D29A8BA002441B7 /* stone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stone.png; sourceTree = "<group>"; };
 		52861D651D29AE5D002441B7 /* shared.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shared.txt; sourceTree = "<group>"; };
+		52946C261D57D09A00A6D54B /* soil.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = soil.jpg; sourceTree = "<group>"; };
 		529743361D4D264E00557DA9 /* GeomBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeomBuilder.swift; sourceTree = "<group>"; };
 		529743381D4D2C1600557DA9 /* SCNVector3Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCNVector3Extensions.swift; sourceTree = "<group>"; };
 		52DC7CDE1D132CB10075C2D3 /* surf.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = surf.shader; sourceTree = "<group>"; };
@@ -58,7 +59,6 @@
 		52E0C8621D1EA74100B59FC9 /* ImageUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUtils.swift; sourceTree = "<group>"; };
 		52E0C8661D20475D00B59FC9 /* HeightMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeightMap.swift; sourceTree = "<group>"; };
 		52E0C8681D2048A100B59FC9 /* CachedImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedImage.swift; sourceTree = "<group>"; };
-		52ECBDA11D57703800129B4A /* stones1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stones1.png; sourceTree = "<group>"; };
 		52FEBC9E1D0419D900B65511 /* geom.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = geom.shader; sourceTree = "<group>"; };
 		80EE09BA196A4C4A00B77AB0 /* SceneKitTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SceneKitTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		80EE09BE196A4C4A00B77AB0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -114,7 +114,7 @@
 		52861D631D29ADE1002441B7 /* assets */ = {
 			isa = PBXGroup;
 			children = (
-				52ECBDA11D57703800129B4A /* stones1.png */,
+				52946C261D57D09A00A6D54B /* soil.jpg */,
 				522CD9EF1CE8FE810062C004 /* robot.dae */,
 				52861D5D1D29A8BA002441B7 /* grass.png */,
 				52861D5E1D29A8BA002441B7 /* stone.png */,
@@ -237,8 +237,8 @@
 				80EE09C7196A4C4A00B77AB0 /* Images.xcassets in Resources */,
 				522CD9F01CE8FE810062C004 /* robot.dae in Resources */,
 				525F54571D0F47E1008C8396 /* LaunchScreen.storyboard in Resources */,
-				52ECBDA21D57703800129B4A /* stones1.png in Resources */,
 				52FEBC9F1D0419D900B65511 /* geom.shader in Resources */,
+				52946C271D57D09A00A6D54B /* soil.jpg in Resources */,
 				52861D601D29A8BA002441B7 /* stone.png in Resources */,
 				52DC7CDF1D132CB10075C2D3 /* surf.shader in Resources */,
 				52861D661D29AE5D002441B7 /* shared.txt in Resources */,

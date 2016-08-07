@@ -80,7 +80,7 @@ class Assets{
 	}
 	
 	static func getSoilImage() -> UIImage{
-		let imgPath = NSBundle.mainBundle().pathForResource("stones1", ofType: "png");
+		let imgPath = NSBundle.mainBundle().pathForResource("soil", ofType: "jpg");
 		return UIImage(contentsOfFile: imgPath!)!;
 	}
 

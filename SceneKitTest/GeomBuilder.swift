@@ -10,7 +10,7 @@ import Foundation
 import SceneKit
 import QuartzCore
 
-struct VertexNorm {var x, y, z, nx, ny, nz: Float}
+struct VertexNorm {var x, y, z, nx, ny, nz, ux, uy: Float}
 
 class GeomBuilder{
 	
@@ -48,9 +48,9 @@ class GeomBuilder{
 				normal = normal * -1;
 			}
 		}
-		self._data.append(VertexNorm(x: v0.x, y: v0.y, z: v0.z, nx: normal.x, ny: normal.y, nz: normal.z));
-		self._data.append(VertexNorm(x: v1.x, y: v1.y, z: v1.z, nx: normal.x, ny: normal.y, nz: normal.z));
-		self._data.append(VertexNorm(x: v2.x, y: v2.y, z: v2.z, nx: normal.x, ny: normal.y, nz: normal.z));
+		self._data.append(VertexNorm(x: v0.x, y: v0.y, z: v0.z, nx: normal.x, ny: normal.y, nz: normal.z, ux: 0, uy: 0));
+		self._data.append(VertexNorm(x: v1.x, y: v1.y, z: v1.z, nx: normal.x, ny: normal.y, nz: normal.z, ux: 1, uy: 0));
+		self._data.append(VertexNorm(x: v2.x, y: v2.y, z: v2.z, nx: normal.x, ny: normal.y, nz: normal.z, ux: 0, uy: 1));
 		self._indices.append(i0 + 2);
 		self._indices.append(i0 + 1);
 		self._indices.append(i0 + 0);
@@ -80,7 +80,17 @@ class GeomBuilder{
 			floatComponents: true,
 			componentsPerVector: 3,
 			bytesPerComponent: sizeof(Float),
-			dataOffset: 3*sizeof(Float),
+			dataOffset: 3*sizeof(Float),          // the first x, y, z
+			dataStride: sizeof(VertexNorm)
+		);
+		let geomSourceText = SCNGeometrySource(
+			data: data,
+			semantic: SCNGeometrySourceSemanticTexcoord,
+			vectorCount: self._vertexCount,
+			floatComponents: true,
+			componentsPerVector: 3,
+			bytesPerComponent: sizeof(Float),
+			dataOffset: 6*sizeof(Float),          // the first x, y, z, nx, ny, nz
 			dataStride: sizeof(VertexNorm)
 		);
 		let indexData = NSData(
@@ -94,7 +104,7 @@ class GeomBuilder{
 			bytesPerIndex: sizeof(CInt)
 		);
 		return SCNGeometry(
-			sources: [geomSourceVertices, geomSourceNormals],
+			sources: [geomSourceVertices, geomSourceNormals, geomSourceText],
 			elements: [element]
 		);
 	}

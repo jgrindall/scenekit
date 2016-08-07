@@ -75,7 +75,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	}
 	
 	func addBase(){
-		let baseGeom:SCNGeometry = GeomUtils.getBase(Float(self.maxI) * self.size, numPerSide: 8);
+		let baseGeom:SCNGeometry = GeomUtils.getBase(Float(self.maxI) * self.size, numPerSide: 12);
 		let blueMaterial = SCNMaterial();
 		blueMaterial.diffuse.contents = Assets.getSoilImage();
 		baseGeom.firstMaterial = blueMaterial;
