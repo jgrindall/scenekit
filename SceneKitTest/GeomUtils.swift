@@ -66,10 +66,11 @@ class GeomUtils {
 	}
 	
 	static func getBase(size:Float, numPerSide:Int) -> SCNGeometry{
-		var vertices:Array<Vertex> = [Vertex]();
-		var tris:Array<Tri> = Array<Tri>();
-		GeomUtils.randomTris(size, numPerSide: numPerSide, vertices: &vertices, tris: &tris);
-		let a:Array<SCNVector3> = vertices.map({
+		var tris:Array<Tri> =					[Tri]();
+		var vertices2d:Array<Vertex> =			[Vertex]();
+
+		GeomUtils.randomTris(size, numPerSide: numPerSide, vertices: &vertices2d, tris: &tris);
+		let vertices3d:Array<SCNVector3> = vertices2d.map({
 			(v: Vertex) -> SCNVector3 in
 			var newY:Float = -10.0;
 			let fx:Float = Float(v.x);
@@ -79,31 +80,33 @@ class GeomUtils {
 				let dy:Float = fy - size/2;
 				let rSqr:Float = dx*dx + dy*dy;
 				let maxRSqr:Float = size*size/4;
-				print(fx, fy, size, rSqr);
 				newY = newY - 50.0*(1.0 - (rSqr/maxRSqr));
+				let rnd = Float(arc4random() % 10);
+				newY = newY + rnd;
+				newY = min(newY, -10);
 			}
 			return SCNVector3Make(Float(v.x), newY, Float(v.y));
 		});
-		return GeomUtils.makeGeometryWithPointsAndTriangles(a, tris: tris, centre: SCNVector3(size/2, 10.0, size/2));
+		return GeomUtils.makeGeometryWithPointsAndTriangles(vertices3d, tris: tris, centre: SCNVector3(size/2.0, size/2.0, size/2.0));
 	}
 	
 	static func makeTopology(maxI:CInt, maxJ:CInt, size:Float) -> SCNGeometry{
-		var a:Array<SCNVector3> = [SCNVector3]();
+		var vertices:Array<SCNVector3> = [SCNVector3]();
 		var sqrs:Array<Sqr> = [Sqr]();
 		let eps:Float = size * GeomUtils.Constants.EPSILON;
 		for i in 0 ... maxI{
 			for j in 0 ... maxJ{
 				var h:Float = 0.0;
-				a.append(SCNVector3Make(Float(j)*size, h, Float(i)*size));
+				vertices.append(SCNVector3Make(Float(j)*size, h, Float(i)*size));
 			}
 		}
 		var h:Float = 0.0;
 		for i in 0 ..< maxI{
 			for j in 0 ..< maxJ{
-				a.append(SCNVector3Make(Float(j)*size + eps, h, Float(i)*size + eps));
-				a.append(SCNVector3Make(Float(j + 1)*size - eps, h, Float(i)*size + eps));
-				a.append(SCNVector3Make(Float(j + 1)*size - eps, h, Float(i + 1)*size - eps));
-				a.append(SCNVector3Make(Float(j)*size + eps, h, Float(i + 1)*size - eps));
+				vertices.append(SCNVector3Make(Float(j)*size + eps, h, Float(i)*size + eps));
+				vertices.append(SCNVector3Make(Float(j + 1)*size - eps, h, Float(i)*size + eps));
+				vertices.append(SCNVector3Make(Float(j + 1)*size - eps, h, Float(i + 1)*size - eps));
+				vertices.append(SCNVector3Make(Float(j)*size + eps, h, Float(i + 1)*size - eps));
 			}
 		}
 		func getIndex(i:CInt, j:CInt) -> CInt{
@@ -127,7 +130,7 @@ class GeomUtils {
 				sqrs.append(Sqr(a: getIndex(i, j: j),					b: getInnerIndex(i, j: j, k: 0),			c: getInnerIndex(i, j: j, k: 1),			d: getIndex(i, j: j + 1)));
 			}
 		}
-		return GeomUtils.makeGeometryWithPointsAndSquares(a, sqrs: sqrs);
+		return GeomUtils.makeGeometryWithPointsAndSquares(vertices, sqrs: sqrs);
 	}
 	
 	static func makeGeometryWithPointsAndSquares(positions:Array<SCNVector3>, sqrs:Array<Sqr>, centre: SCNVector3? = nil) -> SCNGeometry{

@@ -5,29 +5,31 @@ import QuartzCore
 
 class ViewController: UIViewController, SCNSceneRendererDelegate {
 	
-	var sceneView:SCNView!;
-	var scene:SCNScene!;
-	var cameraNode:SCNNode!;
-	var cameraOrbit:SCNNode!;
-	var lightNode:SCNNode!;
-	var originNode:SCNNode!;
-	var base:SCNNode!;
-	var terrain:Terrain!;
-	var gestureHandler:GestureHandler!;
+	var maxI:CInt =		10;
+	var maxJ:CInt =		10;
+	var size:Float =	8.0;
 	
-	var maxI:CInt = 10;
-	var maxJ:CInt = 10;
-	var size:Float = 8.0;
+	var sceneView:		SCNView!;
+	var scene:			SCNScene!;
+	var cameraNode:		SCNNode!;
+	var base:			SCNNode!;
+	var terrain:		Terrain!;
+	var cameraOrbit:	SCNNode!;
+	var lightNode:		SCNNode!;
+	var originNode:		SCNNode!;
+	var gestureHandler:	GestureHandler!;
 	
 	func addScene(){
 		self.sceneView = SCNView(frame: self.view.frame);
 		self.view.addSubview(self.sceneView);
-		self.sceneView.autoenablesDefaultLighting = true
 		self.sceneView.showsStatistics = true;
+		self.sceneView.allowsCameraControl = true;
+		self.sceneView.autoenablesDefaultLighting = true;
+		self.sceneView.delegate = self;
 		self.scene = SCNScene();
 		self.sceneView.scene = scene;
 	}
-
+	
 	func addCamera(){
 		self.cameraNode = SCNNode();
 		self.cameraNode.camera = SCNCamera();
@@ -42,9 +44,12 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		self.scene.rootNode.castsShadow = true;
 	}
 	
+	override func shouldAutorotate() -> Bool {
+		return true;
+	}
+	
 	func addTerrain(){
 		self.terrain = Terrain(maxI: self.maxI, maxJ: self.maxJ, size: self.size);
-		self.terrain.getNode().opacity = 0.5;
 		scene.rootNode.addChildNode(self.terrain.getNode());
 	}
 	
@@ -78,24 +83,21 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		let blueMaterial = SCNMaterial();
 		blueMaterial.diffuse.contents = UIColor.orangeColor();
 		blueMaterial.locksAmbientWithDiffuse   = true;
-		blueMaterial.doubleSided = true;
 		baseGeom.materials = [blueMaterial];
 		self.base = SCNNode(geometry: baseGeom);
 		self.scene.rootNode.addChildNode(self.base);
 	}
-	
+
 	override func viewDidLoad() {
 		super.viewDidLoad();
 		self.addScene();
 		self.addLights();
-		self.addTerrain();
-		self.addBase();
 		self.addCamera();
 		self.addGestures();
+		self.addBase();
+		self.addTerrain();
 		self.sceneView.playing = true;
 		NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector:(#selector(ViewController.edit)) , userInfo: nil, repeats: true);
+		
 	}
 }
-
-
-
