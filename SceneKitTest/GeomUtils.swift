@@ -65,17 +65,53 @@ class GeomUtils {
 		}
 	}
 	
+	static func getSquareRing(size:Float, depth:Float, offsets:Array<Float>, inout vertices:Array<SCNVector3>, inout tris:Array<Tri>){
+		let numVertices = vertices.count;
+		vertices.append(SCNVector3Make(0.0,		0.0,			0.0));
+		vertices.append(SCNVector3Make(size,	0.0,			0.0));
+		vertices.append(SCNVector3Make(size,	0.0,			size));
+		vertices.append(SCNVector3Make(0.0,		0.0,			size));
+		vertices.append(SCNVector3Make(0.0,		depth,			0.0));
+		vertices.append(SCNVector3Make(size,	depth,			0.0));
+		vertices.append(SCNVector3Make(size,	depth,			size));
+		vertices.append(SCNVector3Make(0.0,		depth,			size));
+		
+		tris.append(Tri(a: numVertices + 1, b: numVertices + 0, c: numVertices + 4));
+		tris.append(Tri(a: numVertices + 1, b: numVertices + 4, c: numVertices + 5));
+		tris.append(Tri(a: numVertices + 2, b: numVertices + 1, c: numVertices + 5));
+		tris.append(Tri(a: numVertices + 2, b: numVertices + 5, c: numVertices + 6));
+		tris.append(Tri(a: numVertices + 3, b: numVertices + 2, c: numVertices + 6));
+		tris.append(Tri(a: numVertices + 3, b: numVertices + 6, c: numVertices + 7));
+		tris.append(Tri(a: numVertices + 0, b: numVertices + 3, c: numVertices + 7));
+		tris.append(Tri(a: numVertices + 0, b: numVertices + 7, c: numVertices + 4));
+	}
+	
 	static func getBase(size:Float, numPerSide:Int) -> SCNGeometry{
 		var tris:Array<Tri> =					[Tri]();
 		var vertices2d:Array<Vertex> =			[Vertex]();
-		let defaultY:Float = -3.0;
-		GeomUtils.randomTris(size, numPerSide: numPerSide, vertices: &vertices2d, tris: &tris);
+		let defaultY:Float =					-12.0;
+		GeomUtils.randomTris(size, numPerSide: 3, vertices: &vertices2d, tris: &tris);
+		var edgeOffsets:Array<Float> =			[Float]();
+		for _ in 0 ..< numPerSide{
+			for _ in 0 ..< numPerSide{
+				edgeOffsets.append(0.0);
+			}
+		}
 		var vertices3d:Array<SCNVector3> = vertices2d.map({
 			(v: Vertex) -> SCNVector3 in
 			var newY:Float = defaultY;
 			let fx:Float = Float(v.x);
 			let fy:Float = Float(v.y);
-			if(fx > 0 && fx < size && fy > 0 && fy < size){
+			var indexI:Int;
+			var indexJ:Int;
+			var index:Int;
+			if(fx == 0 || fx == size || fy == 0 || fy == size){
+				indexI = Int(round(fx / (size / Float(numPerSide - 1))));
+				indexJ = Int(round(fy / (size / Float(numPerSide - 1))));
+				index = (indexI * numPerSide) + indexJ;
+				newY = edgeOffsets[index];
+			}
+			else{
 				let dx:Float = fx - size/2;
 				let dy:Float = fy - size/2;
 				let rSqr:Float = dx*dx + dy*dy;
@@ -87,17 +123,8 @@ class GeomUtils {
 			}
 			return SCNVector3Make(Float(v.x), newY, Float(v.y));
 		});
-		let numVertices = vertices3d.count;
-		vertices3d.append(SCNVector3Make(size, 0.0, 0.0));
-		vertices3d.append(SCNVector3Make(0.0, 0.0, 0.0));
-		vertices3d.append(SCNVector3Make(0.0, defaultY, 0.0));
-		vertices3d.append(SCNVector3Make(size, 0.0, 0.0));
-		vertices3d.append(SCNVector3Make(0.0, defaultY, 0.0));
-		vertices3d.append(SCNVector3Make(size, defaultY, 0.0));
-		tris.append(Tri(a: numVertices + 0, b: numVertices + 1, c: numVertices + 2));
-		tris.append(Tri(a: numVertices + 3, b: numVertices + 4, c: numVertices + 5));
-		let base = GeomUtils.makeGeometryWithPointsAndTriangles(vertices3d, tris: tris, centre: SCNVector3(size/2.0, 0.1, size/2.0));
-		return base;
+		GeomUtils.getSquareRing(size, depth:defaultY, offsets:edgeOffsets, vertices: &vertices3d, tris: &tris);
+		return GeomUtils.makeGeometryWithPointsAndTriangles(vertices3d, tris: tris, centre: SCNVector3(size/2.0, 0.1, size/2.0));
 	}
 	
 	static func makeTopology(maxI:CInt, maxJ:CInt, size:Float) -> SCNGeometry{

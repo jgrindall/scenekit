@@ -13,7 +13,6 @@
 		521F67821D4C022A00DF997D /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521F677D1D4C022A00DF997D /* Triangle.swift */; };
 		521F67831D4C022A00DF997D /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521F677E1D4C022A00DF997D /* Vertex.swift */; };
 		522CD9F01CE8FE810062C004 /* robot.dae in Resources */ = {isa = PBXBuildFile; fileRef = 522CD9EF1CE8FE810062C004 /* robot.dae */; };
-		525BD4131D4FEC4800DAD9A0 /* ViewControllerDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525BD4121D4FEC4800DAD9A0 /* ViewControllerDemo.swift */; };
 		525F54571D0F47E1008C8396 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 525F54551D0F47E1008C8396 /* LaunchScreen.storyboard */; };
 		525F54591D0F4925008C8396 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525F54581D0F4925008C8396 /* ViewController.swift */; };
 		52861D581D27F4BC002441B7 /* Terrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52861D571D27F4BC002441B7 /* Terrain.swift */; };
@@ -43,7 +42,6 @@
 		521F677D1D4C022A00DF997D /* Triangle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
 		521F677E1D4C022A00DF997D /* Vertex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vertex.swift; sourceTree = "<group>"; };
 		522CD9EF1CE8FE810062C004 /* robot.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = robot.dae; sourceTree = "<group>"; };
-		525BD4121D4FEC4800DAD9A0 /* ViewControllerDemo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerDemo.swift; sourceTree = "<group>"; };
 		525F54561D0F47E1008C8396 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		525F54581D0F4925008C8396 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		52861D571D27F4BC002441B7 /* Terrain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Terrain.swift; sourceTree = "<group>"; };
@@ -161,7 +159,6 @@
 				52E0C8681D2048A100B59FC9 /* CachedImage.swift */,
 				52861D621D29ADD3002441B7 /* utils */,
 				525F54581D0F4925008C8396 /* ViewController.swift */,
-				525BD4121D4FEC4800DAD9A0 /* ViewControllerDemo.swift */,
 				80EE09BF196A4C4A00B77AB0 /* AppDelegate.swift */,
 				80EE09C6196A4C4A00B77AB0 /* Images.xcassets */,
 				80EE09BD196A4C4A00B77AB0 /* Supporting Files */,
@@ -258,7 +255,6 @@
 				525F54591D0F4925008C8396 /* ViewController.swift in Sources */,
 				52E0C8671D20475D00B59FC9 /* HeightMap.swift in Sources */,
 				52861D5C1D29A40D002441B7 /* ColorMap.swift in Sources */,
-				525BD4131D4FEC4800DAD9A0 /* ViewControllerDemo.swift in Sources */,
 				521F67801D4C022A00DF997D /* DelaunayError.swift in Sources */,
 				52E0C85F1D1E7BBA00B59FC9 /* GeomUtils.swift in Sources */,
 				521F67821D4C022A00DF997D /* Triangle.swift in Sources */,

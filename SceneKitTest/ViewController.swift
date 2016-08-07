@@ -23,8 +23,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		self.sceneView = SCNView(frame: self.view.frame);
 		self.view.addSubview(self.sceneView);
 		self.sceneView.showsStatistics = true;
-		self.sceneView.allowsCameraControl = true;
-		self.sceneView.autoenablesDefaultLighting = true;
+		self.sceneView.allowsCameraControl = false;
+		self.sceneView.autoenablesDefaultLighting = false;
 		self.sceneView.delegate = self;
 		self.scene = SCNScene();
 		self.sceneView.scene = scene;
@@ -33,19 +33,15 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	func addCamera(){
 		self.cameraNode = SCNNode();
 		self.cameraNode.camera = SCNCamera();
-		self.cameraNode.camera!.xFov = 60;
-		self.cameraNode.camera!.yFov  = 60;
-		self.cameraNode.camera!.zFar = 1000;
+		self.cameraNode.camera!.xFov = 53;
+		self.cameraNode.camera!.yFov  = 53;
+		self.cameraNode.camera!.zFar = 2000;
 		self.cameraNode.camera!.zNear = 0.01;
 		self.cameraNode.position = SCNVector3(x: 0, y: 0, z: 200);
 		self.cameraOrbit = SCNNode();
 		self.cameraOrbit.addChildNode(self.cameraNode);
 		self.scene.rootNode.addChildNode(self.cameraOrbit);
 		self.scene.rootNode.castsShadow = true;
-	}
-	
-	override func shouldAutorotate() -> Bool {
-		return true;
 	}
 	
 	func addTerrain(){
@@ -79,14 +75,15 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	}
 	
 	func addBase(){
-		let baseGeom:SCNGeometry = GeomUtils.getBase(Float(self.maxI) * self.size, numPerSide: 8);
+		let baseGeom:SCNGeometry = GeomUtils.getBase(Float(self.maxI) * self.size, numPerSide: 16);
 		let blueMaterial = SCNMaterial();
-		blueMaterial.diffuse.contents = UIColor.brownColor();
+		blueMaterial.diffuse.contents = Assets.getSoilImage();
 		let blueMaterial2 = SCNMaterial();
-		blueMaterial2.diffuse.contents = UIColor.orangeColor();
+		blueMaterial2.diffuse.contents = UIColor.blueColor();
 		let blueMaterial3 = SCNMaterial();
 		blueMaterial3.diffuse.contents = UIColor.greenColor();
-		baseGeom.materials = [blueMaterial, blueMaterial2, blueMaterial3];
+		//baseGeom.materials = [blueMaterial, blueMaterial2, blueMaterial3];
+		baseGeom.firstMaterial = blueMaterial;
 		self.base = SCNNode(geometry: baseGeom);
 		self.scene.rootNode.addChildNode(self.base);
 	}
