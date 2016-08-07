@@ -32,7 +32,7 @@ class Terrain{
 	private func initGeom(){
 		self.geom = GeomUtils.makeTopology(self.maxI, maxJ: self.maxJ, size:self.size);
 		let blueMaterial = SCNMaterial();
-		blueMaterial.diffuse.contents = UIColor.blueColor();
+		blueMaterial.diffuse.contents = Assets.getSoilImage();
 		self.geom.materials = [blueMaterial];
 		self.node = SCNNode(geometry: self.geom);
 		self.node.castsShadow = true;

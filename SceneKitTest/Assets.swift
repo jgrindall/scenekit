@@ -31,6 +31,11 @@ class Assets{
 		return newS;
 	}
 	
+	static func getSoil() -> SCNMaterialProperty{
+		let imgPath = NSBundle.mainBundle().pathForResource("stones1", ofType: "png");
+		return SCNMaterialProperty(contents: UIImage(contentsOfFile: imgPath!)!);
+	}
+	
 	static func getStone() -> SCNMaterialProperty{
 		let imgPath = NSBundle.mainBundle().pathForResource("stone", ofType: "png");
 		return SCNMaterialProperty(contents: UIImage(contentsOfFile: imgPath!)!);
@@ -72,6 +77,11 @@ class Assets{
 	
 	static func getBlackImg() -> UIImage{
 		return ImageUtils.getImageWithColor(UIColor(red: 0, green: 0, blue: 0, alpha: 255), size: CGSizeMake(50, 50));
+	}
+	
+	static func getSoilImage() -> UIImage{
+		let imgPath = NSBundle.mainBundle().pathForResource("stones1", ofType: "png");
+		return UIImage(contentsOfFile: imgPath!)!;
 	}
 
 }
