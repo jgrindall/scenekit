@@ -134,7 +134,7 @@ class GeomUtils {
 				let dy:Float = fy - size/2;
 				let rSqr:Float = dx*dx + dy*dy;
 				let maxRSqr:Float = size*size/4;
-				newY = newY - 30.0*(1.0 - (rSqr/maxRSqr));
+				newY = newY - 50.0*(1.0 - (rSqr/maxRSqr));
 				let rnd = Float(arc4random() % 20);
 				newY = newY + rnd;
 				newY = min(newY, defaultY);
