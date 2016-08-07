@@ -5,6 +5,30 @@ import SceneKit
 
 extension SCNVector3
 {
+	mutating func setX(_x:Float){
+		self.x = _x;
+	}
+	
+	mutating func setY(_y:Float){
+		self.y = _y;
+	}
+	
+	mutating func setZ(_z:Float){
+		self.z = _z;
+	}
+	
+	func withX(_x:Float) -> SCNVector3{
+		return SCNVector3Make(_x, self.y, self.z);
+	}
+	
+	func withY(_y:Float) -> SCNVector3{
+		return SCNVector3Make(self.x, _y, self.z);
+	}
+	
+	func withZ(_z:Float) -> SCNVector3{
+		return SCNVector3Make(self.x, self.y, _z);
+	}
+	
 	/**
 	* Negates the vector described by SCNVector3 and returns
 	* the result as a new SCNVector3.
@@ -114,6 +138,10 @@ func *= (inout left: SCNVector3, right: SCNVector3) {
 */
 func * (vector: SCNVector3, scalar: Float) -> SCNVector3 {
 	return SCNVector3Make(vector.x * scalar, vector.y * scalar, vector.z * scalar)
+}
+
+func * (vector: SCNVector3, scalar: Int) -> SCNVector3 {
+	return SCNVector3Make(vector.x * Float(scalar), vector.y * Float(scalar), vector.z * Float(scalar))
 }
 
 /**

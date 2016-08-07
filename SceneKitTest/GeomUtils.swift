@@ -65,36 +65,53 @@ class GeomUtils {
 		}
 	}
 	
-	static func getSquareRing(size:Float, depth:Float, offsets:Array<Float>, inout vertices:Array<SCNVector3>, inout tris:Array<Tri>){
-		let numVertices = vertices.count;
-		vertices.append(SCNVector3Make(0.0,		0.0,			0.0));
-		vertices.append(SCNVector3Make(size,	0.0,			0.0));
-		vertices.append(SCNVector3Make(size,	0.0,			size));
-		vertices.append(SCNVector3Make(0.0,		0.0,			size));
-		vertices.append(SCNVector3Make(0.0,		depth,			0.0));
-		vertices.append(SCNVector3Make(size,	depth,			0.0));
-		vertices.append(SCNVector3Make(size,	depth,			size));
-		vertices.append(SCNVector3Make(0.0,		depth,			size));
-		
-		tris.append(Tri(a: numVertices + 1, b: numVertices + 0, c: numVertices + 4));
-		tris.append(Tri(a: numVertices + 1, b: numVertices + 4, c: numVertices + 5));
-		tris.append(Tri(a: numVertices + 2, b: numVertices + 1, c: numVertices + 5));
-		tris.append(Tri(a: numVertices + 2, b: numVertices + 5, c: numVertices + 6));
-		tris.append(Tri(a: numVertices + 3, b: numVertices + 2, c: numVertices + 6));
-		tris.append(Tri(a: numVertices + 3, b: numVertices + 6, c: numVertices + 7));
-		tris.append(Tri(a: numVertices + 0, b: numVertices + 3, c: numVertices + 7));
-		tris.append(Tri(a: numVertices + 0, b: numVertices + 7, c: numVertices + 4));
+	static func getSquareRing(size:Float, defaultY:Float, numPerSide:Int, offsets:Array<Float>, inout vertices:Array<SCNVector3>, inout tris:Array<Tri>){
+		let dx:Float =				size / Float(numPerSide - 1);
+		var numVertices:Int =		vertices.count;
+		let startPosns:Array<SCNVector3> = [
+			SCNVector3Make(0.0,		0.0,		0.0),
+			SCNVector3Make(size,	0.0,		0.0),
+			SCNVector3Make(size,	0.0,		size),
+			SCNVector3Make(0.0,		0.0,		size)
+		];
+		let directions:Array<SCNVector3> = [
+			SCNVector3Make(dx,		0.0,		0.0),
+			SCNVector3Make(0.0,		0.0,		dx),
+			SCNVector3Make(-dx,		0.0,		0.0),
+			SCNVector3Make(0.0,		0.0,		-dx)
+		];
+		func getOffset(v:SCNVector3)->Float{
+			let indexI = Int(round(v.x / dx));
+			let indexJ = Int(round(v.z / dx));
+			let index = indexI * numPerSide + indexJ;
+			return offsets[index];
+		}
+		for k in 0...3{
+			let startPos:SCNVector3 =		startPosns[k];
+			let direction:SCNVector3 =		directions[k];
+			for i in 0 ... (numPerSide - 2){
+				let v0 = startPos + (direction * i);
+				let v1 = startPos + (direction * (i + 1));
+				vertices.append(v0);
+				vertices.append(v0.withY(defaultY - getOffset(v0)));
+				vertices.append(v1);
+				vertices.append(v1.withY(defaultY - getOffset(v1)));
+				tris.append(Tri(a: numVertices + 3, b: numVertices + 0, c: numVertices + 1));
+				tris.append(Tri(a: numVertices + 2, b: numVertices + 0, c: numVertices + 3));
+				numVertices += 4;
+			}
+		}
 	}
 	
 	static func getBase(size:Float, numPerSide:Int) -> SCNGeometry{
 		var tris:Array<Tri> =					[Tri]();
 		var vertices2d:Array<Vertex> =			[Vertex]();
 		let defaultY:Float =					-12.0;
-		GeomUtils.randomTris(size, numPerSide: 3, vertices: &vertices2d, tris: &tris);
 		var edgeOffsets:Array<Float> =			[Float]();
+		GeomUtils.randomTris(size, numPerSide: 3, vertices: &vertices2d, tris: &tris);
 		for _ in 0 ..< numPerSide{
 			for _ in 0 ..< numPerSide{
-				edgeOffsets.append(0.0);
+				edgeOffsets.append(Float(arc4random() % 20));
 			}
 		}
 		var vertices3d:Array<SCNVector3> = vertices2d.map({
@@ -105,11 +122,12 @@ class GeomUtils {
 			var indexI:Int;
 			var indexJ:Int;
 			var index:Int;
+			let dx:Float = size / Float(numPerSide - 1);
 			if(fx == 0 || fx == size || fy == 0 || fy == size){
-				indexI = Int(round(fx / (size / Float(numPerSide - 1))));
-				indexJ = Int(round(fy / (size / Float(numPerSide - 1))));
+				indexI = Int(round(fx / dx));
+				indexJ = Int(round(fy / dx));
 				index = (indexI * numPerSide) + indexJ;
-				newY = edgeOffsets[index];
+				newY = defaultY - edgeOffsets[index];
 			}
 			else{
 				let dx:Float = fx - size/2;
@@ -123,7 +141,7 @@ class GeomUtils {
 			}
 			return SCNVector3Make(Float(v.x), newY, Float(v.y));
 		});
-		GeomUtils.getSquareRing(size, depth:defaultY, offsets:edgeOffsets, vertices: &vertices3d, tris: &tris);
+		GeomUtils.getSquareRing(size, defaultY:defaultY, numPerSide:numPerSide, offsets:edgeOffsets, vertices: &vertices3d, tris: &tris);
 		return GeomUtils.makeGeometryWithPointsAndTriangles(vertices3d, tris: tris, centre: SCNVector3(size/2.0, 0.1, size/2.0));
 	}
 	
