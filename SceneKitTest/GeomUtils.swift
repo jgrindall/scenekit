@@ -136,8 +136,8 @@ class GeomUtils {
 	static func makeGeometryWithPointsAndSquares(positions:Array<SCNVector3>, sqrs:Array<Sqr>, centre: SCNVector3? = nil) -> SCNGeometry{
 		var tris = [Tri]();
 		for s:Sqr in sqrs{
-			tris.append(Tri(a: s.a, b: s.b, c: s.c));
-			tris.append(Tri(a: s.c, b: s.d, c: s.a));
+			tris.append(Tri(a: s.c, b: s.b, c: s.a));
+			tris.append(Tri(a: s.a, b: s.d, c: s.c));
 		}
 		return GeomUtils.makeGeometryWithPointsAndTriangles(positions, tris: tris, centre: centre);
 	}
