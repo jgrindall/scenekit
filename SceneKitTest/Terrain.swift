@@ -30,7 +30,7 @@ class Terrain{
 	}
 	
 	private func initGeom(){
-		self.geom = GeomUtils.makeTopology(self.maxI, maxJ: self.maxJ, size:self.size);
+		self.geom = Topology.makeTopology(self.maxI, maxJ: self.maxJ, size:self.size);
 		let blueMaterial = SCNMaterial();
 		blueMaterial.diffuse.contents = Assets.getSoilImage();
 		self.geom.materials = [blueMaterial];
