@@ -17,6 +17,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	var cameraOrbit:	SCNNode!;
 	var lightNode:		SCNNode!;
 	var originNode:		SCNNode!;
+	var box:			SCNGeometry!;
+	var boxNode:		SCNNode!;
 	var gestureHandler:	GestureHandler!;
 	
 	func addScene(){
@@ -44,9 +46,37 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		self.scene.rootNode.castsShadow = true;
 	}
 	
+	func updateHeight(){
+		//SCNTransaction.begin();
+		var s:Float = Float(arc4random() % 10);
+		if(self.box != nil){
+			//self.boxNode.scale = SCNVector3Make(1.0, s, 1.0);
+		}
+		//SCNTransaction.commit();
+	}
+	
 	func addTerrain(){
-		self.terrain = Terrain(maxI: self.maxI, maxJ: self.maxJ, size: self.size);
-		scene.rootNode.addChildNode(self.terrain.getNode());
+		let blueMaterial = SCNMaterial();
+		blueMaterial.diffuse.contents = Assets.getSoilImage();
+		for i in 0 ... self.maxI{
+			for j in 0 ... self.maxJ{
+				var geom = SCNBox(width: CGFloat(self.size), height: CGFloat(arc4random() % 12), length:CGFloat(self.size), chamferRadius: 0.0);
+				var b:SCNNode = SCNNode(geometry: geom);
+				b.position = SCNVector3Make(Float(i)*self.size, 0.0, Float(j)*self.size);
+				geom.firstMaterial = blueMaterial;
+				scene.rootNode.addChildNode(b);
+				if(i == 4 && j == 4){
+					self.box = geom;
+					self.boxNode = b;
+				}
+			}
+		}
+		
+		self.updateHeight();
+		
+		
+		//self.terrain = Terrain(maxI: self.maxI, maxJ: self.maxJ, size: self.size);
+		//scene.rootNode.addChildNode(self.terrain.getNode());
 	}
 	
 	func addLights(){
@@ -71,7 +101,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	}
 	
 	func edit(){
-		self.terrain!.edit();
+		//self.terrain!.edit();
+		self.updateHeight();
 	}
 	
 	func addBase(){
