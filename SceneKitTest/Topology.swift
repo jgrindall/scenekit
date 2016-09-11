@@ -23,7 +23,7 @@ class Topology {
 				vertices.append(SCNVector3Make(Float(j)*size, h, Float(i)*size));
 			}
 		}
-		var h:Float = 0.0;
+		var h:Float = 1.5;
 		for i in 0 ..< maxI{
 			for j in 0 ..< maxJ{
 				vertices.append(SCNVector3Make(Float(j)*size + eps, h, Float(i)*size + eps));

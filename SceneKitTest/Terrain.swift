@@ -33,7 +33,7 @@ class Terrain{
 		self.geom = Topology.makeTopology(self.maxI, maxJ: self.maxJ, size:self.size);
 		let blueMaterial = SCNMaterial();
 		blueMaterial.diffuse.contents = Assets.getSoilImage();
-		self.geom.materials = [blueMaterial];
+		//self.geom.materials = [blueMaterial];
 		self.node = SCNNode(geometry: self.geom);
 		self.node.castsShadow = true;
 		self.updateColor();
@@ -45,7 +45,7 @@ class Terrain{
 		self.geom.setValue(Float(self.size), forKey: "size");
 		self.geom.setValue(Float(GeomUtils.Constants.EPSILON), forKey: "eps");
 		self.geom.shaderModifiers = [
-			SCNShaderModifierEntryPointGeometry: Assets.getGeomModifier(),
+			//SCNShaderModifierEntryPointGeometry: Assets.getGeomModifier(),
 			SCNShaderModifierEntryPointSurface: Assets.getSurfModifier()
 		];
 	}
@@ -67,15 +67,18 @@ class Terrain{
 	}
 	
 	func edit(){
-		let i:Int = Int(arc4random_uniform(10));
-		let j:Int = Int(arc4random_uniform(10));
-		let h:UInt8 = UInt8(arc4random_uniform(255));
+		print("edit");
+		let i:Int = 3;
+		//Int(arc4random_uniform(10));
+		let j:Int = 3;
+		//Int(arc4random_uniform(10));
+		let h:UInt8 = UInt8(50);
 		self.heightMap.setHeightAt(i, j: j, h: h);
-		self.colorMap.setColorAt(i, j: j, colorIndex: h);
-		SCNTransaction.begin();
-		self.updateColor();
-		self.updateHeight();
-		SCNTransaction.commit();
+		//self.colorMap.setColorAt(i, j: j, colorIndex: h);
+		//SCNTransaction.begin();
+		//self.updateColor();
+		//self.updateHeight();
+		//SCNTransaction.commit();
 	}
 	
 	func getNode() -> SCNNode{

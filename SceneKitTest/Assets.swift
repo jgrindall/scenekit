@@ -17,6 +17,20 @@ class Assets{
 		return try! String(contentsOfFile: path);
 	}
 	
+	static func getGeomModifier2() -> String{
+		let path:String = NSBundle.mainBundle().pathForResource("geom2", ofType: "shader")!;
+		let s:String = try! String(contentsOfFile: path);
+		let newS = s.stringByReplacingOccurrencesOfString("%shared%", withString: Assets.getShared());
+		return newS;
+	}
+	
+	static func getGeomModifier3() -> String{
+		let path:String = NSBundle.mainBundle().pathForResource("geom3", ofType: "shader")!;
+		let s:String = try! String(contentsOfFile: path);
+		let newS = s.stringByReplacingOccurrencesOfString("%shared%", withString: Assets.getShared());
+		return newS;
+	}
+	
 	static func getGeomModifier() -> String{
 		let path:String = NSBundle.mainBundle().pathForResource("geom", ofType: "shader")!;
 		let s:String = try! String(contentsOfFile: path);
@@ -32,7 +46,7 @@ class Assets{
 	}
 	
 	static func getSoil() -> SCNMaterialProperty{
-		let imgPath = NSBundle.mainBundle().pathForResource("stones1", ofType: "png");
+		let imgPath = NSBundle.mainBundle().pathForResource("soil", ofType: "png");
 		return SCNMaterialProperty(contents: UIImage(contentsOfFile: imgPath!)!);
 	}
 	
@@ -81,6 +95,11 @@ class Assets{
 	
 	static func getSoilImage() -> UIImage{
 		let imgPath = NSBundle.mainBundle().pathForResource("soil", ofType: "jpg");
+		return UIImage(contentsOfFile: imgPath!)!;
+	}
+	
+	static func getSkyImage() -> UIImage{
+		let imgPath = NSBundle.mainBundle().pathForResource("left", ofType: "png");
 		return UIImage(contentsOfFile: imgPath!)!;
 	}
 
