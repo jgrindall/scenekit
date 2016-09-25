@@ -45,8 +45,15 @@ class Assets{
 		return newS;
 	}
 	
+	static func getFragModifier() -> String{
+		let path:String = NSBundle.mainBundle().pathForResource("frag", ofType: "shader")!;
+		let s:String = try! String(contentsOfFile: path);
+		let newS = s.stringByReplacingOccurrencesOfString("%shared%", withString: Assets.getShared());
+		return newS;
+	}
+	
 	static func getSoil() -> SCNMaterialProperty{
-		let imgPath = NSBundle.mainBundle().pathForResource("soil", ofType: "png");
+		let imgPath = NSBundle.mainBundle().pathForResource("soil", ofType: "jpg");
 		return SCNMaterialProperty(contents: UIImage(contentsOfFile: imgPath!)!);
 	}
 	

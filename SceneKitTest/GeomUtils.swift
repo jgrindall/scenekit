@@ -49,7 +49,7 @@ struct Sqr {
 class GeomUtils {
 	
 	struct Constants {
-		static let EPSILON:Float = 0.2;
+		static let EPSILON:Float = 1.0;
 	}
 	
 	static func randomTris(size:Float, numPerSide:Int, inout vertices:Array<Vertex>, inout tris:Array<Tri>){

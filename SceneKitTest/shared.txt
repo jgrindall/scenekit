@@ -1,11 +1,39 @@
-float j = pos.x / size;			// from 0 to maxJ
-float i = pos.z / size;			// from 0 to maxI
 
-float rnd_j = floor(j);
-float rnd_i = floor(i);
+float z0 =			floor(pos.z / size);
+float x0 =			floor(pos.x / size);
+float dz =			pos.z - z0 * size;
+float dx =			pos.x - x0 * size;
+float mid_i =		z0 + (size/2.0);
+float mid_j =		x0 + (size/2.0);
+float ht =			100.0;
+float innerSize =	size - 2.0 * eps;
+bool _middle =		(dx >= eps && dx <= size - eps && dz >= eps && dz <= size - eps);
+bool _left =		(dz < eps && dx >= dz && dz + dx <= size);
+bool _right =		(dz > size - eps && dz >= dx && dz + dx >= size);
+bool _top =			(dx > size - eps && dx >= dz && dz + dx >= size);
+bool _bottom =		(dx < eps && dz >= dx && dz + dx <= size);
 
-float pix_j = (rnd_j + 0.5) / maxJ;
-float pix_i = (rnd_i + 0.5) / maxI;
+float left_x =		dz;
+float left_y =		dx;
+float oldDx;
 
-float dx = j - rnd_j;
-float dy = i - rnd_i;
+if(_right){
+	left_x = size - left_x;
+	left_y = size - left_y;
+}
+else if(_top){
+	oldDx = left_x;
+	left_x = size - left_y;
+	left_y = oldDx;
+}
+else if(_bottom){
+	oldDx = left_x;
+	left_x = left_y;
+	left_y = size - oldDx;
+}
+
+//here
+
+
+//float ht =			20.0 * texture2D(heightMapTexture, vec2(x0/maxJ, z0/maxI)).r;
+

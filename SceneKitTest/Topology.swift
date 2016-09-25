@@ -16,20 +16,21 @@ class Topology {
 	static func makeTopology(maxI:CInt, maxJ:CInt, size:Float) -> SCNGeometry{
 		var vertices:Array<SCNVector3> = [SCNVector3]();
 		var sqrs:Array<Sqr> = [Sqr]();
-		let eps:Float = size * GeomUtils.Constants.EPSILON;
+		let eps:Float = GeomUtils.Constants.EPSILON;
 		for i in 0 ... maxI{
 			for j in 0 ... maxJ{
 				var h:Float = 0.0;
 				vertices.append(SCNVector3Make(Float(j)*size, h, Float(i)*size));
 			}
 		}
-		var h:Float = 1.5;
+		var h:Float = 0;
+		var dh:Float = 0.0;
 		for i in 0 ..< maxI{
 			for j in 0 ..< maxJ{
-				vertices.append(SCNVector3Make(Float(j)*size + eps, h, Float(i)*size + eps));
-				vertices.append(SCNVector3Make(Float(j + 1)*size - eps, h, Float(i)*size + eps));
-				vertices.append(SCNVector3Make(Float(j + 1)*size - eps, h, Float(i + 1)*size - eps));
-				vertices.append(SCNVector3Make(Float(j)*size + eps, h, Float(i + 1)*size - eps));
+				vertices.append(SCNVector3Make(Float(j)*size + eps, h + dh, Float(i)*size + eps));
+				vertices.append(SCNVector3Make(Float(j + 1)*size - eps, h + dh, Float(i)*size + eps));
+				vertices.append(SCNVector3Make(Float(j + 1)*size - eps, h + dh, Float(i + 1)*size - eps));
+				vertices.append(SCNVector3Make(Float(j)*size + eps, h + dh, Float(i + 1)*size - eps));
 			}
 		}
 		func getIndex(i:CInt, j:CInt) -> CInt{
@@ -53,6 +54,8 @@ class Topology {
 				sqrs.append(Sqr(a: getIndex(i, j: j),					b: getInnerIndex(i, j: j, k: 0),			c: getInnerIndex(i, j: j, k: 1),			d: getIndex(i, j: j + 1)));
 			}
 		}
+		//print(vertices);
+		//print(sqrs);
 		return GeomUtils.makeGeometryWithPointsAndSquares(vertices, sqrs: sqrs);
 	}
 	

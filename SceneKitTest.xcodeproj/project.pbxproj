@@ -14,6 +14,7 @@
 		521F67831D4C022A00DF997D /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521F677E1D4C022A00DF997D /* Vertex.swift */; };
 		5221C7881D85F3A500B71566 /* geom3.shader in Resources */ = {isa = PBXBuildFile; fileRef = 5221C7871D85F3A500B71566 /* geom3.shader */; };
 		522CD9F01CE8FE810062C004 /* robot.dae in Resources */ = {isa = PBXBuildFile; fileRef = 522CD9EF1CE8FE810062C004 /* robot.dae */; };
+		5237FD9B1D8F256E008651DF /* frag.shader in Resources */ = {isa = PBXBuildFile; fileRef = 5237FD9A1D8F256E008651DF /* frag.shader */; };
 		525F54571D0F47E1008C8396 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 525F54551D0F47E1008C8396 /* LaunchScreen.storyboard */; };
 		525F54591D0F4925008C8396 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525F54581D0F4925008C8396 /* ViewController.swift */; };
 		52861D581D27F4BC002441B7 /* Terrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52861D571D27F4BC002441B7 /* Terrain.swift */; };
@@ -48,6 +49,7 @@
 		521F677E1D4C022A00DF997D /* Vertex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vertex.swift; sourceTree = "<group>"; };
 		5221C7871D85F3A500B71566 /* geom3.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = geom3.shader; sourceTree = "<group>"; };
 		522CD9EF1CE8FE810062C004 /* robot.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = robot.dae; sourceTree = "<group>"; };
+		5237FD9A1D8F256E008651DF /* frag.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = frag.shader; sourceTree = "<group>"; };
 		525F54561D0F47E1008C8396 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		525F54581D0F4925008C8396 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		52861D571D27F4BC002441B7 /* Terrain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Terrain.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 		52861D611D29ADC7002441B7 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				5237FD9A1D8F256E008651DF /* frag.shader */,
 				5221C7871D85F3A500B71566 /* geom3.shader */,
 				528E52CE1D5BD2A80064489F /* geom2.shader */,
 				52861D651D29AE5D002441B7 /* shared.txt */,
@@ -222,6 +225,7 @@
 				TargetAttributes = {
 					80EE09B9196A4C4A00B77AB0 = {
 						CreatedOnToolsVersion = 6.0;
+						DevelopmentTeam = WDBW628V64;
 					};
 				};
 			};
@@ -254,6 +258,7 @@
 				525F54571D0F47E1008C8396 /* LaunchScreen.storyboard in Resources */,
 				5221C7881D85F3A500B71566 /* geom3.shader in Resources */,
 				52FEBC9F1D0419D900B65511 /* geom.shader in Resources */,
+				5237FD9B1D8F256E008651DF /* frag.shader in Resources */,
 				52946C271D57D09A00A6D54B /* soil.jpg in Resources */,
 				528E52CD1D5932C00064489F /* left.png in Resources */,
 				52861D601D29A8BA002441B7 /* stone.png in Resources */,
@@ -392,6 +397,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = WDBW628V64;
 				INFOPLIST_FILE = "$(SRCROOT)/SceneKitTest/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -410,6 +416,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = WDBW628V64;
 				INFOPLIST_FILE = "$(SRCROOT)/SceneKitTest/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

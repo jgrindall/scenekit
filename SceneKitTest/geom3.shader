@@ -1,1 +1,1 @@
-_geometry.position.y = _geometry.position.x + sin(_geometry.position.z * u_time);
+// _geometry.position.y = _geometry.position.x + sin(_geometry.position.z * u_time);

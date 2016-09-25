@@ -7,9 +7,9 @@ import QuartzCore
 
 class ViewController: UIViewController, SCNSceneRendererDelegate {
 	
-	var maxI:CInt =		1;
-	var maxJ:CInt =		1;
-	var size:Float =	1.5;
+	var maxI:CInt =		5;
+	var maxJ:CInt =		5;
+	var size:Float =	100;
 	
 	var sceneView:		SCNView!;
 	var scene:			SCNScene!;
@@ -47,7 +47,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		self.cameraNode.camera!.yFov  = 53;
 		self.cameraNode.camera!.zFar = 2000;
 		self.cameraNode.camera!.zNear = 0.01;
-		self.cameraNode.position = SCNVector3(x: 0, y: 0, z: 200);
+		self.cameraNode.position = SCNVector3(x: 0, y: 0, z: 1000);
 		self.cameraOrbit = SCNNode();
 		self.cameraOrbit.addChildNode(self.cameraNode);
 		self.scene.rootNode.addChildNode(self.cameraOrbit);
@@ -67,6 +67,11 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	func addTerrain(){
 		self.terrain = Terrain(maxI: self.maxI, maxJ: self.maxJ, size: self.size);
 		scene.rootNode.addChildNode(self.terrain.getNode());
+	}
+	
+	func addTerrain2(){
+		
+		//scene.rootNode.addChildNode(self.terrain.getNode());
 	}
 	
 	func addLights(){
@@ -186,10 +191,21 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		let cubeNode2 = SCNNode(geometry: cubeGeometry2)
 		cubeNode2.position = SCNVector3(1.2, 2, 1.2);
 		
-		let planeGeometry = SCNPlane(width: 15.0, height: 15.0)
+		var vertices:Array<SCNVector3> = [SCNVector3]();
+		var sqrs:Array<Sqr> = [Sqr]();
+		vertices.append(SCNVector3Make(0, 0, 0));
+		vertices.append(SCNVector3Make(100, 0, 0));
+		vertices.append(SCNVector3Make(100, 0, 100));
+		vertices.append(SCNVector3Make(0, 0, 100));
+		sqrs.append(Sqr(a:0, b:1, c:w, d:3));
+		let planeGeometry = GeomUtils.makeGeometryWithPointsAndSquares(vertices, sqrs: sqrs);
 		let planeNode = SCNNode(geometry: planeGeometry)
-		planeNode.eulerAngles = SCNVector3(x: GLKMathDegreesToRadians(-90), y: 0, z: 0)
-		planeNode.position = SCNVector3(x: 0.0, y: -0.5, z: 0.0)
+		//planeNode.eulerAngles = SCNVector3(x: GLKMathDegreesToRadians(-90), y: 0, z: 0)
+		planeNode.position = SCNVector3(x: 0.0, y: 0.0, z: 0.0)
+		planeGeometry.shaderModifiers = [
+			SCNShaderModifierEntryPointGeometry: Assets.getGeomModifier2()
+		];
+		
 		
 		// materials
 		let cubeMaterial = SCNMaterial()
@@ -197,13 +213,13 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 
 		cubeMaterial.diffuse.contents = Assets.getSoilImage();
 		cubeGeometry.materials = [cubeMaterial];
-		cubeGeometry.shaderModifiers = [
-			SCNShaderModifierEntryPointGeometry: Assets.getGeomModifier2()
-		];
+		//cubeGeometry.shaderModifiers = [
+			//SCNShaderModifierEntryPointGeometry: Assets.getGeomModifier2()
+		//];
 		cubeGeometry2.materials = [cubeMaterial];
-		cubeGeometry2.shaderModifiers = [
-			SCNShaderModifierEntryPointGeometry: Assets.getGeomModifier3()
-		];
+		//cubeGeometry2.shaderModifiers = [
+			//SCNShaderModifierEntryPointGeometry: Assets.getGeomModifier3()
+		//];
 		//cubeGeometry2.shaderModifiers = [
 			//SCNShaderModifierEntryPointGeometry: Assets.getGeomModifier2()
 		//];
@@ -215,7 +231,9 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		let camera = SCNCamera()
 		let cameraNode = SCNNode()
 		cameraNode.camera = camera
-		cameraNode.position = SCNVector3(-5.0, 5.0, 5.0)
+		cameraNode.position = SCNVector3(-30.0, 30.0, 30.0);
+		cameraNode.camera!.zFar = 10000;
+		cameraNode.camera!.zNear = 0.01;
 		
 		// set up optional lookAt constraint for the camera
 		let constraint = SCNLookAtConstraint(target: cubeNode)
@@ -258,7 +276,9 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		self.scene.rootNode.addChildNode(cubeNode2)
 		self.scene.rootNode.addChildNode(planeNode)
 		sceneView.playing = true;
-		self.addTerrain();
+		
+		self.addTerrain2()
+		//self.addTerrain();
 		//NSTimer.scheduledTimerWithTimeInterval(0.25, target: self, selector:(#selector(ViewController.edit)) , userInfo: nil, repeats: true);
 	}
 	

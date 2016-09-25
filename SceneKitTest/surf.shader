@@ -12,26 +12,23 @@ uniform float eps;
 vec4 surfacePos = vec4(_surface.position, 1.0);
 vec4 pos = u_inverseViewTransform * surfacePos;
 
-float j = pos.x / size;						// from 0 to maxJ
-float i = pos.z / size;						// from 0 to maxI
-float y = pos.y;
+%shared%
 
-float rnd_j = floor(j);
-float rnd_i = floor(i);
+float tex_x;
+float tex_y;
 
-float pix_j = (rnd_j + 0.5) / maxJ;			// 0 to 1
-float pix_i = (rnd_i + 0.5) / maxI;			// 0 to 1
-
-float dx = j - rnd_j;
-float dz = i - rnd_i;
-
-if(dx > eps && dx < 1.0 - eps && dz > eps && dz < 1.0 - eps){
-	_surface.diffuse = texture2D(texture0, vec2(dx, dz));
+if(_middle){
+    tex_y = (dz - eps) / innerSize;
+	tex_x = (dx - eps) / innerSize;
+	_surface.diffuse = texture2D(texture1, vec2(tex_x, tex_y));
 }
-
-else if(dx < eps){
-	float pix_ht = (dx / eps);		// 0 to 1
-	_surface.diffuse = texture2D(texture0, vec2(dz, pix_ht));
+else {
+    tex_y = pos.y / ht;
+    tex_x = (left_y - left_x) / (size - 2.0 * left_x);
+    _surface.diffuse = texture2D(texture0, vec2(tex_x, tex_y));
+	//_surface.diffuse = vec4(0.0, 0.0, 0.0, 0.0);
+	//_surface.ambient = vec4(0.0, 0.0, 0.0, 0.0);
+	//_surface.transparent = vec4(0.0, 0.0, 0.0, 0.0);
 }
 
 

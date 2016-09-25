@@ -1,1 +1,4 @@
-_geometry.position.y = _geometry.position.x + sin(_geometry.position.z * u_time);
+
+if(_geometry.position.x > 50.0){
+	_geometry.position.y += 50.0;
+}

@@ -39,15 +39,17 @@ class Terrain{
 		self.updateColor();
 		self.updateHeight();
 		self.geom.setValue(Assets.getGrass(), forKey: "texture0");
-		self.geom.setValue(Assets.getStone(), forKey: "texture1");
+		self.geom.setValue(Assets.getSoil(), forKey: "texture1");
 		self.geom.setValue(Float(self.maxI), forKey: "maxI");
 		self.geom.setValue(Float(self.maxJ), forKey: "maxJ");
 		self.geom.setValue(Float(self.size), forKey: "size");
 		self.geom.setValue(Float(GeomUtils.Constants.EPSILON), forKey: "eps");
 		self.geom.shaderModifiers = [
-			//SCNShaderModifierEntryPointGeometry: Assets.getGeomModifier(),
-			SCNShaderModifierEntryPointSurface: Assets.getSurfModifier()
+			SCNShaderModifierEntryPointGeometry: Assets.getGeomModifier(),
+			SCNShaderModifierEntryPointSurface: Assets.getSurfModifier(),
+			SCNShaderModifierEntryPointFragment: Assets.getFragModifier()
 		];
+		//SCNShaderModifierEntryPointSurface: Assets.getSurfModifier()
 	}
 	
 	private func updateHeight(){
