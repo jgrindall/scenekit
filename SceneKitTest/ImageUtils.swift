@@ -12,28 +12,28 @@ import QuartzCore
 
 class ImageUtils {
 	
-	static func createBitmapContext(inImage: CGImageRef?) -> CGContext {
+	static func createBitmapContext(_ inImage: CGImage?) -> CGContext {
 		var pixelsWide:Int = 1;
 		var pixelsHigh:Int = 1;
 		if((inImage) != nil){
-			pixelsWide = CGImageGetWidth(inImage);
-			pixelsHigh = CGImageGetHeight(inImage);
+			pixelsWide = inImage!.width;
+			pixelsHigh = inImage!.height;
 		}
 		let bitmapBytesPerRow = Int(pixelsWide) * 4;
 		let colorSpace = CGColorSpaceCreateDeviceRGB();
-		let bitmapData:UnsafeMutablePointer<Void> = nil;
-		let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue);
-		let context = CGBitmapContextCreate(bitmapData, pixelsWide, pixelsHigh, 8, bitmapBytesPerRow, colorSpace, bitmapInfo.rawValue);
+		let bitmapData:UnsafeMutableRawPointer? = nil;
+		let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue);
+		let context = CGContext(data: bitmapData, width: pixelsWide, height: pixelsHigh, bitsPerComponent: 8, bytesPerRow: bitmapBytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo.rawValue);
 		return context!;
 	}
 	
-	static func getImageWithColor(color: UIColor, size: CGSize) -> UIImage {
+	static func getImageWithColor(_ color: UIColor, size: CGSize) -> UIImage {
 		UIGraphicsBeginImageContextWithOptions(size, false, 0);
 		color.setFill();
-		UIRectFill(CGRectMake(0, 0, size.width, size.height));
+		UIRectFill(CGRect(x: 0, y: 0, width: size.width, height: size.height));
 		let image = UIGraphicsGetImageFromCurrentImageContext();
 		UIGraphicsEndImageContext();
-		return image;
+		return image!;
 	}
 	
 }

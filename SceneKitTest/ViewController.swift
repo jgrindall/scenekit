@@ -7,21 +7,24 @@ import QuartzCore
 
 class ViewController: UIViewController, SCNSceneRendererDelegate {
 	
-	var maxI:CInt =		5;
-	var maxJ:CInt =		5;
-	var size:Float =	100;
+	var maxI:Int =		50;
+	var maxJ:Int =		50;
+	var size:Float =	12;
+	var height:Float =	20;
 	
-	var sceneView:		SCNView!;
-	var scene:			SCNScene!;
-	var cameraNode:		SCNNode!;
-	var base:			SCNNode!;
-	var terrain:		Terrain!;
-	var cameraOrbit:	SCNNode!;
-	var lightNode:		SCNNode!;
-	var originNode:		SCNNode!;
-	var box:			SCNGeometry!;
-	var boxNode:		SCNNode!;
-	var gestureHandler:	GestureHandler!;
+	var sceneView:			SCNView!;
+	var scene:				SCNScene!;
+	var cameraNode:			SCNNode!;
+	var base:				SCNNode!;
+	var cameraOrbit:		SCNNode!;
+	var lightNode:			SCNNode!;
+	var originNode:			SCNNode!;
+	var box:				SCNGeometry!;
+	var boxNode:			SCNNode!;
+	var gestureHandler:		GestureHandler!;
+	var dispatchingValue:	DispatchingValue<Int>!;
+	var cachedTree:			SCNNode!;
+	var trees:				Array<SCNNode>!;
 	
 	func addScene(){
 		self.sceneView = SCNView(frame: self.view.frame);
@@ -35,9 +38,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		self.scene.fogStartDistance = 150;
 		self.scene.fogEndDistance = 300;
 		self.scene?.fogDensityExponent = 1.0;
-		//var sky = Assets.getSkyImage();
-		//scene.background.contents = [sky, sky, sky, sky, sky, sky];
 		self.sceneView.scene = scene;
+		self.trees = [SCNNode]();
 	}
 	
 	func addCamera(){
@@ -64,92 +66,31 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		SCNTransaction.commit();
 	}
 	
-	func addTerrain(){
-		self.terrain = Terrain(maxI: self.maxI, maxJ: self.maxJ, size: self.size);
-		scene.rootNode.addChildNode(self.terrain.getNode());
-	}
-	
-	func addTerrain2(){
-		
-		//scene.rootNode.addChildNode(self.terrain.getNode());
-	}
-	
 	func addLights(){
-		/*
 		let ambientLight = SCNLight();
-		ambientLight.type = SCNLightTypeAmbient;
-		ambientLight.color = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.4)
+		ambientLight.type = SCNLight.LightType.ambient;
+		ambientLight.color = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.75)
 		let ambientLightNode = SCNNode()
 		ambientLightNode.light = ambientLight;
 		ambientLight.castsShadow = true;
 		ambientLightNode.castsShadow = true;
 		scene.rootNode.addChildNode(ambientLightNode);
-		let myDirectLight = SCNLight();
-		myDirectLight.type = SCNLightTypeDirectional;
-		myDirectLight.color = UIColor.whiteColor();
-		myDirectLight.castsShadow = true;
-		self.lightNode = SCNNode();
-		self.lightNode.light = myDirectLight;
-		self.scene.rootNode.addChildNode(self.lightNode);
-		self.lightNode.castsShadow = true;
-		myDirectLight.shadowMode = SCNShadowMode.Forward;
-		
-		let omniLight = SCNLight()
-		omniLight.type = SCNLightTypeOmni
-		let omniLightNode = SCNNode()
-		omniLightNode.light = omniLight
-		omniLightNode.position = SCNVector3(1.5, 1.5, 1.5)
-		
-		// set up a Spot light
-*/
 		let cNode = SCNNode();
 		cNode.transform = SCNMatrix4MakeRotation(Float(M_PI), 0, 0, 1);
-		cNode.position = SCNVector3(Float(self.maxI)*self.size/2, 50, Float(self.maxI)*self.size/2)
-		
+		cNode.position = SCNVector3(Float(self.maxI)*self.size/2, 150, Float(self.maxI)*self.size/2)
 		let spotLight = SCNLight();
-		spotLight.color = UIColor.whiteColor();
-		spotLight.type = SCNLightTypeSpot;
+		spotLight.color = UIColor.white;
+		spotLight.type = SCNLight.LightType.spot;
 		spotLight.spotInnerAngle = 20.0;
 		spotLight.spotOuterAngle = 120.0;
 		spotLight.castsShadow = true;
-		
 		let spotLightNode = SCNNode();
 		spotLightNode.castsShadow = true;
 		spotLightNode.light = spotLight;
-		
-		let sphereGeom = SCNSphere(radius: 2);
-		let sphereGeom2 = SCNSphere(radius: 0.5);
 		let blueMaterial = SCNMaterial();
-		blueMaterial.diffuse.contents = UIColor.redColor();
-		sphereGeom.materials = [blueMaterial];
-		sphereGeom2.materials = [blueMaterial];
-		
-		let sphereNode = SCNNode(geometry: sphereGeom);
-		let sphereNode2 = SCNNode(geometry: sphereGeom2);
-		sphereNode2.position = SCNVector3Make(5.0, 0.0, 0.0);
-		
-		cNode.addChildNode(sphereNode);
-		cNode.addChildNode(sphereNode2);
+		blueMaterial.diffuse.contents = UIColor.red;
 		cNode.addChildNode(spotLightNode);
 		self.scene.rootNode.addChildNode(cNode);
-		
-		NSTimer.scheduledTimerWithTimeInterval(1,
-			target: NSBlockOperation(
-				block: {
-					let a:Float = 6 * Float(arc4random() % 1000000) / 1000000.0;
-					let x:Float = Float(arc4random() % 1000000) / 1000000.0
-					let y:Float = Float(arc4random() % 1000000) / 1000000.0
-					let z:Float = Float(arc4random() % 1000000) / 1000000.0
-					print(a, x, y, z);
-					cNode.position = SCNVector3Zero;
-					cNode.transform = SCNMatrix4MakeRotation(a, x, y, z);
-					cNode.position = SCNVector3(Float(self.maxI)*self.size/2, 50, Float(self.maxI)*self.size/2)
-				}
-			),
-			selector: #selector(NSOperation.main),
-			userInfo: nil,
-			repeats: true
-		);
 	}
 	
 	func addGestures(){
@@ -158,140 +99,72 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	}
 	
 	func edit(){
-		self.terrain!.edit();
-		//self.updateHeight();
+		let r0 = Float(arc4random_uniform(8)) - 4.0;
+		let r1 = Float(arc4random_uniform(8)) - 4.0;
+		for tree in self.trees {
+			tree.position.setX(tree.position.x + r0);
+			tree.position.setZ(tree.position.z + r1);
+		}
 	}
 	
-	func addBase(){
-		let baseGeom:SCNGeometry = Base.getBase(Float(self.maxI) * self.size, numPerSide: 12);
-		let blueMaterial = SCNMaterial();
-		blueMaterial.diffuse.contents = Assets.getSoilImage();
-		baseGeom.firstMaterial = blueMaterial;
-		self.base = SCNNode(geometry: baseGeom);
-		self.scene.rootNode.addChildNode(self.base);
-		self.base.opacity = 0.25;
-	}
-
-	override func viewDidLoad(){
-		super.viewDidLoad()
+	func collada2SCNNode(_ filepath:String) -> SCNNode {
+		let node = SCNNode()
+		let scene = SCNScene(named: filepath)
+		let nodeArray = scene!.rootNode.childNodes
 		
-		// set the view to match the current view size
-		let sceneView = SCNView(frame: self.view.frame)
-		self.view.addSubview(sceneView)
-		
-		// set up a scene
-		self.scene = SCNScene()
-		sceneView.scene = self.scene
-		sceneView.allowsCameraControl = true;
-		sceneView.autoenablesDefaultLighting = false;
-		// create some geometry
-		let cubeGeometry = SCNBox(width: 1.0, height: 1.0, length: 1.0, chamferRadius: 0.0)
-		let cubeGeometry2 = SCNBox(width: 0.7, height: 0.7, length: 0.7, chamferRadius: 0.0)
-		let cubeNode = SCNNode(geometry: cubeGeometry)
-		let cubeNode2 = SCNNode(geometry: cubeGeometry2)
-		cubeNode2.position = SCNVector3(1.2, 2, 1.2);
-		
-		var vertices:Array<SCNVector3> = [SCNVector3]();
-		var sqrs:Array<Sqr> = [Sqr]();
-		vertices.append(SCNVector3Make(0, 0, 0));
-		vertices.append(SCNVector3Make(100, 0, 0));
-		vertices.append(SCNVector3Make(100, 0, 100));
-		vertices.append(SCNVector3Make(0, 0, 100));
-		sqrs.append(Sqr(a:0, b:1, c:w, d:3));
-		let planeGeometry = GeomUtils.makeGeometryWithPointsAndSquares(vertices, sqrs: sqrs);
-		let planeNode = SCNNode(geometry: planeGeometry)
-		//planeNode.eulerAngles = SCNVector3(x: GLKMathDegreesToRadians(-90), y: 0, z: 0)
-		planeNode.position = SCNVector3(x: 0.0, y: 0.0, z: 0.0)
-		planeGeometry.shaderModifiers = [
-			SCNShaderModifierEntryPointGeometry: Assets.getGeomModifier2()
-		];
-		
-		
-		// materials
-		let cubeMaterial = SCNMaterial()
-		
-
-		cubeMaterial.diffuse.contents = Assets.getSoilImage();
-		cubeGeometry.materials = [cubeMaterial];
-		//cubeGeometry.shaderModifiers = [
-			//SCNShaderModifierEntryPointGeometry: Assets.getGeomModifier2()
-		//];
-		cubeGeometry2.materials = [cubeMaterial];
-		//cubeGeometry2.shaderModifiers = [
-			//SCNShaderModifierEntryPointGeometry: Assets.getGeomModifier3()
-		//];
-		//cubeGeometry2.shaderModifiers = [
-			//SCNShaderModifierEntryPointGeometry: Assets.getGeomModifier2()
-		//];
-		let planeMaterial = SCNMaterial()
-		planeMaterial.diffuse.contents = UIColor.blueColor()
-		planeGeometry.materials = [planeMaterial]
-		
-		// set up a Perspective camera
-		let camera = SCNCamera()
-		let cameraNode = SCNNode()
-		cameraNode.camera = camera
-		cameraNode.position = SCNVector3(-30.0, 30.0, 30.0);
-		cameraNode.camera!.zFar = 10000;
-		cameraNode.camera!.zNear = 0.01;
-		
-		// set up optional lookAt constraint for the camera
-		let constraint = SCNLookAtConstraint(target: cubeNode)
-		constraint.gimbalLockEnabled = true
-		cameraNode.constraints = [constraint]
-
-		
-		// set up a Spot light
-		let spotLight = SCNLight()
-		spotLight.type = SCNLightTypeSpot
-		spotLight.spotInnerAngle = 30.0
-		spotLight.spotOuterAngle = 80.0
-		spotLight.castsShadow = true
-		let spotLightNode = SCNNode()
-		spotLightNode.light = spotLight
-		spotLightNode.position = SCNVector3(1.5, 3.5, 1.5)
-		spotLightNode.constraints = [constraint]
-		
-		let sphereGeom = SCNSphere(radius: 0.1);
-		let blackMaterial = SCNMaterial();
-		blackMaterial.diffuse.contents = UIColor.blackColor();
-		sphereGeom.firstMaterial = blackMaterial;
-		let sphereNode = SCNNode(geometry: sphereGeom);
-		self.scene.rootNode.addChildNode(sphereNode);
-		sphereNode.position = spotLightNode.position;
-		
-		
-		
-		
-		// set up an ambient light
-		let ambientLight = SCNLight()
-		ambientLight.type = SCNLightTypeAmbient
-		ambientLight.color = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.05)
-		cameraNode.light = ambientLight
-		
-		// add nodes to the scene (make them viewable)
-		self.scene.rootNode.addChildNode(spotLightNode)
-		self.scene.rootNode.addChildNode(cameraNode)
-		self.scene.rootNode.addChildNode(cubeNode)
-		self.scene.rootNode.addChildNode(cubeNode2)
-		self.scene.rootNode.addChildNode(planeNode)
-		sceneView.playing = true;
-		
-		self.addTerrain2()
-		//self.addTerrain();
-		//NSTimer.scheduledTimerWithTimeInterval(0.25, target: self, selector:(#selector(ViewController.edit)) , userInfo: nil, repeats: true);
+		for childNode in nodeArray {
+			node.addChildNode(childNode as SCNNode)
+		}
+		return node
 	}
 	
-	/*override func viewDidLoad2() {
+	func getTree() -> SCNNode{
+		if((self.cachedTree == nil)){
+			//self.cachedTree = collada2SCNNode("model.dae");
+			let b0 = SCNNode(geometry:SCNBox(width: 8, height: 8, length: 5, chamferRadius: 0));
+			let b1 = SCNNode(geometry:SCNBox(width: 3, height: 3, length: 5, chamferRadius: 0));
+			b1.position.setX(5);
+			self.cachedTree = SCNNode();
+			self.cachedTree.addChildNode(b0);
+			self.cachedTree.addChildNode(b1);
+		}
+		return self.cachedTree;
+	}
+	
+	func addCubes(){
+		for i in 0...35{
+			for j in 0...35{
+				let cGeom:SCNPlane = SCNPlane(width: 20.0, height: 20.0);
+				cGeom.widthSegmentCount = 1;
+				cGeom.heightSegmentCount = 1;
+				let redMaterial = SCNMaterial();
+				redMaterial.diffuse.contents = UIColor.red;
+				cGeom.firstMaterial = redMaterial;
+				let cNode = SCNNode(geometry: cGeom);
+				cNode.eulerAngles = SCNVector3Make(0, 1.57, 0);
+				self.scene.rootNode.addChildNode(cNode);
+				cNode.position = SCNVector3Make(Float(i)*20.0, 0.0, Float(j)*20.0);
+				
+				let tree:SCNNode = self.getTree().clone();
+				self.scene.rootNode.addChildNode(tree);
+				tree.position = SCNVector3Make(Float(i)*20.0, 0.0, Float(j)*20.0);
+				self.trees.append(tree);
+				//tree.scale = SCNVector3(0.1,0.1,0.1);
+			}
+		}
+	}
+	
+	override func viewDidLoad() {
 		super.viewDidLoad();
 		self.addScene();
 		self.addLights();
 		self.addCamera();
 		self.addGestures();
-		self.addBase();
-		self.addTerrain();
-		self.sceneView.playing = true;
-		NSTimer.scheduledTimerWithTimeInterval(0.25, target: self, selector:(#selector(ViewController.edit)) , userInfo: nil, repeats: true);
-		
-	}*/
+		self.addCubes();
+		self.sceneView.isPlaying = true;
+		let delayTime = DispatchTime.now() + Double(Int64(10 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+		DispatchQueue.main.asyncAfter(deadline: delayTime) {
+			Timer.scheduledTimer(timeInterval: 0.1, target: self, selector:(#selector(ViewController.edit)), userInfo: nil, repeats: true);
+		}
+	}
 }

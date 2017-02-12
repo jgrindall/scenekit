@@ -12,12 +12,12 @@ import QuartzCore
 
 @objc
 
-public class GestureHandler : NSObject, SCNSceneRendererDelegate, UIGestureRecognizerDelegate{
+open class GestureHandler : NSObject, SCNSceneRendererDelegate, UIGestureRecognizerDelegate{
 	
-	private var _slideVel:CGPoint = CGPointZero;
-	private var _target:UIViewController!;
-	private var _cameraNode:SCNNode!;
-	private var _lights:Array<SCNNode>!;
+	fileprivate var _slideVel:CGPoint = CGPoint.zero;
+	fileprivate var _target:UIViewController!;
+	fileprivate var _cameraNode:SCNNode!;
+	fileprivate var _lights:Array<SCNNode>!;
 	
 	struct Consts {
 		static let VEL_SCALE:Float = 12000.0;
@@ -33,13 +33,13 @@ public class GestureHandler : NSObject, SCNSceneRendererDelegate, UIGestureRecog
 	}
 	
 	func add(){
-		self._target.view.userInteractionEnabled = true;
+		self._target.view.isUserInteractionEnabled = true;
 		let panGesture = UIPanGestureRecognizer(target: self, action:#selector(self.handlePanGesture(_:)));
 		panGesture.delegate = self;
 		self._target.view.addGestureRecognizer(panGesture);
 	}
 	
-	public func renderer(renderer: SCNSceneRenderer, updateAtTime time: NSTimeInterval) {
+	open func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
 		let old:SCNMatrix4 = self._cameraNode.transform;
 		let dx:Float = Float(self._slideVel.x)/GestureHandler.Consts.VEL_SCALE;
 		let dy:Float = Float(self._slideVel.y)/GestureHandler.Consts.VEL_SCALE;
@@ -68,8 +68,8 @@ public class GestureHandler : NSObject, SCNSceneRendererDelegate, UIGestureRecog
 		}
 	}
 	
-	@objc public func handlePanGesture(panGesture: UIPanGestureRecognizer){
-		self._slideVel = panGesture.velocityInView(self._target.view);
+	@objc open func handlePanGesture(_ panGesture: UIPanGestureRecognizer){
+		self._slideVel = panGesture.velocity(in: self._target.view);
 	}
 
 }
