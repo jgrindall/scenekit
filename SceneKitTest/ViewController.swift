@@ -119,7 +119,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		for i in 0...35{
 			for j in 0...35{
 				let turtle:Turtle = Turtle(type: "turtle");
-				turtle.pos(p: SCNVector3Make(Float(i)*20.0, 0.0, Float(j)*20.0));
+				turtle.pos(p: SCNVector3Make(Float(i)*20.0, 8.0, Float(j)*20.0));
 				self.turtles.append(turtle);
 				self.scene.rootNode.addChildNode(turtle.getNode());
 			}
@@ -137,6 +137,21 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		}
 	}
 	
+	func addBg(){
+		let planeGeom:SCNPlane = SCNPlane(width: 800.0, height: 800.0);
+		planeGeom.widthSegmentCount = 1;
+		planeGeom.heightSegmentCount = 1;
+		let material = SCNMaterial();
+		material.diffuse.minificationFilter = SCNFilterMode.nearest;
+		material.diffuse.magnificationFilter = SCNFilterMode.nearest;
+		material.diffuse.contents = UIColor.black;
+		planeGeom.firstMaterial = material;
+		let cNode = SCNNode(geometry: planeGeom);
+		cNode.position = SCNVector3(0, -1, 0);
+		cNode.rotation = SCNVector4Make(1, 0, 0, -1.57);
+		self.scene.rootNode.addChildNode(cNode);
+	}
+	
 	override func viewDidLoad() {
 		super.viewDidLoad();
 		self.addScene();
@@ -145,6 +160,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		self.addGestures();
 		self.addPatches();
 		self.addTurtles();
+		//self.addBg();
 		self.sceneView.isPlaying = true;
 		let delayTime = DispatchTime.now() + Double(Int64(10 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
 		DispatchQueue.main.asyncAfter(deadline: delayTime) {

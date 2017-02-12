@@ -16,15 +16,19 @@ class PatchNodeCache {
 		return (_dict[type]?.clone())!;
 	}
 	static private func _make(type:String) -> SCNNode{
-		let planeGeom:SCNPlane = SCNPlane(width: 20.0, height: 20.0);
+		let planeGeom:SCNPlane = SCNPlane(width: 21.0, height: 21.0);
 		planeGeom.widthSegmentCount = 1;
 		planeGeom.heightSegmentCount = 1;
 		let material = SCNMaterial();
+		material.diffuse.minificationFilter = SCNFilterMode.nearest;
+		material.diffuse.magnificationFilter = SCNFilterMode.nearest;
 		if(type == "grass"){
 			material.diffuse.contents = UIColor.red;
+			material.ambient.contents = UIColor.red;
 		}
 		else{
 			material.diffuse.contents = UIColor.green;
+			material.ambient.contents = UIColor.green;
 		}
 		planeGeom.firstMaterial = material;
 		let cNode = SCNNode(geometry: planeGeom);
