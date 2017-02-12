@@ -23,8 +23,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	var boxNode:			SCNNode!;
 	var gestureHandler:		GestureHandler!;
 	var dispatchingValue:	DispatchingValue<Int>!;
-	var cachedTree:			SCNNode!;
-	var trees:				Array<SCNNode>!;
+	var patches:			Array<Patch>!;
+	var turtles:			Array<Turtle>!;
 	
 	func addScene(){
 		self.sceneView = SCNView(frame: self.view.frame);
@@ -39,7 +39,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		self.scene.fogEndDistance = 300;
 		self.scene?.fogDensityExponent = 1.0;
 		self.sceneView.scene = scene;
-		self.trees = [SCNNode]();
+		self.patches = [Patch]();
+		self.turtles = [Turtle]();
 	}
 	
 	func addCamera(){
@@ -101,55 +102,37 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	func edit(){
 		let r0 = Float(arc4random_uniform(8)) - 4.0;
 		let r1 = Float(arc4random_uniform(8)) - 4.0;
-		for tree in self.trees {
-			tree.position.setX(tree.position.x + r0);
-			tree.position.setZ(tree.position.z + r1);
+		for turtle in self.turtles {
+			//turtle.position.setX(tree.position.x + r0);
+			//turtle.position.setZ(tree.position.z + r1);
+		}
+		for patch in self.patches {
+			//patch.getNode().eulerAngles = SCNVector3(0,0,0);
 		}
 	}
 	
-	func collada2SCNNode(_ filepath:String) -> SCNNode {
-		let node = SCNNode()
-		let scene = SCNScene(named: filepath)
-		let nodeArray = scene!.rootNode.childNodes
+	func consumeNextCommand(){
 		
-		for childNode in nodeArray {
-			node.addChildNode(childNode as SCNNode)
-		}
-		return node
 	}
 	
-	func getTree() -> SCNNode{
-		if((self.cachedTree == nil)){
-			//self.cachedTree = collada2SCNNode("model.dae");
-			let b0 = SCNNode(geometry:SCNBox(width: 8, height: 8, length: 5, chamferRadius: 0));
-			let b1 = SCNNode(geometry:SCNBox(width: 3, height: 3, length: 5, chamferRadius: 0));
-			b1.position.setX(5);
-			self.cachedTree = SCNNode();
-			self.cachedTree.addChildNode(b0);
-			self.cachedTree.addChildNode(b1);
-		}
-		return self.cachedTree;
-	}
-	
-	func addCubes(){
+	func addTurtles(){
 		for i in 0...35{
 			for j in 0...35{
-				let cGeom:SCNPlane = SCNPlane(width: 20.0, height: 20.0);
-				cGeom.widthSegmentCount = 1;
-				cGeom.heightSegmentCount = 1;
-				let redMaterial = SCNMaterial();
-				redMaterial.diffuse.contents = UIColor.red;
-				cGeom.firstMaterial = redMaterial;
-				let cNode = SCNNode(geometry: cGeom);
-				cNode.eulerAngles = SCNVector3Make(0, 1.57, 0);
-				self.scene.rootNode.addChildNode(cNode);
-				cNode.position = SCNVector3Make(Float(i)*20.0, 0.0, Float(j)*20.0);
-				
-				let tree:SCNNode = self.getTree().clone();
-				self.scene.rootNode.addChildNode(tree);
-				tree.position = SCNVector3Make(Float(i)*20.0, 0.0, Float(j)*20.0);
-				self.trees.append(tree);
-				//tree.scale = SCNVector3(0.1,0.1,0.1);
+				let turtle:Turtle = Turtle(type: "turtle");
+				turtle.pos(p: SCNVector3Make(Float(i)*20.0, 0.0, Float(j)*20.0));
+				self.turtles.append(turtle);
+				self.scene.rootNode.addChildNode(turtle.getNode());
+			}
+		}
+	}
+	
+	func addPatches(){
+		for i in 0...35{
+			for j in 0...35{
+				let patch:Patch = Patch(type: "grass");
+				patch.pos(p: SCNVector3Make(Float(i)*20.0, 0.0, Float(j)*20.0));
+				self.patches.append(patch);
+				self.scene.rootNode.addChildNode(patch.getNode());
 			}
 		}
 	}
@@ -160,7 +143,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		self.addLights();
 		self.addCamera();
 		self.addGestures();
-		self.addCubes();
+		self.addPatches();
+		self.addTurtles();
 		self.sceneView.isPlaying = true;
 		let delayTime = DispatchTime.now() + Double(Int64(10 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
 		DispatchQueue.main.asyncAfter(deadline: delayTime) {
