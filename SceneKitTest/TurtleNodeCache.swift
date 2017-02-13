@@ -20,6 +20,8 @@ class TurtleNodeCache {
 		}
 		let b0 = SCNNode(geometry:SCNBox(width: 8, height: 8, length: 5, chamferRadius: 0));
 		let b1 = SCNNode(geometry:SCNBox(width: 3, height: 3, length: 5, chamferRadius: 0));
+		//material.diffuse.minificationFilter = SCNFilterMode.nearest;
+		//material.diffuse.magnificationFilter = SCNFilterMode.nearest;
 		b1.position.setX(5);
 		let n:SCNNode = SCNNode();
 		n.addChildNode(b0);

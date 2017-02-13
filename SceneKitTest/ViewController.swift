@@ -2,7 +2,7 @@
 import UIKit
 import SceneKit
 import QuartzCore
-
+import JavaScriptCore
 
 
 class ViewController: UIViewController, SCNSceneRendererDelegate {
@@ -34,10 +34,11 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		self.sceneView.autoenablesDefaultLighting = false;
 		self.sceneView.delegate = self;
 		self.scene = SCNScene();
-		self.scene.fogColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.75);
-		self.scene.fogStartDistance = 150;
-		self.scene.fogEndDistance = 300;
-		self.scene?.fogDensityExponent = 1.0;
+		self.scene.background.contents = UIImage(named: "bg.png");
+		//self.scene.fogColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.75);
+		//self.scene.fogStartDistance = 150;
+		//self.scene.fogEndDistance = 300;
+		//self.scene?.fogDensityExponent = 1.0;
 		self.sceneView.scene = scene;
 		self.patches = [Patch]();
 		self.turtles = [Turtle]();
@@ -116,10 +117,14 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	}
 	
 	func addTurtles(){
-		for i in 0...35{
-			for j in 0...35{
+		var num:Int = 30;
+		var size:Float = 20.0;
+		var cx:Float = -Float(num) * size/2.0;
+		var cz:Float = -Float(num) * size/2.0;
+		for i in 0...num-1{
+			for j in 0...num-1{
 				let turtle:Turtle = Turtle(type: "turtle");
-				turtle.pos(p: SCNVector3Make(Float(i)*20.0, 8.0, Float(j)*20.0));
+				turtle.pos(p: SCNVector3Make(Float(i)*size - cx, 8.0, Float(j)*size - cz));
 				self.turtles.append(turtle);
 				self.scene.rootNode.addChildNode(turtle.getNode());
 			}
@@ -127,44 +132,35 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	}
 	
 	func addPatches(){
-		for i in 0...35{
-			for j in 0...35{
+		var num:Int = 30;
+		var size:Float = 20.0;
+		var cx:Float = -Float(num) * size/2.0;
+		var cz:Float = -Float(num) * size/2.0;
+		for i in 0...num-1{
+			for j in 0...num-1{
 				let patch:Patch = Patch(type: "grass");
-				patch.pos(p: SCNVector3Make(Float(i)*20.0, 0.0, Float(j)*20.0));
+				patch.pos(p: SCNVector3Make(Float(i)*size - cx, 0.0, Float(j)*size - cz));
 				self.patches.append(patch);
 				self.scene.rootNode.addChildNode(patch.getNode());
 			}
 		}
 	}
 	
-	func addBg(){
-		let planeGeom:SCNPlane = SCNPlane(width: 800.0, height: 800.0);
-		planeGeom.widthSegmentCount = 1;
-		planeGeom.heightSegmentCount = 1;
-		let material = SCNMaterial();
-		material.diffuse.minificationFilter = SCNFilterMode.nearest;
-		material.diffuse.magnificationFilter = SCNFilterMode.nearest;
-		material.diffuse.contents = UIColor.black;
-		planeGeom.firstMaterial = material;
-		let cNode = SCNNode(geometry: planeGeom);
-		cNode.position = SCNVector3(0, -1, 0);
-		cNode.rotation = SCNVector4Make(1, 0, 0, -1.57);
-		self.scene.rootNode.addChildNode(cNode);
-	}
-	
 	override func viewDidLoad() {
 		super.viewDidLoad();
-		self.addScene();
-		self.addLights();
-		self.addCamera();
-		self.addGestures();
-		self.addPatches();
-		self.addTurtles();
-		//self.addBg();
-		self.sceneView.isPlaying = true;
-		let delayTime = DispatchTime.now() + Double(Int64(10 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
-		DispatchQueue.main.asyncAfter(deadline: delayTime) {
-			Timer.scheduledTimer(timeInterval: 0.1, target: self, selector:(#selector(ViewController.edit)), userInfo: nil, repeats: true);
-		}
+		//self.addScene();
+		//self.addLights();
+		//self.addCamera();
+		//self.addGestures();
+		//self.addPatches();
+		//self.addTurtles();
+		//self.sceneView.isPlaying = true;
+		//let delayTime = DispatchTime.now() + Double(Int64(10 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+		//DispatchQueue.main.asyncAfter(deadline: delayTime) {
+			//Timer.scheduledTimer(timeInterval: 0.1, target: self, selector:(#selector(ViewController.edit)), userInfo: nil, repeats: true);
+		//}
+		
+		var cr = CodeRunner();
+		cr.runFn(fnName: "myFn");
 	}
 }

@@ -23,8 +23,8 @@ class PatchNodeCache {
 		material.diffuse.minificationFilter = SCNFilterMode.nearest;
 		material.diffuse.magnificationFilter = SCNFilterMode.nearest;
 		if(type == "grass"){
-			material.diffuse.contents = UIColor.red;
-			material.ambient.contents = UIColor.red;
+			material.diffuse.contents = UIColor(colorLiteralRed: 211.0/255.0, green: 171.0/255.0, blue: 212.0/255.0, alpha: 1.0);
+			material.ambient.contents = UIColor(colorLiteralRed: 211.0/255.0, green: 171.0/255.0, blue: 212.0/255.0, alpha: 1.0);
 		}
 		else{
 			material.diffuse.contents = UIColor.green;
