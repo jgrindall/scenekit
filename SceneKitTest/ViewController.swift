@@ -148,17 +148,17 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad();
-		//self.addScene();
-		//self.addLights();
-		//self.addCamera();
-		//self.addGestures();
-		//self.addPatches();
-		//self.addTurtles();
-		//self.sceneView.isPlaying = true;
-		//let delayTime = DispatchTime.now() + Double(Int64(10 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
-		//DispatchQueue.main.asyncAfter(deadline: delayTime) {
-			//Timer.scheduledTimer(timeInterval: 0.1, target: self, selector:(#selector(ViewController.edit)), userInfo: nil, repeats: true);
-		//}
+		self.addScene();
+		self.addLights();
+		self.addCamera();
+		self.addGestures();
+		self.addPatches();
+		self.addTurtles();
+		self.sceneView.isPlaying = true;
+		let delayTime0 = DispatchTime.now() + Double(Int64(10 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+		DispatchQueue.main.asyncAfter(deadline: delayTime0) {
+			Timer.scheduledTimer(timeInterval: 0.1, target: self, selector:(#selector(ViewController.edit)), userInfo: nil, repeats: true);
+		}
 		
 		var cr = CodeRunner();
 		cr.runFn(fnName: "myFn");

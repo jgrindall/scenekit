@@ -254,7 +254,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# save working directory\nWORKING_DIR=$(pwd)\n# temporarily switch to the JavaScript dir so we can run `nvm` and `npm` stuff\ncd $SRCROOT\"/JavaScript\"\n# build the JavaScript bundle\nnpm run build\n# if non-zero exit code, exit and warn the user\nif [ $? -ne 0 ]; then\necho \"failure in 'Run Script' phase - building JS bundle\"\ncd $WORKING_DIR\nexit 1\nfi\n# go back to the working directory\ncd $WORKING_DIR";
+			shellScript = "# save working directory\nWORKING_DIR=$(pwd)\n# temporarily switch to the JavaScript dir so we can run `nvm` and `npm` stuff\n# cd $SRCROOT\"/JavaScript\"\ncd $WORKING_DIR";
 		};
 /* End PBXShellScriptBuildPhase section */
 
