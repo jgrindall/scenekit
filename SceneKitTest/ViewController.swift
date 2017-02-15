@@ -162,5 +162,17 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		
 		var cr = CodeRunner();
 		cr.runFn(fnName: "myFn");
+		print("WAIT0");
+		var delayTime = DispatchTime.now() + Double(Int64(0.1 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
+		DispatchQueue.main.asyncAfter(deadline: delayTime) {
+			print("WAIT1");
+			cr.wait();
+		}
+		print("WAIT2");
+		var delayTime1 = DispatchTime.now() + Double(Int64(5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
+		DispatchQueue.main.asyncAfter(deadline: delayTime1) {
+			print("WAIT3");
+			cr.go();
+		}
 	}
 }

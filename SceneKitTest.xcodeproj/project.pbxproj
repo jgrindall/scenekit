@@ -175,6 +175,7 @@
 				80EE09B6196A4C4A00B77AB0 /* Sources */,
 				80EE09B7196A4C4A00B77AB0 /* Frameworks */,
 				80EE09B8196A4C4A00B77AB0 /* Resources */,
+				52A9C79C1E550C0000082CF1 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -240,6 +241,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		52A9C79C1E550C0000082CF1 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# save working directory\nWORKING_DIR=$(pwd)\n# temporarily switch to the JavaScript dir so we can run `nvm` and `npm` stuff\ncd $SRCROOT\"/JavaScript\"\n# build the JavaScript bundle\nnpm run build\n# if non-zero exit code, exit and warn the user\nif [ $? -ne 0 ]; then\necho \"failure in 'Run Script' phase - building JS bundle\"\ncd $WORKING_DIR\nexit 1\nfi\n# go back to the working directory\ncd $WORKING_DIR";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		80EE09B6196A4C4A00B77AB0 /* Sources */ = {

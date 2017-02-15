@@ -16,6 +16,7 @@ import UIKit
 protocol JavaScriptMethods : JSExport {
 	func getItem(key: String) -> String?;
 	func f();
+	func p();
 	func setItem(key: String, data: String);
 	func myFunctionParam1(param1 : String, param2 : String, param3 : String);
 }
@@ -30,6 +31,10 @@ public class MyClass: NSObject, JavaScriptMethods {
 	}
 	func f(){
 		print("SetF");
+	}
+	
+	func p(){
+		print("pppp");
 	}
 	
 	func setItem(key: String, data: String) {
