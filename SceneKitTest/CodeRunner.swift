@@ -29,9 +29,12 @@ class CodeRunner : NSObject {
 			print("console.log: " + message)
 		}
 		
-		let commonJSPath = Bundle.main.path(forResource: "common", ofType: "js");
+		let buildPath = Bundle.main.path(forResource: "build", ofType: "js");
+		let rjsPath = Bundle.main.path(forResource: "require", ofType: "js");
 		do {
-			let common = try String(contentsOfFile: commonJSPath!, encoding: String.Encoding.utf8);
+			let common = try String(contentsOfFile: buildPath!, encoding: String.Encoding.utf8);
+			let rjs = try String(contentsOfFile: rjsPath!, encoding: String.Encoding.utf8);
+			_ = self.context.evaluateScript(rjs);
 			_ = self.context.evaluateScript(common);
 			self.context.globalObject.setObject(self.myClass, forKeyedSubscript: "objectwrapper" as (NSCopying & NSObjectProtocol)!)
 			self.context.globalObject.setObject(unsafeBitCast(consoleLog, to: AnyObject.self), forKeyedSubscript: "_consoleLog" as (NSCopying & NSObjectProtocol)!)
@@ -75,32 +78,3 @@ class CodeRunner : NSObject {
 	}
 }
 
-
-
-/*
-
-DispatchQueue.global(qos: .userInitiated).async { // 1
-var storedError: NSError?
-let downloadGroup = DispatchGroup() // 2
-for address in [overlyAttachedGirlfriendURLString,
-successKidURLString,
-lotsOfFacesURLString] {
-let url = URL(string: address)
-downloadGroup.enter() // 3
-let photo = DownloadPhoto(url: url!) {
-_, error in
-if error != nil {
-storedError = error
-}
-downloadGroup.leave() // 4
-}
-PhotoManager.sharedManager.addPhoto(photo)
-}
-
-downloadGroup.wait() // 5
-DispatchQueue.main.async { // 6
-completion?(storedError)
-}
-}
-
-*/
