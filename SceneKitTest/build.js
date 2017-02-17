@@ -5512,6 +5512,12 @@ define('visit',['stack', 'symtable', 'lock'],
 		var symTable = new SymTable();
 		var _consumer = null;
 
+		var checkSleep = function(){
+			while(Lock.isLocked()){
+				_consumer("tapFingers");
+			}
+		};
+
 		function visitchildren(node){
 			// a general node with children
 			var ch = node.children;
@@ -5540,44 +5546,43 @@ define('visit',['stack', 'symtable', 'lock'],
 		function visitfdstmt(node){
 			visitchildren(node);
 			var amount = stack.pop();
-			//_consumer.consume({ "type":"command", "name":"fd", "amount":amount });
-			_consumer.consume('aaaaa');
+			_consumer("command", { "type":"command", "name":"fd", "amount":amount });
 		}
 
 		function visitbkstmt(node){
 			visitchildren(node);
 			var amount = stack.pop();
-			_consumer.consume({ "type":"command", "name":"fd", "amount": -1 * amount });
+			_consumer("command", { "type":"command", "name":"fd", "amount": -1 * amount });
 		}
 
 		function visitpenupstmt(node){
-			_consumer.consume({ "type":"command", "name":"penup" });
+			_consumer("command", { "type":"command", "name":"penup" });
 		}
 
 		function visithomestmt(node){
-			_consumer.consume({ "type":"command", "name":"home" });
+			_consumer("command", { "type":"command", "name":"home" });
 		}
 
 		function visitpendownstmt(node){
-			_consumer.consume({ "type":"command", "name":"pendown" });
+			_consumer("command", { "type":"command", "name":"pendown" });
 		}
 
 		function visitbgstmt(node){
 			var colorIndex;
 			if(node.color.type === 'colorname'){
-				_consumer.consume({ "type":"command", "name":"bg", "colorname":node.color.name });
+				_consumer("command", { "type":"command", "name":"bg", "colorname":node.color.name });
 			}
 			else if(node.color.type === 'colorindex'){
 				visitNode(node.color.children[0]);
 				colorIndex = stack.pop();
-				_consumer.consume({ "type":"command", "name":"bg", "colorindex":colorIndex });
+				_consumer("command", { "type":"command", "name":"bg", "colorindex":colorIndex });
 			}
 		}
 
 		function visitthickstmt(node){
 			visitchildren(node);
 			var thick = stack.pop();
-			_consumer.consume({ "type":"command", "name":"thick", "amount":thick });
+			_consumer("command", { "type":"command", "name":"thick", "amount":thick });
 		}
 
 		function visitbooleanstmt(node){
@@ -5640,12 +5645,12 @@ define('visit',['stack', 'symtable', 'lock'],
 		function visitcolorstmt(node){
 			var colorIndex;
 			if(node.color.type === 'colorname'){
-				_consumer.consume({ "type":"command", "name":"color", "colorname":node.color.name });
+				_consumer("command", { "type":"command", "name":"color", "colorname":node.color.name });
 			}
 			else if(node.color.type === 'colorindex'){
 				visitNode(node.color.children[0]);
 				colorIndex = stack.pop();
-				_consumer.consume({ "type":"command", "name":"color", "colorindex":colorIndex });
+				_consumer("command", { "type":"command", "name":"color", "colorindex":colorIndex });
 			}
 		}
 
@@ -5686,6 +5691,7 @@ define('visit',['stack', 'symtable', 'lock'],
 			var num = stack.pop();
 			if(num >= 0 && num === parseInt(num, 10)){
 				for(var i = 1;i<=num; i++){
+					checkSleep();
 					try{
 						visitNode(ch[1]);
 					}
@@ -5725,14 +5731,14 @@ define('visit',['stack', 'symtable', 'lock'],
 			visitchildren(node);
 			var amount = stack.pop();
 			amount = amount % 360;
-			_consumer.consume({"type":"command", "name":"rt", "amount":amount });
+			_consumer("command", {"type":"command", "name":"rt", "amount":amount });
 		}
 
 		function visitltstmt(node){
 			visitchildren(node);
 			var amount = stack.pop();
 			amount = amount % 360;
-			_consumer.consume({"type":"command", "name":"rt", "amount": -1 * amount });
+			_consumer("command", {"type":"command", "name":"rt", "amount": -1 * amount });
 		}
 
 		function visittimesordivterms(node){
@@ -5785,7 +5791,7 @@ define('visit',['stack', 'symtable', 'lock'],
 			visitchildren(node);
 			var amountY = stack.pop();
 			var amountX = stack.pop();
-			_consumer.consume({ "type":"command", "name":"setxy", "amountX":amountX, "amountY":amountY });
+			_consumer("command", { "type":"command", "name":"setxy", "amountX":amountX, "amountY":amountY });
 		}
 
 		function visitlabelstmt(node){
@@ -5804,7 +5810,7 @@ define('visit',['stack', 'symtable', 'lock'],
 			if(contents.length > 16){
 				contents = contents.substring(0, 16);
 			}
-			_consumer.consume({ "type":"command", "name":"label", "contents": contents});
+			_consumer("command", { "type":"command", "name":"label", "contents": contents});
 		}
 
 		function visitsqrtexpression(node){
@@ -5911,14 +5917,12 @@ define('visit',['stack', 'symtable', 'lock'],
 
 		function runTimeError(msg){
 			throw new Error(msg);
-			_consumer.consume({"type":"error", "message":msg });
+			_consumer("command", {"type":"error", "message":msg });
 		}
 
 		function visitNode(node){
 			var t = node.type;
-			while(Lock.isLocked()){
-				_consumer.tapFingers();
-			}
+			checkSleep();
 			if(t=="start"){
 				visitstart(node);
 			}
@@ -6074,48 +6078,52 @@ define('visit',['stack', 'symtable', 'lock'],
 
 
 
-var myFn, _consumer, pause, unpause;
+var run, consumer, sleep, wake, getConsumer, clean, console;
 
-var console = {
+console = {
 	log: function(message) {
-		_consoleLog(message);
+		consoleLog(message);
 	}
+};
+
+clean = function(logo){
+	logo = logo.replace(/;[^\n\r]+\n/g, "");
+	logo = logo.replace(/#[^\n\r]+\n/g, "");
+	logo = logo.replace(/\/\/[^\n\r]+\n/g, "");
+	return logo;
+};
+
+getConsumer = function(){
+	return function(type, data){
+		if(typeof data === "undefined"){
+			consumer(type, "");
+		}
+		else if(typeof data === "object"){
+			data = JSON.stringify(data);
+		}
+		consumer(type, data);
+	};
 };
 
 require(['converted/parser', 'lock', 'visit'], function(Parser, Lock, visitor){
 
 	'use strict';
 
-	var _paused = false;
-
-	var _clean = function(logo){
-		logo = logo.replace(/;[^\n\r]+\n/g, "");
-		logo = logo.replace(/#[^\n\r]+\n/g, "");
-		logo = logo.replace(/\/\/[^\n\r]+\n/g, "");
-		return logo;
-	};
-
-	myFn = function(logo) {
-		var tree;
-		console.log(JSON.stringify(_consumer));
-		_consumer.consume("abc");
-		logo = "fd 100";
-		console.log("DONE1");
-		_consumer.consume("pqr");
-		logo = _clean(logo);
-		tree = Parser.parse(logo);
-		console.log("tree " + JSON.stringify(tree));
+	run = function(logo) {
+		var tree, _consumer = getConsumer();
+		tree = Parser.parse(clean(logo));
+		_consumer("message", "start");
 		if(tree){
 			visitor.visit(tree, _consumer);
 		}
-		console.log("DONE2");
+		_consumer("message", "end");
 	};
 
-	pause = function(){
+	sleep = function(){
 		Lock.lock();
 	};
 
-	unpause = function(){
+	wake = function(){
 		Lock.unlock();
 	};
 })

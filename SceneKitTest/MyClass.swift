@@ -13,8 +13,11 @@ public class MyClass: NSObject, PMyClass {
 	func getItem(key: String) -> String? {
 		return "String value";
 	}
-	func consume(s:String){
-		print("consume! " + s);
+	func command(s:String){
+		print("command! ");
+	}
+	func message(s: String) {
+		print("message! ");
 	}
 	
 	func tapFingers(){

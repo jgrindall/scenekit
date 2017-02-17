@@ -1,46 +1,50 @@
 
-var myFn, _consumer, pause, unpause;
+var run, consumer, sleep, wake, getConsumer, clean, console;
 
-var console = {
+console = {
 	log: function(message) {
-		_consoleLog(message);
+		consoleLog(message);
 	}
+};
+
+clean = function(logo){
+	logo = logo.replace(/;[^\n\r]+\n/g, "");
+	logo = logo.replace(/#[^\n\r]+\n/g, "");
+	logo = logo.replace(/\/\/[^\n\r]+\n/g, "");
+	return logo;
+};
+
+getConsumer = function(){
+	return function(type, data){
+		if(typeof data === "undefined"){
+			consumer(type, "");
+		}
+		else if(typeof data === "object"){
+			data = JSON.stringify(data);
+		}
+		consumer(type, data);
+	};
 };
 
 require(['converted/parser', 'lock', 'visit'], function(Parser, Lock, visitor){
 
 	'use strict';
 
-	var _paused = false;
-
-	var _clean = function(logo){
-		logo = logo.replace(/;[^\n\r]+\n/g, "");
-		logo = logo.replace(/#[^\n\r]+\n/g, "");
-		logo = logo.replace(/\/\/[^\n\r]+\n/g, "");
-		return logo;
-	};
-
-	myFn = function(logo) {
-		var tree;
-		console.log(JSON.stringify(_consumer));
-		_consumer.consume("abc");
-		logo = "fd 100";
-		console.log("DONE1");
-		_consumer.consume("pqr");
-		logo = _clean(logo);
-		tree = Parser.parse(logo);
-		console.log("tree " + JSON.stringify(tree));
+	run = function(logo) {
+		var tree, _consumer = getConsumer();
+		tree = Parser.parse(clean(logo));
+		_consumer("message", "start");
 		if(tree){
 			visitor.visit(tree, _consumer);
 		}
-		console.log("DONE2");
+		_consumer("message", "end");
 	};
 
-	pause = function(){
+	sleep = function(){
 		Lock.lock();
 	};
 
-	unpause = function(){
+	wake = function(){
 		Lock.unlock();
 	};
 })

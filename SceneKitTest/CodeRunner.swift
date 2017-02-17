@@ -31,7 +31,18 @@ class CodeRunner : NSObject {
 		let consoleLog: @convention(block) (String) -> Void = { message in
 			print("log " + message);
 		}
-		
+		let consumer:@convention(block)(String, String)->Void = {type, data in
+			if(type == "command"){
+				self.consumer?.command(s: data);
+			}
+			else if(type == "message"){
+				self.consumer?.message(s: data);
+			}
+			else if(type == "tapFingers"){
+				self.consumer?.tapFingers();
+			}
+			return;
+		}
 		let buildPath = Bundle.main.path(forResource: "build", ofType: "js");
 		let rjsPath = Bundle.main.path(forResource: "require", ofType: "js");
 		do {
@@ -39,9 +50,8 @@ class CodeRunner : NSObject {
 			let rjs = try String(contentsOfFile: rjsPath!, encoding: String.Encoding.utf8);
 			_ = self.context.evaluateScript(rjs);
 			_ = self.context.evaluateScript(common);
-			print(self.consumer);
-			self.context.globalObject.setObject(self.consumer, forKeyedSubscript: "_consumer" as (NSCopying & NSObjectProtocol)!)
-			self.context.globalObject.setObject(unsafeBitCast(consoleLog, to: AnyObject.self), forKeyedSubscript: "_consoleLog" as (NSCopying & NSObjectProtocol)!)
+			self.context.globalObject.setObject(unsafeBitCast(consumer, to: AnyObject.self), forKeyedSubscript: "consumer" as (NSCopying & NSObjectProtocol)!)
+			self.context.globalObject.setObject(unsafeBitCast(consoleLog, to: AnyObject.self), forKeyedSubscript: "consoleLog" as (NSCopying & NSObjectProtocol)!)
 			self.context.exceptionHandler = { context, exception in
 				print("JS Error: \(exception)");
 			};
@@ -51,29 +61,24 @@ class CodeRunner : NSObject {
 		}
 	}
 	
-	func runFn(fnName:String) {
-		print("run");
+	func run(fnName:String, arg:String) {
+		print("run", fnName, arg);
 		DispatchQueue.global(qos: .default).async {
 			self.downloadGroup.enter();
 			let filterFunction = self.context.objectForKeyedSubscript(fnName);
-			_ = filterFunction?.call(withArguments: nil);
-			print("done");
+			_ = filterFunction?.call(withArguments: [arg]);
 			self.downloadGroup.leave();
 		}
 	}
 	
-	func wait() {
-		print("w1");
-		let filterFunction = self.context.objectForKeyedSubscript("pause");
+	func sleep() {
+		let filterFunction = self.context.objectForKeyedSubscript("sleep");
 		_ = filterFunction?.call(withArguments: nil);
-		print("w2");
 	}
 	
-	func go(){
-		print("g1");
-		let filterFunction = self.context.objectForKeyedSubscript("unpause");
+	func wake(){
+		let filterFunction = self.context.objectForKeyedSubscript("wake");
 		_ = filterFunction?.call(withArguments: nil);
-		print("g2");
 	}
 }
 
