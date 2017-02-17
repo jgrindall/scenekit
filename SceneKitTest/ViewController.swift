@@ -25,6 +25,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	var dispatchingValue:	DispatchingValue<Int>!;
 	var patches:			Array<Patch>!;
 	var turtles:			Array<Turtle>!;
+	var consumer:			PMyClass!;
 	
 	func addScene(){
 		self.sceneView = SCNView(frame: self.view.frame);
@@ -159,8 +160,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		DispatchQueue.main.asyncAfter(deadline: delayTime0) {
 			Timer.scheduledTimer(timeInterval: 0.1, target: self, selector:(#selector(ViewController.edit)), userInfo: nil, repeats: true);
 		}
-		
-		var cr = CodeRunner();
+		self.consumer = MyClass();
+		var cr = CodeRunner(consumer:self.consumer);
 		cr.runFn(fnName: "myFn");
 		print("WAIT0");
 		var delayTime = DispatchTime.now() + Double(Int64(0.1 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);

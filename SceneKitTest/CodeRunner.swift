@@ -16,17 +16,20 @@ import UIKit
 class CodeRunner : NSObject {
 	
 	var context: JSContext!
-	var myClass: MyClass!;
 	let serialQueue = DispatchQueue(label: "queuename");
 	let downloadGroup = DispatchGroup();
+	var consumer:PMyClass?
 	
-	override init(){
+	init(consumer:PMyClass){
 		super.init();
-		self.myClass = MyClass();
+		self.consumer = consumer;
+		self.makeContext();
+	}
+	
+	func makeContext(){
 		self.context = JSContext();
-		
 		let consoleLog: @convention(block) (String) -> Void = { message in
-			print("console.log: " + message)
+			print("log " + message);
 		}
 		
 		let buildPath = Bundle.main.path(forResource: "build", ofType: "js");
@@ -36,7 +39,8 @@ class CodeRunner : NSObject {
 			let rjs = try String(contentsOfFile: rjsPath!, encoding: String.Encoding.utf8);
 			_ = self.context.evaluateScript(rjs);
 			_ = self.context.evaluateScript(common);
-			self.context.globalObject.setObject(self.myClass, forKeyedSubscript: "objectwrapper" as (NSCopying & NSObjectProtocol)!)
+			print(self.consumer);
+			self.context.globalObject.setObject(self.consumer, forKeyedSubscript: "_consumer" as (NSCopying & NSObjectProtocol)!)
 			self.context.globalObject.setObject(unsafeBitCast(consoleLog, to: AnyObject.self), forKeyedSubscript: "_consoleLog" as (NSCopying & NSObjectProtocol)!)
 			self.context.exceptionHandler = { context, exception in
 				print("JS Error: \(exception)");
@@ -45,11 +49,6 @@ class CodeRunner : NSObject {
 		catch (let error) {
 			print("Error while processing script file: \(error)");
 		}
-	}
-	
-	func outputReceived(a:Int){
-		print("output");
-		print(a);
 	}
 	
 	func runFn(fnName:String) {

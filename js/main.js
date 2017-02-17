@@ -1,34 +1,47 @@
 
-var myFn, objectwrapper, pause, unpause;
+var myFn, _consumer, pause, unpause;
 
+var console = {
+	log: function(message) {
+		_consoleLog(message);
+	}
+};
 
-require(['dep'], function(dep){
+require(['converted/parser', 'lock', 'visit'], function(Parser, Lock, visitor){
+
 	'use strict';
 
 	var _paused = false;
 
-	var console = {
-		log: function(message) {
-			_consoleLog(message);
-		}
+	var _clean = function(logo){
+		logo = logo.replace(/;[^\n\r]+\n/g, "");
+		logo = logo.replace(/#[^\n\r]+\n/g, "");
+		logo = logo.replace(/\/\/[^\n\r]+\n/g, "");
+		return logo;
 	};
 
-	myFn = function() {
-		while(true){
-			while(_paused){
-				objectwrapper.p();
-			}
-			objectwrapper.f();
+	myFn = function(logo) {
+		var tree;
+		console.log(JSON.stringify(_consumer));
+		_consumer.consume("abc");
+		logo = "fd 100";
+		console.log("DONE1");
+		_consumer.consume("pqr");
+		logo = _clean(logo);
+		tree = Parser.parse(logo);
+		console.log("tree " + JSON.stringify(tree));
+		if(tree){
+			visitor.visit(tree, _consumer);
 		}
+		console.log("DONE2");
 	};
 
 	pause = function(){
-		_paused = true;
+		Lock.lock();
 	};
 
 	unpause = function(){
-		_paused = false;
+		Lock.unlock();
 	};
 })
-
 

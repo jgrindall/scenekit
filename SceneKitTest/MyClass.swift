@@ -1,10 +1,3 @@
-//
-//  ImageUtils
-//  SceneKitTest
-//
-//  Created by John on 25/06/2016.
-//
-//
 
 import Foundation
 import SceneKit
@@ -13,28 +6,19 @@ import JavaScriptCore
 import UIKit
 
 @objc
-protocol JavaScriptMethods : JSExport {
-	func getItem(key: String) -> String?;
-	func f();
-	func p();
-	func setItem(key: String, data: String);
-	func myFunctionParam1(param1 : String, param2 : String, param3 : String);
-}
-
-@objc
-public class MyClass: NSObject, JavaScriptMethods {
+public class MyClass: NSObject, PMyClass {
 	override init(){
 		super.init();
 	}
 	func getItem(key: String) -> String? {
 		return "String value";
 	}
-	func f(){
-		print("SetF");
+	func consume(s:String){
+		print("consume! " + s);
 	}
 	
-	func p(){
-		print("pppp");
+	func tapFingers(){
+		print("tiptap");
 	}
 	
 	func setItem(key: String, data: String) {
