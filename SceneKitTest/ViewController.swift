@@ -4,7 +4,6 @@ import SceneKit
 import QuartzCore
 import JavaScriptCore
 
-
 public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestureDelegate {
 	
 	var maxI:Int =		50;
@@ -35,12 +34,9 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 		self.sceneView.allowsCameraControl = false;
 		self.sceneView.autoenablesDefaultLighting = false;
 		self.sceneView.delegate = self;
+		self.sceneView.loops = true;
 		self.scene = SCNScene();
 		self.scene.background.contents = UIImage(named: "bg.png");
-		//self.scene.fogColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.75);
-		//self.scene.fogStartDistance = 150;
-		//self.scene.fogEndDistance = 300;
-		//self.scene?.fogDensityExponent = 1.0;
 		self.sceneView.scene = scene;
 		self.patches = [Patch]();
 		self.turtles = [Turtle]();
@@ -104,26 +100,16 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 	
 	func onStart(){
 		print("start");
+		self.codeRunner.sleep();
 	}
 	
 	func onFinished(){
-		print("onFinished");
-	}
-	
-	func edit(){
-		let r0 = Float(arc4random_uniform(8)) - 4.0;
-		let r1 = Float(arc4random_uniform(8)) - 4.0;
-		for turtle in self.turtles {
-			//turtle.position.setX(tree.position.x + r0);
-			//turtle.position.setZ(tree.position.z + r1);
-		}
-		for patch in self.patches {
-			//patch.getNode().eulerAngles = SCNVector3(0,0,0);
-		}
+		print("fin");
+		self.codeRunner.wake();
 	}
 	
 	func addTurtles(){
-		let num:Int = 30;
+		let num:Int = 13;
 		let size:Float = 20.0;
 		let cx:Float = -Float(num) * size/2.0;
 		let cz:Float = -Float(num) * size/2.0;
@@ -137,8 +123,12 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 		}
 	}
 	
+	@objc func renderer(aRenderer:SCNSceneRenderer, updateAtTime time:TimeInterval){
+		print("render");
+	}
+	
 	func addPatches(){
-		let num:Int = 30;
+		let num:Int = 13;
 		let size:Float = 20.0;
 		let cx:Float = -Float(num) * size/2.0;
 		let cz:Float = -Float(num) * size/2.0;
@@ -152,9 +142,43 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 		}
 	}
 	
-	func command(s:String){
-		
+	func convertToDictionary(text: String) -> [String: Any]? {
+		if let data = text.data(using: .utf8) {
+			do {
+				return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+			}
+			catch {
+				print(error.localizedDescription)
+			}
+		}
+		return nil
 	};
+	
+	func command(s:String){
+		print("cmd", s);
+		let d:[String:Any] = self.convertToDictionary(text: s)!;
+		let n: String = (d["name"] as? String)!;
+		if(n == "fd"){
+			let amt:Float = (d["amount"] as? Float)!;
+			SCNTransaction.begin()
+			for turtle in self.turtles {
+				turtle.fd(n: amt);
+			}
+			SCNTransaction.commit()
+		}
+		else if(n == "rt"){
+			let amt:Float = (d["amount"] as? Float)!;
+			SCNTransaction.begin()
+			for turtle in self.turtles {
+				turtle.rt(n: amt);
+			}
+			SCNTransaction.commit()
+		}
+	};
+	
+	func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+		print("tb");
+	}
 	
 	override public func viewDidLoad() {
 		super.viewDidLoad();
@@ -165,26 +189,11 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 		self.addPatches();
 		self.addTurtles();
 		self.sceneView.isPlaying = true;
-		let delayTime0 = DispatchTime.now() + Double(Int64(10 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
-		DispatchQueue.main.asyncAfter(deadline: delayTime0) {
-			Timer.scheduledTimer(timeInterval: 0.1, target: self, selector:(#selector(ViewController.edit)), userInfo: nil, repeats: true);
-		}
-		
 		self.consumer = CodeConsumer(target:self);
 		self.codeRunner = CodeRunner(consumer:self.consumer);
-		//self.codeRunner.run(fnName: "run", arg: "rpt 10000 [fd 100]");
-		
-		print("WAIT0");
-		let delayTime = DispatchTime.now() + Double(Int64(0.01 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
-		DispatchQueue.main.asyncAfter(deadline: delayTime) {
-			print("WAIT1");
-			//self.codeRunner.sleep();
-		}
-		print("WAIT2");
 		let delayTime1 = DispatchTime.now() + Double(Int64(5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
 		DispatchQueue.main.asyncAfter(deadline: delayTime1) {
-			print("WAIT3");
-			//self.codeRunner.wake();
+			self.codeRunner.run(fnName: "run", arg: "rpt 1000000 [fd 5 rt 5]");
 		}
 	}
 }

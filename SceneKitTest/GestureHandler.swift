@@ -19,6 +19,7 @@ open class GestureHandler : NSObject, SCNSceneRendererDelegate, UIGestureRecogni
 	fileprivate var _cameraNode:SCNNode!;
 	fileprivate var _lights:Array<SCNNode>!;
 	fileprivate var _delegate:PGestureDelegate!;
+	fileprivate var _still:Bool = true;
 	
 	struct Consts {
 		static let VEL_SCALE:Float = 12000.0;
@@ -45,7 +46,7 @@ open class GestureHandler : NSObject, SCNSceneRendererDelegate, UIGestureRecogni
 		let old:SCNMatrix4 = self._cameraNode.transform;
 		let dx:Float = Float(self._slideVel.x)/GestureHandler.Consts.VEL_SCALE;
 		let dy:Float = Float(self._slideVel.y)/GestureHandler.Consts.VEL_SCALE;
-		let INC:CGFloat = 0.95;
+		let INC:CGFloat = 0.5;
 		let rX:SCNMatrix4 = SCNMatrix4MakeRotation(-dx, 0, 1, 0);
 		let rY:SCNMatrix4 = SCNMatrix4MakeRotation(-dy, 1, 0, 0);
 		let netRot:SCNMatrix4 = SCNMatrix4Mult(rX, rY);
@@ -69,13 +70,21 @@ open class GestureHandler : NSObject, SCNSceneRendererDelegate, UIGestureRecogni
 			}
 		}
 		if(self._slideVel.x == 0 && self._slideVel.y == 0){
-			self._delegate.onFinished();
+			if(self._still == false){
+				self._still = true;
+				self._delegate.onFinished();
+			}
+		}
+		else{
+			if(self._still == true){
+				self._still = false;
+				self._delegate.onStart();
+			}
 		}
 	}
 	
 	@objc open func handlePanGesture(_ panGesture: UIPanGestureRecognizer){
 		self._slideVel = panGesture.velocity(in: self._target.view);
-		self._delegate.onStart();
 	}
 
 }
