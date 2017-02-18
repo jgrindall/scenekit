@@ -13,14 +13,14 @@ import JavaScriptCore
 import UIKit
 
 @objc
-class CodeRunner : NSObject {
+class CodeRunner : NSObject, PCodeRunner {
 	
 	var context: JSContext!
-	let serialQueue = DispatchQueue(label: "queuename");
+	let serialQueue = DispatchQueue(label: "codeSerialQueue");
 	let downloadGroup = DispatchGroup();
-	var consumer:PMyClass?
+	var consumer:PCodeConsumer?
 	
-	init(consumer:PMyClass){
+	required init(consumer:PCodeConsumer){
 		super.init();
 		self.consumer = consumer;
 		self.makeContext();
@@ -46,8 +46,8 @@ class CodeRunner : NSObject {
 		let buildPath = Bundle.main.path(forResource: "build", ofType: "js");
 		let rjsPath = Bundle.main.path(forResource: "require", ofType: "js");
 		do {
-			let common = try String(contentsOfFile: buildPath!, encoding: String.Encoding.utf8);
 			let rjs = try String(contentsOfFile: rjsPath!, encoding: String.Encoding.utf8);
+			let common = try String(contentsOfFile: buildPath!, encoding: String.Encoding.utf8);
 			_ = self.context.evaluateScript(rjs);
 			_ = self.context.evaluateScript(common);
 			self.context.globalObject.setObject(unsafeBitCast(consumer, to: AnyObject.self), forKeyedSubscript: "consumer" as (NSCopying & NSObjectProtocol)!)

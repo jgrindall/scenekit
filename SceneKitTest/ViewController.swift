@@ -5,7 +5,7 @@ import QuartzCore
 import JavaScriptCore
 
 
-class ViewController: UIViewController, SCNSceneRendererDelegate {
+public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestureDelegate {
 	
 	var maxI:Int =		50;
 	var maxJ:Int =		50;
@@ -25,7 +25,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	var dispatchingValue:	DispatchingValue<Int>!;
 	var patches:			Array<Patch>!;
 	var turtles:			Array<Turtle>!;
-	var consumer:			PMyClass!;
+	var consumer:			PCodeConsumer!;
+	var codeRunner:			PCodeRunner!;
 	
 	func addScene(){
 		self.sceneView = SCNView(frame: self.view.frame);
@@ -97,8 +98,16 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	}
 	
 	func addGestures(){
-		self.gestureHandler = GestureHandler(target: self, camera: self.cameraNode, lights:[]);
+		self.gestureHandler = GestureHandler(target: self, camera: self.cameraNode, lights: [], delegate: self);
 		self.sceneView.delegate = self.gestureHandler;
+	}
+	
+	func onStart(){
+		print("start");
+	}
+	
+	func onFinished(){
+		print("onFinished");
 	}
 	
 	func edit(){
@@ -113,15 +122,11 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		}
 	}
 	
-	func consumeNextCommand(){
-		
-	}
-	
 	func addTurtles(){
-		var num:Int = 30;
-		var size:Float = 20.0;
-		var cx:Float = -Float(num) * size/2.0;
-		var cz:Float = -Float(num) * size/2.0;
+		let num:Int = 30;
+		let size:Float = 20.0;
+		let cx:Float = -Float(num) * size/2.0;
+		let cz:Float = -Float(num) * size/2.0;
 		for i in 0...num-1{
 			for j in 0...num-1{
 				let turtle:Turtle = Turtle(type: "turtle");
@@ -133,10 +138,10 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 	}
 	
 	func addPatches(){
-		var num:Int = 30;
-		var size:Float = 20.0;
-		var cx:Float = -Float(num) * size/2.0;
-		var cz:Float = -Float(num) * size/2.0;
+		let num:Int = 30;
+		let size:Float = 20.0;
+		let cx:Float = -Float(num) * size/2.0;
+		let cz:Float = -Float(num) * size/2.0;
 		for i in 0...num-1{
 			for j in 0...num-1{
 				let patch:Patch = Patch(type: "grass");
@@ -147,7 +152,11 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		}
 	}
 	
-	override func viewDidLoad() {
+	func command(s:String){
+		
+	};
+	
+	override public func viewDidLoad() {
 		super.viewDidLoad();
 		self.addScene();
 		self.addLights();
@@ -160,22 +169,22 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 		DispatchQueue.main.asyncAfter(deadline: delayTime0) {
 			Timer.scheduledTimer(timeInterval: 0.1, target: self, selector:(#selector(ViewController.edit)), userInfo: nil, repeats: true);
 		}
-		self.consumer = MyClass();
-		var cr = CodeRunner(consumer:self.consumer);
-		cr.run(fnName: "run", arg: "rpt 100000 [fd 100]");
 		
+		self.consumer = CodeConsumer(target:self);
+		self.codeRunner = CodeRunner(consumer:self.consumer);
+		//self.codeRunner.run(fnName: "run", arg: "rpt 10000 [fd 100]");
 		
 		print("WAIT0");
-		var delayTime = DispatchTime.now() + Double(Int64(0.01 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
+		let delayTime = DispatchTime.now() + Double(Int64(0.01 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
 		DispatchQueue.main.asyncAfter(deadline: delayTime) {
 			print("WAIT1");
-			cr.sleep();
+			//self.codeRunner.sleep();
 		}
 		print("WAIT2");
-		var delayTime1 = DispatchTime.now() + Double(Int64(5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
+		let delayTime1 = DispatchTime.now() + Double(Int64(5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
 		DispatchQueue.main.asyncAfter(deadline: delayTime1) {
 			print("WAIT3");
-			cr.wake();
+			//self.codeRunner.wake();
 		}
 	}
 }
