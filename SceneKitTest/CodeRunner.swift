@@ -16,68 +16,72 @@ import UIKit
 class CodeRunner : NSObject, PCodeRunner {
 	
 	var context: JSContext!
-	var vm: JSVirtualMachine!
-	let serialQueue = DispatchQueue(label: "codeSerialQueue");
-	let downloadGroup = DispatchGroup();
-	var consumer:PCodeConsumer?
-	let m = Mutex();
+	let serialQueue = DispatchQueue(label: "codeRunnerSerialQueue" + UUID().uuidString);
+	let mutexLock = Mutex();
+	var _consumer:PCodeConsumer!;
 	
-	required init(consumer:PCodeConsumer){
+	required init(fileNames:[String]){
 		super.init();
-		self.consumer = consumer;
-		self.makeContext();
+		self.makeContext(fileNames: fileNames);
 	}
 	
-	func makeContext(){
-		serialQueue.async{
-			self.vm = JSVirtualMachine();
-			self.context = JSContext(virtualMachine: self.vm);
+	private func loadFile(fileName:String){
+		do {
+			let contents = try String(contentsOfFile: Bundle.main.path(forResource: fileName, ofType: "js")!, encoding: String.Encoding.utf8);
+			_ = self.context.evaluateScript(contents);
+		}
+		catch (let error) {
+			print("Error while processing script file: \(error)");
+		}
+	}
+	
+	private func loadFiles(fileNames:[String]){
+		for fileName:String in fileNames{
+			self.loadFile(fileName:fileName);
+		}
+	}
+	
+	func makeContext(fileNames:[String]){
+		serialQueue.sync{
+			self.context = JSContext();
 			let consoleLog: @convention(block) (String) -> Void = { message in
 				print("log " + message);
 			}
-			let consumer:@convention(block)(String, String)->Void = {type, data in
-				self.m.locked {
-					if(type == "command"){
-						self.consumer?.command(s: data);
-					}
-					else if(type == "message"){
-						self.consumer?.message(s: data);
-					}
-				}
-			}
-			let buildPath = Bundle.main.path(forResource: "build", ofType: "js");
-			let rjsPath = Bundle.main.path(forResource: "require", ofType: "js");
-			do {
-				let rjs = try String(contentsOfFile: rjsPath!, encoding: String.Encoding.utf8);
-				let common = try String(contentsOfFile: buildPath!, encoding: String.Encoding.utf8);
-				_ = self.context.evaluateScript(rjs);
-				_ = self.context.evaluateScript(common);
-				self.context.globalObject.setObject(unsafeBitCast(consumer, to: AnyObject.self), forKeyedSubscript: "consumer" as (NSCopying & NSObjectProtocol)!)
-				self.context.globalObject.setObject(unsafeBitCast(consoleLog, to: AnyObject.self), forKeyedSubscript: "consoleLog" as (NSCopying & NSObjectProtocol)!)
-				self.context.exceptionHandler = { context, exception in
-					print("JS Error: \(exception)");
-				};
-			}
-			catch (let error) {
-				print("Error while processing script file: \(error)");
-			}
+			self.context.exceptionHandler = { context, exception in
+				print("JS Error: \(exception)");
+			};
+			self.context.globalObject.setObject(unsafeBitCast(consoleLog, to: AnyObject.self), forKeyedSubscript: "consoleLog" as (NSCopying & NSObjectProtocol)!)
+			self.loadFiles(fileNames: fileNames);
 		};
+	}
+	
+	func setConsumer(consumer:PCodeConsumer, name:String) -> PCodeRunner{
+		self._consumer = consumer;
+		let lockedConsumerBlock:@convention(block)(String, String)->Void = {type, data in
+			self.mutexLock.locked {
+				self._consumer.consume(type: type, data:data);
+			}
+		}
+		serialQueue.sync{
+			let castBlock:Any! = unsafeBitCast(lockedConsumerBlock, to: AnyObject.self);
+			self.context.globalObject.setObject(castBlock, forKeyedSubscript: name as (NSCopying & NSObjectProtocol)!);
+		}
+		return self;
 	}
 	
 	func run(fnName:String, arg:String) {
 		serialQueue.async{
-			let filterFunction = self.context.objectForKeyedSubscript(fnName);
-			_ = filterFunction?.call(withArguments: [arg]);
+			let fn = self.context.objectForKeyedSubscript(fnName);
+			_ = fn?.call(withArguments: [arg]);
 		}
-		print("run", fnName, arg);
 	}
 	
 	func sleep() {
-		self.m.lock();
+		self.mutexLock.lock();
 	}
 	
 	func wake(){
-		self.m.unlock();
+		self.mutexLock.unlock();
 	}
 }
 

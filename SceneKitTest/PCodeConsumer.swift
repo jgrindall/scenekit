@@ -8,9 +8,7 @@ import UIKit
 @objc
 protocol PCodeConsumer : JSExport {
 
-	init(target:ViewController);
-	func command(s:String);
-	func message(s:String);
+	func consume(type:String, data:String);
 
 }
 

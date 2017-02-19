@@ -30,7 +30,6 @@
 		52A9C79E1E5667E200082CF1 /* build.js in Resources */ = {isa = PBXBuildFile; fileRef = 52A9C79D1E5667E200082CF1 /* build.js */; };
 		52A9C7A01E5669C200082CF1 /* require.js in Resources */ = {isa = PBXBuildFile; fileRef = 52A9C79F1E5669C200082CF1 /* require.js */; };
 		52A9C7A81E57BEBB00082CF1 /* PCodeConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A9C7A71E57BEBB00082CF1 /* PCodeConsumer.swift */; };
-		52A9C7AA1E57BEC000082CF1 /* CodeConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A9C7A91E57BEC000082CF1 /* CodeConsumer.swift */; };
 		52A9C7AC1E57BF2800082CF1 /* PCodeRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A9C7AB1E57BF2800082CF1 /* PCodeRunner.swift */; };
 		52A9C7AE1E57C26600082CF1 /* PGestureDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A9C7AD1E57C26600082CF1 /* PGestureDelegate.swift */; };
 		52B1666B1E59EE4F000CE6F9 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B1666A1E59EE4F000CE6F9 /* Mutex.swift */; };
@@ -66,7 +65,6 @@
 		52A9C79D1E5667E200082CF1 /* build.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = build.js; sourceTree = "<group>"; };
 		52A9C79F1E5669C200082CF1 /* require.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = require.js; sourceTree = "<group>"; };
 		52A9C7A71E57BEBB00082CF1 /* PCodeConsumer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCodeConsumer.swift; sourceTree = "<group>"; };
-		52A9C7A91E57BEC000082CF1 /* CodeConsumer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeConsumer.swift; sourceTree = "<group>"; };
 		52A9C7AB1E57BF2800082CF1 /* PCodeRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCodeRunner.swift; sourceTree = "<group>"; };
 		52A9C7AD1E57C26600082CF1 /* PGestureDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PGestureDelegate.swift; sourceTree = "<group>"; };
 		52B1666A1E59EE4F000CE6F9 /* Mutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mutex.swift; sourceTree = "<group>"; };
@@ -145,7 +143,6 @@
 				52B1666A1E59EE4F000CE6F9 /* Mutex.swift */,
 				52A9C7AD1E57C26600082CF1 /* PGestureDelegate.swift */,
 				52A9C7AB1E57BF2800082CF1 /* PCodeRunner.swift */,
-				52A9C7A91E57BEC000082CF1 /* CodeConsumer.swift */,
 				52A9C7A71E57BEBB00082CF1 /* PCodeConsumer.swift */,
 				52A9C79F1E5669C200082CF1 /* require.js */,
 				52A9C79D1E5667E200082CF1 /* build.js */,
@@ -288,7 +285,6 @@
 				52E0C8611D1E95ED00B59FC9 /* Assets.swift in Sources */,
 				52B1666B1E59EE4F000CE6F9 /* Mutex.swift in Sources */,
 				52E0C8631D1EA74100B59FC9 /* ImageUtils.swift in Sources */,
-				52A9C7AA1E57BEC000082CF1 /* CodeConsumer.swift in Sources */,
 				529743391D4D2C1600557DA9 /* SCNVector3Extensions.swift in Sources */,
 				526CB7091E5114E200C2E0F5 /* PTurtle.swift in Sources */,
 				526CB6F71E510EC800C2E0F5 /* Turtle.swift in Sources */,

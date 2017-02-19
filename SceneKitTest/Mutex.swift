@@ -77,16 +77,16 @@ public class Mutex {
 		pthread_mutex_destroy(&self.mutex)
 	}
 	
-	@discardableResult public final func locked<T>(_ block: @noescape () throws -> (T)) throws -> T {
+	@discardableResult public final func locked<T>(_ block: () throws -> (T)) throws -> T {
 		return try self.tryLocked(block)
 	}
 	
-	@discardableResult public final func locked<T>(_ block: @noescape () -> (T)) -> T {
+	@discardableResult public final func locked<T>(_ block: () -> (T)) -> T {
 		return try! self.tryLocked(block)
 	}
 	
 	/** Execute the given block while holding a lock to this mutex. */
-	@discardableResult public final func tryLocked<T>(_ block: @noescape () throws -> (T)) throws -> T {
+	@discardableResult public final func tryLocked<T>(_ block: () throws -> (T)) throws -> T {
 		self.lock()
 		
 		defer {

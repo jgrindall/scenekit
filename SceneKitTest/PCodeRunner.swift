@@ -15,8 +15,9 @@ import UIKit
 @objc
 protocol PCodeRunner {
 	
-	init(consumer:PCodeConsumer);
+	init(fileNames:[String]);
 	func run(fnName:String, arg:String);
+	func setConsumer(consumer:PCodeConsumer, name:String) -> PCodeRunner;
 	func sleep() ;
 	func wake();
 }

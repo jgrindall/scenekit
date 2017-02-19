@@ -4,7 +4,7 @@ import SceneKit
 import QuartzCore
 import JavaScriptCore
 
-public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestureDelegate {
+public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestureDelegate, PCodeConsumer {
 	
 	var maxI:Int =		50;
 	var maxJ:Int =		50;
@@ -108,8 +108,6 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 		}
 	}
 	
-
-	
 	func addPatches(){
 		let num:Int = 13;
 		let size:Float = 20.0;
@@ -125,20 +123,8 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 		}
 	}
 	
-	func convertToDictionary(text: String) -> [String: Any]? {
-		if let data = text.data(using: .utf8) {
-			do {
-				return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-			}
-			catch {
-				print(error.localizedDescription)
-			}
-		}
-		return nil
-	};
-	
 	func _command(s:String){
-		let d:[String:Any] = self.convertToDictionary(text: s)!;
+		let d:[String:Any] = ImageUtils.convertToDictionary(text: s)!;
 		let n: String = (d["name"] as? String)!;
 		let amt:Float = (d["amount"] as? Float)!;
 		if(n == "fd"){
@@ -167,6 +153,10 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 		SCNTransaction.commit();
 	}
 	
+	func consume(type: String, data: String) {
+		print(type, data);
+	}
+	
 	override public func viewDidLoad() {
 		super.viewDidLoad();
 		self.addScene();
@@ -178,9 +168,7 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 		self.updateAll();
 		self.sceneView.isPlaying = true;
 		self.sceneView.play(self);
-		
-		self.consumer = CodeConsumer(target:self);
-		self.codeRunner = CodeRunner(consumer:self.consumer);
+		self.codeRunner = CodeRunner(fileNames:["require", "build"]).setConsumer(consumer: self, name:"consumer");
 		let delayTime1 = DispatchTime.now() + Double(Int64(3 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
 		DispatchQueue.main.asyncAfter(deadline: delayTime1) {
 			self.codeRunner.run(fnName: "run", arg: "rpt 100000 [fd 30 rt 1]");
