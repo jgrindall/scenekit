@@ -14,18 +14,21 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 	var sceneView:			SCNView!;
 	var scene:				SCNScene!;
 	var cameraNode:			SCNNode!;
-	var base:				SCNNode!;
 	var cameraOrbit:		SCNNode!;
 	var lightNode:			SCNNode!;
 	var originNode:			SCNNode!;
-	var box:				SCNGeometry!;
-	var boxNode:			SCNNode!;
 	var gestureHandler:		GestureHandler!;
 	var dispatchingValue:	DispatchingValue<Int>!;
 	var patches:			Array<Patch>!;
 	var turtles:			Array<Turtle>!;
 	var consumer:			PCodeConsumer!;
 	var codeRunner:			PCodeRunner!;
+	
+	var _moving:Bool = false;
+	
+	let buffer = SendBuffer<String>(bufferSize: 200000);
+	
+	var sentItems = [String]();
 	
 	func addScene(){
 		self.sceneView = SCNView(frame: self.view.frame);
@@ -55,15 +58,6 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 		self.scene.rootNode.addChildNode(self.cameraOrbit);
 		self.scene.rootNode.castsShadow = true;
 		self.sceneView.pointOfView = self.cameraNode;
-	}
-	
-	func updateHeight(){
-		SCNTransaction.begin();
-		let s:Float = Float(arc4random() % 30);
-		if(self.box != nil){
-			self.box.setValue(s, forKey: "h");
-		}
-		SCNTransaction.commit();
 	}
 	
 	func addLights(){
@@ -99,13 +93,16 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 	}
 	
 	func onStart(){
-		print("start");
+		//print("start");
+		//self._moving = true;
 		self.codeRunner.sleep();
 	}
 	
 	func onFinished(){
-		print("fin");
+		//print("fin");
+		//self._moving = false;
 		self.codeRunner.wake();
+		//self.buffer.flush();
 	}
 	
 	func addTurtles(){
@@ -123,9 +120,7 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 		}
 	}
 	
-	@objc func renderer(aRenderer:SCNSceneRenderer, updateAtTime time:TimeInterval){
-		print("render");
-	}
+
 	
 	func addPatches(){
 		let num:Int = 13;
@@ -154,31 +149,43 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 		return nil
 	};
 	
-	func command(s:String){
-		print("cmd", s);
+	func _command(s:String){
 		let d:[String:Any] = self.convertToDictionary(text: s)!;
 		let n: String = (d["name"] as? String)!;
+		let amt:Float = (d["amount"] as? Float)!;
 		if(n == "fd"){
-			let amt:Float = (d["amount"] as? Float)!;
-			SCNTransaction.begin()
 			for turtle in self.turtles {
+				//print("_ fd", amt);
 				turtle.fd(n: amt);
 			}
-			SCNTransaction.commit()
 		}
 		else if(n == "rt"){
-			let amt:Float = (d["amount"] as? Float)!;
-			SCNTransaction.begin()
 			for turtle in self.turtles {
+				//print("_ rt", amt);
 				turtle.rt(n: amt);
 			}
-			SCNTransaction.commit()
 		}
-	};
-	
-	func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-		print("tb");
 	}
+	
+	func updateAll(){
+		for turtle in self.turtles {
+			turtle.update();
+		}
+	}
+	
+	func commands(items: [String]){
+		print("do items", items.count);
+		for s in items {
+			self._command(s: s);
+		}
+		SCNTransaction.begin();
+		self.updateAll();
+		SCNTransaction.commit();
+	}
+	
+	func command(s:String){
+		self.commands(items:[s]);
+	};
 	
 	override public func viewDidLoad() {
 		super.viewDidLoad();
@@ -188,12 +195,31 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 		self.addGestures();
 		self.addPatches();
 		self.addTurtles();
+		self.updateAll();
 		self.sceneView.isPlaying = true;
+		self.sceneView.play(self);
+		
+		buffer.onFlush = { (items, commit, rollback, queue) in
+			print("cmds");
+			self.commands(items:items);
+		}
+		
 		self.consumer = CodeConsumer(target:self);
 		self.codeRunner = CodeRunner(consumer:self.consumer);
-		let delayTime1 = DispatchTime.now() + Double(Int64(5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
+		let delayTime1 = DispatchTime.now() + Double(Int64(3 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
 		DispatchQueue.main.asyncAfter(deadline: delayTime1) {
-			self.codeRunner.run(fnName: "run", arg: "rpt 1000000 [fd 5 rt 5]");
+			self.codeRunner.run(fnName: "run", arg: "rpt 100000 [fd 0.5]");
 		}
+		
+		let delayTime2 = DispatchTime.now() + Double(Int64(5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
+		DispatchQueue.main.asyncAfter(deadline: delayTime2) {
+			self.codeRunner.sleep();
+		}
+		
+		let delayTime3 = DispatchTime.now() + Double(Int64(7 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
+		DispatchQueue.main.asyncAfter(deadline: delayTime3) {
+			self.codeRunner.wake();
+		}
+		
 	}
 }

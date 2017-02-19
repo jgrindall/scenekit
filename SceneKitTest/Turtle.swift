@@ -10,10 +10,17 @@ class Turtle : PTurtle{
 	var _type:String = "";
 	var _node:SCNNode;
 	var heading:Float = 0;
+	var pos:SCNVector3;
 	
-	init(type:String){
+	init(type: String){
 		self._type = type;
 		self._node = TurtleNodeCache.get(type: type);
+		self.pos = SCNVector3(0,0,0);
+	}
+	
+	func update(){
+		//flush
+		self.getNode().position = self.pos;
 	}
 	
 	func getNode() -> SCNNode{
@@ -24,25 +31,19 @@ class Turtle : PTurtle{
 		return TurtleData();
 	}
 	
-	func pos(p:SCNVector3){
-		self.getNode().position = p;
+	func pos(p: SCNVector3){
+		self.pos = p;
 	}
 	
 	func getPos() -> SCNVector3{
-		return self.getNode().position;
+		return self.pos;
 	}
 	func fd(n:Float){
 		let r0 = cosf(self.heading) * n;
 		let r1 = sinf(self.heading) * n;
-		var x:Float = self.getNode().position.x;
-		var y:Float = self.getNode().position.y;
-		var z:Float = self.getNode().position.z;
-		self.pos(p: SCNVector3(x + r0, y, z + r1));
+		self.pos = SCNVector3(pos.x + r0, pos.y + 1, pos.z + r1);
 	}
-	func rt(n:Float){
+	func rt(n: Float){
 		self.heading += n;
-	}
-	func update(){
-		
 	}
 }

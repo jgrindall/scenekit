@@ -12,13 +12,34 @@ import QuartzCore
 import JavaScriptCore
 import UIKit
 
+class Canceller{
+	var _shouldCancel = false;
+	func shouldCancel() -> Bool{
+		return self._shouldCancel;
+	}
+	func setShouldCancel(s:Bool) {
+		self._shouldCancel = s;
+	}
+}
+
+
 @objc
 class CodeRunner : NSObject, PCodeRunner {
 	
 	var context: JSContext!
+	var vm: JSVirtualMachine!
 	let serialQueue = DispatchQueue(label: "codeSerialQueue");
 	let downloadGroup = DispatchGroup();
 	var consumer:PCodeConsumer?
+	let semaphore = DispatchSemaphore(value: 1);
+	let tapCondition = NSCondition();
+	var seenTap:Bool = true
+	var c = Canceller();
+	
+	let m = Mutex()
+	
+	
+	
 	
 	required init(consumer:PCodeConsumer){
 		super.init();
@@ -26,59 +47,75 @@ class CodeRunner : NSObject, PCodeRunner {
 		self.makeContext();
 	}
 	
+	func wait() {
+		print("wait", self.seenTap);
+		self.tapCondition.lock()
+		while (!seenTap) {
+			self.tapCondition.wait()
+		}
+		self.tapCondition.unlock()
+	}
+	
+	func notify() {
+		self.tapCondition.lock()
+		self.tapCondition.signal()
+		self.tapCondition.unlock()
+	}
+
+	
 	func makeContext(){
-		self.context = JSContext();
-		let consoleLog: @convention(block) (String) -> Void = { message in
-			print("log " + message);
-		}
-		let consumer:@convention(block)(String, String)->Void = {type, data in
-			if(type == "command"){
-				self.consumer?.command(s: data);
+		serialQueue.async{
+			self.vm = JSVirtualMachine();
+			self.context = JSContext(virtualMachine: self.vm);
+			let consoleLog: @convention(block) (String) -> Void = { message in
+				print("log " + message);
 			}
-			else if(type == "message"){
-				self.consumer?.message(s: data);
+			let consumer:@convention(block)(String, String)->Void = {type, data in
+				self.m.locked {
+					if(type == "command"){
+						self.consumer?.command(s: data);
+					}
+					else if(type == "message"){
+						self.consumer?.message(s: data);
+					}
+					else if(type == "tapFingers"){
+						self.consumer?.tapFingers();
+					}
+				}
 			}
-			else if(type == "tapFingers"){
-				self.consumer?.tapFingers();
+			let buildPath = Bundle.main.path(forResource: "build", ofType: "js");
+			let rjsPath = Bundle.main.path(forResource: "require", ofType: "js");
+			do {
+				let rjs = try String(contentsOfFile: rjsPath!, encoding: String.Encoding.utf8);
+				let common = try String(contentsOfFile: buildPath!, encoding: String.Encoding.utf8);
+				_ = self.context.evaluateScript(rjs);
+				_ = self.context.evaluateScript(common);
+				self.context.globalObject.setObject(unsafeBitCast(consumer, to: AnyObject.self), forKeyedSubscript: "consumer" as (NSCopying & NSObjectProtocol)!)
+				self.context.globalObject.setObject(unsafeBitCast(consoleLog, to: AnyObject.self), forKeyedSubscript: "consoleLog" as (NSCopying & NSObjectProtocol)!)
+				self.context.exceptionHandler = { context, exception in
+					print("JS Error: \(exception)");
+				};
 			}
-			return;
-		}
-		let buildPath = Bundle.main.path(forResource: "build", ofType: "js");
-		let rjsPath = Bundle.main.path(forResource: "require", ofType: "js");
-		do {
-			let rjs = try String(contentsOfFile: rjsPath!, encoding: String.Encoding.utf8);
-			let common = try String(contentsOfFile: buildPath!, encoding: String.Encoding.utf8);
-			_ = self.context.evaluateScript(rjs);
-			_ = self.context.evaluateScript(common);
-			self.context.globalObject.setObject(unsafeBitCast(consumer, to: AnyObject.self), forKeyedSubscript: "consumer" as (NSCopying & NSObjectProtocol)!)
-			self.context.globalObject.setObject(unsafeBitCast(consoleLog, to: AnyObject.self), forKeyedSubscript: "consoleLog" as (NSCopying & NSObjectProtocol)!)
-			self.context.exceptionHandler = { context, exception in
-				print("JS Error: \(exception)");
-			};
-		}
-		catch (let error) {
-			print("Error while processing script file: \(error)");
-		}
+			catch (let error) {
+				print("Error while processing script file: \(error)");
+			}
+		};
 	}
 	
 	func run(fnName:String, arg:String) {
-		print("run", fnName, arg);
-		DispatchQueue.global(qos: .default).async {
-			self.downloadGroup.enter();
+		serialQueue.async{
 			let filterFunction = self.context.objectForKeyedSubscript(fnName);
 			_ = filterFunction?.call(withArguments: [arg]);
-			self.downloadGroup.leave();
 		}
+		print("run", fnName, arg);
 	}
 	
 	func sleep() {
-		let filterFunction = self.context.objectForKeyedSubscript("sleep");
-		_ = filterFunction?.call(withArguments: nil);
+		self.m.lock();
 	}
 	
 	func wake(){
-		let filterFunction = self.context.objectForKeyedSubscript("wake");
-		_ = filterFunction?.call(withArguments: nil);
+		self.m.unlock();
 	}
 }
 

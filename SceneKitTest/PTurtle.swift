@@ -11,4 +11,5 @@ protocol PTurtle: class{
 	func pos(p:SCNVector3);
 	func fd(n:Float);
 	func rt(n:Float);
+	func update();
 }
