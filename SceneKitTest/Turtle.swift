@@ -41,7 +41,7 @@ class Turtle : PTurtle{
 	func fd(n:Float){
 		let r0 = cosf(self.heading) * n;
 		let r1 = sinf(self.heading) * n;
-		self.pos = SCNVector3(pos.x + r0, pos.y + 1, pos.z + r1);
+		self.pos = SCNVector3(pos.x + r0, pos.y, pos.z + r1);
 	}
 	func rt(n: Float){
 		self.heading += n;

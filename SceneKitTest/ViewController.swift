@@ -18,17 +18,10 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 	var lightNode:			SCNNode!;
 	var originNode:			SCNNode!;
 	var gestureHandler:		GestureHandler!;
-	var dispatchingValue:	DispatchingValue<Int>!;
 	var patches:			Array<Patch>!;
 	var turtles:			Array<Turtle>!;
 	var consumer:			PCodeConsumer!;
 	var codeRunner:			PCodeRunner!;
-	
-	var _moving:Bool = false;
-	
-	let buffer = SendBuffer<String>(bufferSize: 200000);
-	
-	var sentItems = [String]();
 	
 	func addScene(){
 		self.sceneView = SCNView(frame: self.view.frame);
@@ -93,16 +86,11 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 	}
 	
 	func onStart(){
-		//print("start");
-		//self._moving = true;
 		self.codeRunner.sleep();
 	}
 	
 	func onFinished(){
-		//print("fin");
-		//self._moving = false;
 		self.codeRunner.wake();
-		//self.buffer.flush();
 	}
 	
 	func addTurtles(){
@@ -155,13 +143,11 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 		let amt:Float = (d["amount"] as? Float)!;
 		if(n == "fd"){
 			for turtle in self.turtles {
-				//print("_ fd", amt);
 				turtle.fd(n: amt);
 			}
 		}
 		else if(n == "rt"){
 			for turtle in self.turtles {
-				//print("_ rt", amt);
 				turtle.rt(n: amt);
 			}
 		}
@@ -173,19 +159,13 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 		}
 	}
 	
-	func commands(items: [String]){
-		print("do items", items.count);
-		for s in items {
-			self._command(s: s);
-		}
+	
+	func command(s:String){
+		self._command(s: s);
 		SCNTransaction.begin();
 		self.updateAll();
 		SCNTransaction.commit();
 	}
-	
-	func command(s:String){
-		self.commands(items:[s]);
-	};
 	
 	override public func viewDidLoad() {
 		super.viewDidLoad();
@@ -199,27 +179,13 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 		self.sceneView.isPlaying = true;
 		self.sceneView.play(self);
 		
-		buffer.onFlush = { (items, commit, rollback, queue) in
-			print("cmds");
-			self.commands(items:items);
-		}
-		
 		self.consumer = CodeConsumer(target:self);
 		self.codeRunner = CodeRunner(consumer:self.consumer);
 		let delayTime1 = DispatchTime.now() + Double(Int64(3 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
 		DispatchQueue.main.asyncAfter(deadline: delayTime1) {
-			self.codeRunner.run(fnName: "run", arg: "rpt 100000 [fd 0.5]");
+			self.codeRunner.run(fnName: "run", arg: "rpt 100000 [fd 30 rt 1]");
 		}
 		
-		let delayTime2 = DispatchTime.now() + Double(Int64(5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
-		DispatchQueue.main.asyncAfter(deadline: delayTime2) {
-			self.codeRunner.sleep();
-		}
-		
-		let delayTime3 = DispatchTime.now() + Double(Int64(7 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
-		DispatchQueue.main.asyncAfter(deadline: delayTime3) {
-			self.codeRunner.wake();
-		}
 		
 	}
 }

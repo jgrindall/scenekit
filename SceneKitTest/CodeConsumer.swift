@@ -15,15 +15,9 @@ public class CodeConsumer: NSObject, PCodeConsumer {
 		super.init();
 	}
 	func command(s:String){
-		//semaphore.wait(timeout: DispatchTime.distantFuture);
-		print("command! ", s);
-		//Thread.sleep(forTimeInterval: 1);
 		self.target?.command(s: s);
 	}
 	func message(s: String) {
 		print("message! ", s);
-	}
-	func tapFingers(){
-		print("tiptap");
 	}
 }

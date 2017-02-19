@@ -1,5 +1,5 @@
 
-var run, consumer, sleep, wake, getConsumer, clean, console;
+var run, consumer, getConsumer, clean, console;
 
 console = {
 	log: function(message) {
@@ -26,7 +26,7 @@ getConsumer = function(){
 	};
 };
 
-require(['converted/parser', 'lock', 'visit'], function(Parser, Lock, visitor){
+require(['converted/parser', 'visit'], function(Parser, visitor){
 
 	'use strict';
 
@@ -40,12 +40,5 @@ require(['converted/parser', 'lock', 'visit'], function(Parser, Lock, visitor){
 		_consumer("message", "end");
 	};
 
-	sleep = function(){
-		Lock.lock();
-	};
-
-	wake = function(){
-		Lock.unlock();
-	};
 })
 

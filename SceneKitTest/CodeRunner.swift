@@ -12,17 +12,6 @@ import QuartzCore
 import JavaScriptCore
 import UIKit
 
-class Canceller{
-	var _shouldCancel = false;
-	func shouldCancel() -> Bool{
-		return self._shouldCancel;
-	}
-	func setShouldCancel(s:Bool) {
-		self._shouldCancel = s;
-	}
-}
-
-
 @objc
 class CodeRunner : NSObject, PCodeRunner {
 	
@@ -31,37 +20,13 @@ class CodeRunner : NSObject, PCodeRunner {
 	let serialQueue = DispatchQueue(label: "codeSerialQueue");
 	let downloadGroup = DispatchGroup();
 	var consumer:PCodeConsumer?
-	let semaphore = DispatchSemaphore(value: 1);
-	let tapCondition = NSCondition();
-	var seenTap:Bool = true
-	var c = Canceller();
-	
-	let m = Mutex()
-	
-	
-	
+	let m = Mutex();
 	
 	required init(consumer:PCodeConsumer){
 		super.init();
 		self.consumer = consumer;
 		self.makeContext();
 	}
-	
-	func wait() {
-		print("wait", self.seenTap);
-		self.tapCondition.lock()
-		while (!seenTap) {
-			self.tapCondition.wait()
-		}
-		self.tapCondition.unlock()
-	}
-	
-	func notify() {
-		self.tapCondition.lock()
-		self.tapCondition.signal()
-		self.tapCondition.unlock()
-	}
-
 	
 	func makeContext(){
 		serialQueue.async{
@@ -77,9 +42,6 @@ class CodeRunner : NSObject, PCodeRunner {
 					}
 					else if(type == "message"){
 						self.consumer?.message(s: data);
-					}
-					else if(type == "tapFingers"){
-						self.consumer?.tapFingers();
 					}
 				}
 			}

@@ -5389,20 +5389,6 @@ define('converted/parser',['require','exports','module'],function (require, expo
 
 });
 
-define('lock',[], function(){
-    var _locked = false;
-    return {
-        lock:function(){
-            _locked = true;
-        },
-        unlock:function(){
-            _locked = false;
-        },
-        isLocked:function(){
-            return _locked;
-        }
-    };
-});
 define('stack',[], function(){
 
 	var MAX_STACK_SIZE = 1024;
@@ -5504,19 +5490,13 @@ define('symtable',[], function(){
 
 
 
-define('visit',['stack', 'symtable', 'lock'],
+define('visit',['stack', 'symtable'],
 
-	function(Stack, SymTable, Lock){
+	function(Stack, SymTable){
 
 		var stack = new Stack();
 		var symTable = new SymTable();
 		var _consumer = null;
-
-		var checkSleep = function(){
-			while(Lock.isLocked()){
-				_consumer("tapFingers");
-			}
-		};
 
 		function visitchildren(node){
 			// a general node with children
@@ -5691,7 +5671,6 @@ define('visit',['stack', 'symtable', 'lock'],
 			var num = stack.pop();
 			if(num >= 0 && num === parseInt(num, 10)){
 				for(var i = 1;i<=num; i++){
-					checkSleep();
 					try{
 						visitNode(ch[1]);
 					}
@@ -5922,7 +5901,6 @@ define('visit',['stack', 'symtable', 'lock'],
 
 		function visitNode(node){
 			var t = node.type;
-			checkSleep();
 			if(t=="start"){
 				visitstart(node);
 			}
@@ -6078,7 +6056,7 @@ define('visit',['stack', 'symtable', 'lock'],
 
 
 
-var run, consumer, sleep, wake, getConsumer, clean, console;
+var run, consumer, getConsumer, clean, console;
 
 console = {
 	log: function(message) {
@@ -6105,7 +6083,7 @@ getConsumer = function(){
 	};
 };
 
-require(['converted/parser', 'lock', 'visit'], function(Parser, Lock, visitor){
+require(['converted/parser', 'visit'], function(Parser, visitor){
 
 	'use strict';
 
@@ -6119,13 +6097,6 @@ require(['converted/parser', 'lock', 'visit'], function(Parser, Lock, visitor){
 		_consumer("message", "end");
 	};
 
-	sleep = function(){
-		Lock.lock();
-	};
-
-	wake = function(){
-		Lock.unlock();
-	};
 })
 
 ;

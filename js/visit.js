@@ -1,16 +1,10 @@
-define(['stack', 'symtable', 'lock'],
+define(['stack', 'symtable'],
 
-	function(Stack, SymTable, Lock){
+	function(Stack, SymTable){
 
 		var stack = new Stack();
 		var symTable = new SymTable();
 		var _consumer = null;
-
-		var checkSleep = function(){
-			while(Lock.isLocked()){
-				_consumer("tapFingers");
-			}
-		};
 
 		function visitchildren(node){
 			// a general node with children
@@ -185,7 +179,6 @@ define(['stack', 'symtable', 'lock'],
 			var num = stack.pop();
 			if(num >= 0 && num === parseInt(num, 10)){
 				for(var i = 1;i<=num; i++){
-					checkSleep();
 					try{
 						visitNode(ch[1]);
 					}
@@ -416,7 +409,6 @@ define(['stack', 'symtable', 'lock'],
 
 		function visitNode(node){
 			var t = node.type;
-			checkSleep();
 			if(t=="start"){
 				visitstart(node);
 			}
