@@ -19,6 +19,11 @@ class CodeRunner : NSObject, PCodeRunner {
 	let serialQueue = DispatchQueue(label: "codeRunnerSerialQueue" + UUID().uuidString);
 	let mutexLock = Mutex();
 	var _consumer:PCodeConsumer!;
+	var _break:Bool = false;
+	
+	enum MyError : Error {
+		case RuntimeError(String)
+	}
 	
 	required init(fileNames:[String]){
 		super.init();
@@ -57,9 +62,16 @@ class CodeRunner : NSObject, PCodeRunner {
 	
 	func setConsumer(consumer:PCodeConsumer, name:String) -> PCodeRunner{
 		self._consumer = consumer;
-		let lockedConsumerBlock:@convention(block)(String, String)->Void = {type, data in
-			self.mutexLock.locked {
-				self._consumer.consume(type: type, data:data);
+		let lockedConsumerBlock:@convention(block)(String, String) ->Void = {type, data in
+			print("receive");
+			if(self._break){
+				//throw MyError.RuntimeError("end");
+				print("end3");
+			}
+			else{
+				self.mutexLock.locked {
+					self._consumer.consume(type: type, data:data);
+				}
 			}
 		}
 		serialQueue.sync{
@@ -71,9 +83,19 @@ class CodeRunner : NSObject, PCodeRunner {
 	
 	func run(fnName:String, arg:String) {
 		serialQueue.async{
+			print(fnName);
 			let fn = self.context.objectForKeyedSubscript(fnName);
 			_ = fn?.call(withArguments: [arg]);
 		}
+	}
+	
+	func end(){
+		print("end1");
+		self._break = true;
+		self.context.globalObject.setObject(nil, forKeyedSubscript: "consumer" as (NSCopying & NSObjectProtocol)!);
+		let fn = self.context.objectForKeyedSubscript("end");
+		_ = fn?.call(withArguments: []);
+		print("end2");
 	}
 	
 	func sleep() {

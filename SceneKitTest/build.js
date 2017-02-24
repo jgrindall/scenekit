@@ -5497,6 +5497,7 @@ define('visit',['stack', 'symtable'],
 		var stack = new Stack();
 		var symTable = new SymTable();
 		var _consumer = null;
+		var _ended = false;
 
 		function visitchildren(node){
 			// a general node with children
@@ -5896,11 +5897,14 @@ define('visit',['stack', 'symtable'],
 
 		function runTimeError(msg){
 			throw new Error(msg);
-			_consumer("command", {"type":"error", "message":msg });
 		}
 
 		function visitNode(node){
 			var t = node.type;
+			if(_ended){
+				runTimeError("end");
+				return;
+			}
 			if(t=="start"){
 				visitstart(node);
 			}
@@ -6049,6 +6053,10 @@ define('visit',['stack', 'symtable'],
 				visitNode(tree);
 				stack.clear();
 				symTable.clear();
+			},
+			"end":function(){
+				_ended = true;
+				runTimeError("end");
 			}
 		}
 	}
@@ -6056,7 +6064,7 @@ define('visit',['stack', 'symtable'],
 
 
 
-var run, consumer, getConsumer, clean, console;
+var run, consumer, getConsumer, clean, console, end;
 
 console = {
 	log: function(message) {
@@ -6089,12 +6097,22 @@ require(['converted/parser', 'visit'], function(Parser, visitor){
 
 	run = function(logo) {
 		var tree, _consumer = getConsumer();
-		tree = Parser.parse(clean(logo));
-		_consumer("message", "start");
-		if(tree){
-			visitor.visit(tree, _consumer);
+		try{
+			tree = Parser.parse(clean(logo));
+			_consumer("message", "start");
+			if(tree){
+				visitor.visit(tree, _consumer);
+			}
+			_consumer("message", "end");
 		}
-		_consumer("message", "end");
+		catch(e){
+			throw new Error("error");
+		}
+	};
+
+	end = function(){
+		visitor.end();
+		throw new Error("end");
 	};
 
 })

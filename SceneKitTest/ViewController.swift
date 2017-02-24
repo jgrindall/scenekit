@@ -94,7 +94,7 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 	}
 	
 	func addTurtles(){
-		let num:Int = 13;
+		let num:Int = 18;
 		let size:Float = 20.0;
 		let cx:Float = -Float(num) * size/2.0;
 		let cz:Float = -Float(num) * size/2.0;
@@ -109,7 +109,7 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 	}
 	
 	func addPatches(){
-		let num:Int = 13;
+		let num:Int = 18;
 		let size:Float = 20.0;
 		let cx:Float = -Float(num) * size/2.0;
 		let cz:Float = -Float(num) * size/2.0;
@@ -123,16 +123,16 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 		}
 	}
 	
-	func _command(s:String){
-		let d:[String:Any] = ImageUtils.convertToDictionary(text: s)!;
-		let n: String = (d["name"] as? String)!;
+	func _command(data:String){
+		let d:[String:Any] = ImageUtils.convertToDictionary(text: data)!;
+		let name: String = (d["name"] as? String)!;
 		let amt:Float = (d["amount"] as? Float)!;
-		if(n == "fd"){
+		if(name == "fd"){
 			for turtle in self.turtles {
 				turtle.fd(n: amt);
 			}
 		}
-		else if(n == "rt"){
+		else if(name == "rt"){
 			for turtle in self.turtles {
 				turtle.rt(n: amt);
 			}
@@ -146,15 +146,20 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 	}
 	
 	
-	func command(s:String){
-		self._command(s: s);
+	func command(data:String){
+		self._command(data: data);
 		SCNTransaction.begin();
 		self.updateAll();
 		SCNTransaction.commit();
 	}
 	
 	func consume(type: String, data: String) {
-		print(type, data);
+		if(type == "message"){
+			print(data);
+		}
+		else if(type == "command"){
+			self.command(data:data);
+		}
 	}
 	
 	override public func viewDidLoad() {
@@ -168,12 +173,46 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 		self.updateAll();
 		self.sceneView.isPlaying = true;
 		self.sceneView.play(self);
-		self.codeRunner = CodeRunner(fileNames:["require", "build"]).setConsumer(consumer: self, name:"consumer");
-		let delayTime1 = DispatchTime.now() + Double(Int64(3 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
-		DispatchQueue.main.asyncAfter(deadline: delayTime1) {
-			self.codeRunner.run(fnName: "run", arg: "rpt 100000 [fd 30 rt 1]");
+		
+		
+		//let instanceOfCustomObject: OCodeRunner = OCodeRunner();
+		
+		
+		
+		do {
+			//instanceOfCustomObject.runIt();
+		}
+		catch _ {
+			//print("stopped");
 		}
 		
 		
+		
+		let delayTime = DispatchTime.now() + Double(Int64(0.3 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
+		DispatchQueue.main.asyncAfter(deadline: delayTime) {
+			do {
+				//instanceOfCustomObject.stop();
+			}
+			catch _ {
+				//print("stopped");
+			}
+			
+		}
+		
+		
+		
+		self.codeRunner = CodeRunner(fileNames:["require", "build"]).setConsumer(consumer: self, name:"consumer");
+		let delayTime1 = DispatchTime.now() + Double(Int64(3 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
+		DispatchQueue.main.asyncAfter(deadline: delayTime1) {
+			print("run");
+			self.codeRunner.run(fnName: "run", arg: "rpt 100000 [fd 30 rt 1]");
+		}
+		
+		let delayTime2 = DispatchTime.now() + Double(Int64(17 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
+		DispatchQueue.main.asyncAfter(deadline: delayTime2) {
+			print("end");
+			self.codeRunner.end();
+			//self.codeRunner.run(fnName: "end", arg: "");
+		}
 	}
 }

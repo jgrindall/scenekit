@@ -5,6 +5,7 @@ define(['stack', 'symtable'],
 		var stack = new Stack();
 		var symTable = new SymTable();
 		var _consumer = null;
+		var _ended = false;
 
 		function visitchildren(node){
 			// a general node with children
@@ -404,11 +405,14 @@ define(['stack', 'symtable'],
 
 		function runTimeError(msg){
 			throw new Error(msg);
-			_consumer("command", {"type":"error", "message":msg });
 		}
 
 		function visitNode(node){
 			var t = node.type;
+			if(_ended){
+				runTimeError("end");
+				return;
+			}
 			if(t=="start"){
 				visitstart(node);
 			}
@@ -557,6 +561,10 @@ define(['stack', 'symtable'],
 				visitNode(tree);
 				stack.clear();
 				symTable.clear();
+			},
+			"end":function(){
+				_ended = true;
+				runTimeError("end");
 			}
 		}
 	}
