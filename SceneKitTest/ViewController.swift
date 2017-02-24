@@ -22,6 +22,8 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 	var turtles:			Array<Turtle>!;
 	var consumer:			PCodeConsumer!;
 	var codeRunner:			PCodeRunner!;
+	var button:				UIButton!;
+	var button1:				UIButton!;
 	
 	func addScene(){
 		self.sceneView = SCNView(frame: self.view.frame);
@@ -164,20 +166,32 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 	
 	func _stop(){
 		self.codeRunner.end();
-		let d = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
-		DispatchQueue.main.asyncAfter(deadline: d) {
-			self._run();
-		}
 	}
 	
 	func _run(){
-		print("run");
 		self.codeRunner.run(fnName: "run", arg: "rpt 100000 [fd 30 rt 1]");
-		let d = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
-		DispatchQueue.main.asyncAfter(deadline: d) {
-			print("end");
-			self._stop();
-		}
+	}
+	
+	func buttonUp(){
+		self._run();
+	};
+	
+	func buttonUp1(){
+		self._stop();
+	};
+	
+	func addUI(){
+		self.button = UIButton(type: UIButtonType.system);
+		self.button.setTitle("start", for: .normal);
+		self.view.addSubview(self.button);
+		self.button.frame = CGRect(x: 50.0, y: 100.0, width: 200.0, height: 50.0);
+		self.button.addTarget(self, action: #selector(ViewController.buttonUp), for: UIControlEvents.touchUpInside);
+		
+		self.button1 = UIButton(type: UIButtonType.system);
+		self.button1.setTitle("end", for: .normal);
+		self.view.addSubview(self.button1);
+		self.button1.frame = CGRect(x: 150.0, y: 100.0, width: 200.0, height: 50.0);
+		self.button1.addTarget(self, action: #selector(ViewController.buttonUp1), for: UIControlEvents.touchUpInside);
 	}
 	
 	override public func viewDidLoad() {
@@ -191,7 +205,7 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 		self.updateAll();
 		self.sceneView.isPlaying = true;
 		self.sceneView.play(self);
+		self.addUI();
 		self.codeRunner = CodeRunner(fileNames:["require", "build"]).setConsumer(consumer: self);
-		self._run();
 	}
 }
