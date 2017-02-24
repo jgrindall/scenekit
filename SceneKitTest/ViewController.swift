@@ -162,6 +162,24 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 		}
 	}
 	
+	func _stop(){
+		self.codeRunner.end();
+		let d = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
+		DispatchQueue.main.asyncAfter(deadline: d) {
+			self._run();
+		}
+	}
+	
+	func _run(){
+		print("run");
+		self.codeRunner.run(fnName: "run", arg: "rpt 100000 [fd 30 rt 1]");
+		let d = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
+		DispatchQueue.main.asyncAfter(deadline: d) {
+			print("end");
+			self._stop();
+		}
+	}
+	
 	override public func viewDidLoad() {
 		super.viewDidLoad();
 		self.addScene();
@@ -173,46 +191,7 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 		self.updateAll();
 		self.sceneView.isPlaying = true;
 		self.sceneView.play(self);
-		
-		
-		//let instanceOfCustomObject: OCodeRunner = OCodeRunner();
-		
-		
-		
-		do {
-			//instanceOfCustomObject.runIt();
-		}
-		catch _ {
-			//print("stopped");
-		}
-		
-		
-		
-		let delayTime = DispatchTime.now() + Double(Int64(0.3 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
-		DispatchQueue.main.asyncAfter(deadline: delayTime) {
-			do {
-				//instanceOfCustomObject.stop();
-			}
-			catch _ {
-				//print("stopped");
-			}
-			
-		}
-		
-		
-		
-		self.codeRunner = CodeRunner(fileNames:["require", "build"]).setConsumer(consumer: self, name:"consumer");
-		let delayTime1 = DispatchTime.now() + Double(Int64(3 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
-		DispatchQueue.main.asyncAfter(deadline: delayTime1) {
-			print("run");
-			self.codeRunner.run(fnName: "run", arg: "rpt 100000 [fd 30 rt 1]");
-		}
-		
-		let delayTime2 = DispatchTime.now() + Double(Int64(17 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC);
-		DispatchQueue.main.asyncAfter(deadline: delayTime2) {
-			print("end");
-			self.codeRunner.end();
-			//self.codeRunner.run(fnName: "end", arg: "");
-		}
+		self.codeRunner = CodeRunner(fileNames:["require", "build"]).setConsumer(consumer: self);
+		self._run();
 	}
 }

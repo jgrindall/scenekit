@@ -556,6 +556,7 @@ define(['stack', 'symtable'],
 		return {
 			"visit": function(tree, consumer){
 				_consumer = consumer;
+				_ended = false;
 				stack.clear();
 				symTable.clear();
 				visitNode(tree);

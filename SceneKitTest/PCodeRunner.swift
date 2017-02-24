@@ -17,7 +17,7 @@ protocol PCodeRunner {
 	
 	init(fileNames:[String]);
 	func run(fnName:String, arg:String);
-	func setConsumer(consumer:PCodeConsumer, name:String) -> PCodeRunner;
+	func setConsumer(consumer:PCodeConsumer) -> PCodeRunner;
 	func sleep();
 	func end();
 	func wake();

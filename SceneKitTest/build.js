@@ -6048,6 +6048,7 @@ define('visit',['stack', 'symtable'],
 		return {
 			"visit": function(tree, consumer){
 				_consumer = consumer;
+				_ended = false;
 				stack.clear();
 				symTable.clear();
 				visitNode(tree);
@@ -6106,7 +6107,7 @@ require(['converted/parser', 'visit'], function(Parser, visitor){
 			_consumer("message", "end");
 		}
 		catch(e){
-			throw new Error("error");
+			throw new Error("error " + e.message);
 		}
 	};
 

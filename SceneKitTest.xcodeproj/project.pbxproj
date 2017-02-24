@@ -33,7 +33,6 @@
 		52A9C7AC1E57BF2800082CF1 /* PCodeRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A9C7AB1E57BF2800082CF1 /* PCodeRunner.swift */; };
 		52A9C7AE1E57C26600082CF1 /* PGestureDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A9C7AD1E57C26600082CF1 /* PGestureDelegate.swift */; };
 		52B1666B1E59EE4F000CE6F9 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B1666A1E59EE4F000CE6F9 /* Mutex.swift */; };
-		52D848DF1E5BA3FC0065336A /* OCodeRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D848DE1E5BA3FC0065336A /* OCodeRunner.m */; };
 		52DC7CDF1D132CB10075C2D3 /* surf.shader in Resources */ = {isa = PBXBuildFile; fileRef = 52DC7CDE1D132CB10075C2D3 /* surf.shader */; };
 		52E0C8611D1E95ED00B59FC9 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E0C8601D1E95ED00B59FC9 /* Assets.swift */; };
 		52E0C8631D1EA74100B59FC9 /* ImageUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E0C8621D1EA74100B59FC9 /* ImageUtils.swift */; };
@@ -69,9 +68,6 @@
 		52A9C7AB1E57BF2800082CF1 /* PCodeRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCodeRunner.swift; sourceTree = "<group>"; };
 		52A9C7AD1E57C26600082CF1 /* PGestureDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PGestureDelegate.swift; sourceTree = "<group>"; };
 		52B1666A1E59EE4F000CE6F9 /* Mutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mutex.swift; sourceTree = "<group>"; };
-		52D848DC1E5BA3FC0065336A /* SceneKitTest-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SceneKitTest-Bridging-Header.h"; sourceTree = "<group>"; };
-		52D848DD1E5BA3FC0065336A /* OCodeRunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCodeRunner.h; sourceTree = "<group>"; };
-		52D848DE1E5BA3FC0065336A /* OCodeRunner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCodeRunner.m; sourceTree = "<group>"; };
 		52DC7CDE1D132CB10075C2D3 /* surf.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = surf.shader; sourceTree = "<group>"; };
 		52E0C8601D1E95ED00B59FC9 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		52E0C8621D1EA74100B59FC9 /* ImageUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUtils.swift; sourceTree = "<group>"; };
@@ -118,13 +114,6 @@
 			name = utils;
 			sourceTree = "<group>";
 		};
-		52861D641D29ADEA002441B7 /* maps */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = maps;
-			sourceTree = "<group>";
-		};
 		80EE09B1196A4C4A00B77AB0 = {
 			isa = PBXGroup;
 			children = (
@@ -160,7 +149,6 @@
 				526CB6FA1E51102500C2E0F5 /* PPatch.swift */,
 				526CB6F41E510EC800C2E0F5 /* Patch.swift */,
 				526CB6F51E510EC800C2E0F5 /* Turtle.swift */,
-				52861D641D29ADEA002441B7 /* maps */,
 				52861D591D27F80A002441B7 /* GestureHandler.swift */,
 				52861D611D29ADC7002441B7 /* shaders */,
 				52861D621D29ADD3002441B7 /* utils */,
@@ -168,9 +156,6 @@
 				80EE09BF196A4C4A00B77AB0 /* AppDelegate.swift */,
 				80EE09C6196A4C4A00B77AB0 /* Images.xcassets */,
 				80EE09BD196A4C4A00B77AB0 /* Supporting Files */,
-				52D848DD1E5BA3FC0065336A /* OCodeRunner.h */,
-				52D848DE1E5BA3FC0065336A /* OCodeRunner.m */,
-				52D848DC1E5BA3FC0065336A /* SceneKitTest-Bridging-Header.h */,
 			);
 			path = SceneKitTest;
 			sourceTree = "<group>";
@@ -289,7 +274,6 @@
 				525F54591D0F4925008C8396 /* ViewController.swift in Sources */,
 				526CB6FF1E51148100C2E0F5 /* PatchNodeCache.swift in Sources */,
 				5269C29C1DC7E32900E3BCC2 /* EventDispatcher.swift in Sources */,
-				52D848DF1E5BA3FC0065336A /* OCodeRunner.m in Sources */,
 				52E0C8611D1E95ED00B59FC9 /* Assets.swift in Sources */,
 				52B1666B1E59EE4F000CE6F9 /* Mutex.swift in Sources */,
 				52E0C8631D1EA74100B59FC9 /* ImageUtils.swift in Sources */,
@@ -423,7 +407,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jgrindall.scenekit;
 				PRODUCT_NAME = SceneKitTest;
 				SWIFT_INSTALL_OBJC_HEADER = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "SceneKitTest/SceneKitTest-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -444,7 +428,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jgrindall.scenekit;
 				PRODUCT_NAME = SceneKitTest;
 				SWIFT_INSTALL_OBJC_HEADER = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "SceneKitTest/SceneKitTest-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

@@ -41,7 +41,7 @@ require(['converted/parser', 'visit'], function(Parser, visitor){
 			_consumer("message", "end");
 		}
 		catch(e){
-			throw new Error("error");
+			throw new Error("error " + e.message);
 		}
 	};
 
