@@ -1,7 +1,7 @@
 {
     baseUrl: '.',
     name: 'main',
-    out: '../SceneKitTest/build.js',
+    out: '../SceneKitTest/js/build.js',
     removeCombined: true,
     findNestedDependencies: true,
     optimize: 'none'

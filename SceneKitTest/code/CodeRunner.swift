@@ -30,13 +30,13 @@ class CodeRunner : NSObject, PCodeRunner {
 		self.makeContext(fileNames: fileNames);
 		self.loadFiles(fileNames: fileNames);
 		self._consumer = consumer;
-		print("->ready");
 		self._status.value = "ready";
 	}
 	
 	private func loadFile(fileName:String){
 		do {
-			let contents = try String(contentsOfFile: Bundle.main.path(forResource: fileName, ofType: "js")!, encoding: String.Encoding.utf8);
+			let path:String = Bundle.main.path(forResource: fileName, ofType: "js")!;
+			let contents = try String(contentsOfFile:path, encoding: String.Encoding.utf8);
 			_ = self.context.evaluateScript(contents);
 		}
 		catch (let error) {
@@ -68,31 +68,23 @@ class CodeRunner : NSObject, PCodeRunner {
 				print("broken...", self._status.value);
 			}
 			else{
-				print("locked?");
 				self.mutexLock.locked {
-					print("consume");
 					if(self._status.value == "running" && self.hasConsumer()){
-						print("consume", type, data);
 						if(type == "end"){
-							// done!
-							print("->done");
 							self._status.value = "ready";
 						}
-						//self._consumer.consume(type: type, data:data);
-					}
-					else{
-						
+						else{
+							self._consumer.consume(type: type, data:data);
+						}
 					}
 				}
 			}
 		}
 		let castBlock:Any! = unsafeBitCast(lockedConsumerBlock, to: AnyObject.self);
 		self.context.globalObject.setObject(castBlock, forKeyedSubscript: "consumer" as (NSCopying & NSObjectProtocol)!);
-		print("bind2");
 	}
 	
 	private func unbindConsumer(){
-		print("unbind");
 		self.context.globalObject.setObject(nil, forKeyedSubscript: "consumer" as (NSCopying & NSObjectProtocol)!);
 	}
 	
@@ -105,15 +97,12 @@ class CodeRunner : NSObject, PCodeRunner {
 	}
 	
 	func run(fnName:String, arg:String) {
-		print("run");
 		if(self._status.value == "ready"){
 			self._status.value = "about to run";
 			if(!self.hasConsumer()){
 				self.bindConsumer();
 			}
-			print("r2");
 			serialQueue.async{
-				print("->running");
 				if(self._status.value == "about to run"){
 					self._status.value = "running";
 				}
@@ -129,11 +118,9 @@ class CodeRunner : NSObject, PCodeRunner {
 			listener.onStatusChange(status:self._status.value);
 		});
 		self._status.addEventListener("change", handler: handler);
-		print("onStatusChange added");
 	}
 	
 	func end(){
-		print("end");
 		let fn = self.context.objectForKeyedSubscript("end");
 		_ = fn?.call(withArguments: []);
 		self.unbindConsumer();
