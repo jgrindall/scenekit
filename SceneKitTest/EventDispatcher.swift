@@ -74,7 +74,7 @@ extension EventDispatcher
 			return
 		}
 		
-		eventListeners.listeners[type]?.remove(handler)
+		_ = eventListeners.listeners[type]?.remove(handler)
 		
 		objc_setAssociatedObject(self,
 		                         &EventDispatcherKey.eventDispatcher,

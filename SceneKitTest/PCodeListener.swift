@@ -5,9 +5,9 @@ import QuartzCore
 import JavaScriptCore
 import UIKit
 
-protocol PCodeConsumer : JSExport {
+protocol PCodeListener {
 
-	func consume(type:String, data:String);
+	func onStatusChange(status:String);
 
 }
 

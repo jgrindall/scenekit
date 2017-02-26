@@ -6100,20 +6100,21 @@ require(['converted/parser', 'visit'], function(Parser, visitor){
 		var tree, _consumer = getConsumer();
 		try{
 			tree = Parser.parse(clean(logo));
-			_consumer("message", "start");
+			_consumer("start", "start");
 			if(tree){
 				visitor.visit(tree, _consumer);
 			}
-			_consumer("message", "end");
+			_consumer("end", "end");
 		}
 		catch(e){
+			_consumer("error", "error");
 			throw new Error("error " + e.message);
 		}
 	};
 
 	end = function(){
 		visitor.end();
-		throw new Error("end");
+		throw new Error("end!");
 	};
 
 })

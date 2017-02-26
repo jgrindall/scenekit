@@ -12,14 +12,13 @@ import QuartzCore
 import JavaScriptCore
 import UIKit
 
-@objc
 protocol PCodeRunner {
 	
-	init(fileNames:[String]);
+	init(fileNames:[String], consumer:PCodeConsumer);
 	func run(fnName:String, arg:String);
-	func setConsumer(consumer:PCodeConsumer) -> PCodeRunner;
 	func sleep();
 	func end();
 	func wake();
+	func onStatusChange(listener:PCodeListener);
 }
 

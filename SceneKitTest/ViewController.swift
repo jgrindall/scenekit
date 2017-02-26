@@ -4,7 +4,7 @@ import SceneKit
 import QuartzCore
 import JavaScriptCore
 
-public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestureDelegate, PCodeConsumer {
+public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestureDelegate, PCodeConsumer, PCodeListener {
 	
 	var maxI:Int =		50;
 	var maxJ:Int =		50;
@@ -23,7 +23,8 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 	var consumer:			PCodeConsumer!;
 	var codeRunner:			PCodeRunner!;
 	var button:				UIButton!;
-	var button1:				UIButton!;
+	var button1:			UIButton!;
+	var label:				UILabel!
 	
 	func addScene(){
 		self.sceneView = SCNView(frame: self.view.frame);
@@ -164,34 +165,43 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 		}
 	}
 	
-	func _stop(){
-		self.codeRunner.end();
-	}
-	
-	func _run(){
-		self.codeRunner.run(fnName: "run", arg: "rpt 100000 [fd 30 rt 1]");
-	}
-	
 	func buttonUp(){
-		self._run();
+		print("run");
+		self.codeRunner.run(fnName: "run", arg: "rpt 100000 [fd 30 rt 1]");
 	};
 	
 	func buttonUp1(){
-		self._stop();
+		print("stop");
+		self.codeRunner.end();
 	};
 	
 	func addUI(){
 		self.button = UIButton(type: UIButtonType.system);
 		self.button.setTitle("start", for: .normal);
+		self.button.setTitleColor(UIColor.black, for: UIControlState.normal);
 		self.view.addSubview(self.button);
-		self.button.frame = CGRect(x: 50.0, y: 100.0, width: 200.0, height: 50.0);
+		self.button.frame = CGRect(x: 50.0, y: 100.0, width: 100.0, height: 50.0);
 		self.button.addTarget(self, action: #selector(ViewController.buttonUp), for: UIControlEvents.touchUpInside);
+		self.button.backgroundColor = UIColor.red;
 		
 		self.button1 = UIButton(type: UIButtonType.system);
 		self.button1.setTitle("end", for: .normal);
+		self.button1.setTitleColor(UIColor.black, for: UIControlState.normal);
 		self.view.addSubview(self.button1);
-		self.button1.frame = CGRect(x: 150.0, y: 100.0, width: 200.0, height: 50.0);
+		self.button1.frame = CGRect(x: 200.0, y: 100.0, width: 100.0, height: 50.0);
 		self.button1.addTarget(self, action: #selector(ViewController.buttonUp1), for: UIControlEvents.touchUpInside);
+		self.button1.backgroundColor = UIColor.green;
+		
+		self.label = UILabel(frame: CGRect(x: 450.0, y: 100.0, width: 200.0, height: 50.0));
+		self.view.addSubview(self.label);
+		self.label.text = "new";
+	}
+	
+	func onStatusChange(status:String){
+		print("status", status);
+		DispatchQueue.main.async { [unowned self] in
+			self.label.text = status;
+		}
 	}
 	
 	override public func viewDidLoad() {
@@ -206,6 +216,7 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 		self.sceneView.isPlaying = true;
 		self.sceneView.play(self);
 		self.addUI();
-		self.codeRunner = CodeRunner(fileNames:["require", "build"]).setConsumer(consumer: self);
+		self.codeRunner = CodeRunner(fileNames:["require", "build"], consumer:self);
+		self.codeRunner.onStatusChange(listener: self);
 	}
 }

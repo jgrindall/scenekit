@@ -36,6 +36,7 @@
 		52DC7CDF1D132CB10075C2D3 /* surf.shader in Resources */ = {isa = PBXBuildFile; fileRef = 52DC7CDE1D132CB10075C2D3 /* surf.shader */; };
 		52E0C8611D1E95ED00B59FC9 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E0C8601D1E95ED00B59FC9 /* Assets.swift */; };
 		52E0C8631D1EA74100B59FC9 /* ImageUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E0C8621D1EA74100B59FC9 /* ImageUtils.swift */; };
+		52F9FB221E6300DF004829AC /* PCodeListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F9FB211E6300DF004829AC /* PCodeListener.swift */; };
 		52FEBC9F1D0419D900B65511 /* geom.shader in Resources */ = {isa = PBXBuildFile; fileRef = 52FEBC9E1D0419D900B65511 /* geom.shader */; };
 		80EE09C0196A4C4A00B77AB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EE09BF196A4C4A00B77AB0 /* AppDelegate.swift */; };
 		80EE09C7196A4C4A00B77AB0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80EE09C6196A4C4A00B77AB0 /* Images.xcassets */; };
@@ -71,6 +72,7 @@
 		52DC7CDE1D132CB10075C2D3 /* surf.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = surf.shader; sourceTree = "<group>"; };
 		52E0C8601D1E95ED00B59FC9 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		52E0C8621D1EA74100B59FC9 /* ImageUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUtils.swift; sourceTree = "<group>"; };
+		52F9FB211E6300DF004829AC /* PCodeListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCodeListener.swift; sourceTree = "<group>"; };
 		52FEBC9E1D0419D900B65511 /* geom.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = geom.shader; sourceTree = "<group>"; };
 		80EE09BA196A4C4A00B77AB0 /* SceneKitTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SceneKitTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		80EE09BE196A4C4A00B77AB0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 		80EE09BC196A4C4A00B77AB0 /* SceneKitTest */ = {
 			isa = PBXGroup;
 			children = (
+				52F9FB211E6300DF004829AC /* PCodeListener.swift */,
 				52B1666A1E59EE4F000CE6F9 /* Mutex.swift */,
 				52A9C7AD1E57C26600082CF1 /* PGestureDelegate.swift */,
 				52A9C7AB1E57BF2800082CF1 /* PCodeRunner.swift */,
@@ -268,6 +271,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52F9FB221E6300DF004829AC /* PCodeListener.swift in Sources */,
 				52A9C7971E525E5C00082CF1 /* CodeRunner.swift in Sources */,
 				526CB6FD1E51106600C2E0F5 /* PatchData.swift in Sources */,
 				52A9C7AC1E57BF2800082CF1 /* PCodeRunner.swift in Sources */,

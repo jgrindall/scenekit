@@ -19,16 +19,19 @@ class CodeRunner : NSObject, PCodeRunner {
 	let serialQueue = DispatchQueue(label: "codeRunnerSerialQueue" + UUID().uuidString);
 	let mutexLock = Mutex();
 	var _consumer:PCodeConsumer!;
-	var _running = false;
-	var _bound = false;
+	var _status:DispatchingValue<String> = DispatchingValue("new");
 
 	enum CodeRunnerError : Error {
 		case RuntimeError(String)
 	}
 	
-	required init(fileNames:[String]){
+	required init(fileNames:[String], consumer:PCodeConsumer){
 		super.init();
 		self.makeContext(fileNames: fileNames);
+		self.loadFiles(fileNames: fileNames);
+		self._consumer = consumer;
+		print("->ready");
+		self._status.value = "ready";
 	}
 	
 	private func loadFile(fileName:String){
@@ -47,91 +50,109 @@ class CodeRunner : NSObject, PCodeRunner {
 		}
 	}
 	
-	func makeContext(fileNames:[String]){
-		serialQueue.sync{
-			self.context = JSContext();
-			let consoleLog: @convention(block) (String) -> Void = { message in
-				print("console.log " + message);
-			}
-			self.context.exceptionHandler = { context, exception in
-				print("error: \(exception)");
-			};
-			self.context.globalObject.setObject(unsafeBitCast(consoleLog, to: AnyObject.self), forKeyedSubscript: "consoleLog" as (NSCopying & NSObjectProtocol)!)
-			self.loadFiles(fileNames: fileNames);
+	private func makeContext(fileNames:[String]){
+		self.context = JSContext(virtualMachine: JSVirtualMachine());
+		let consoleLog: @convention(block) (String) -> Void = { message in
+			print("console.log " + message);
+		}
+		self.context.exceptionHandler = { context, exception in
+			print("error: \(exception)");
 		};
+		self.context.globalObject.setObject(unsafeBitCast(consoleLog, to: AnyObject.self), forKeyedSubscript: "consoleLog" as (NSCopying & NSObjectProtocol)!)
 	}
 	
-	func bindConsumer(){
+	private func bindConsumer(){
 		let lockedConsumerBlock:@convention(block)(String, String) ->Void = {type, data in
-			if(self._consumer == nil || !self._bound || !self._running){
-				print("broken");
+			let allowedStates:[String] = ["running", "pausing", "paused", "waking"];
+			if(allowedStates.index(of: self._status.value) == nil){
+				print("broken...", self._status.value);
 			}
 			else{
+				print("locked?");
 				self.mutexLock.locked {
-					if(self._consumer != nil){
-						self._consumer.consume(type: type, data:data);
+					print("consume");
+					if(self._status.value == "running" && self.hasConsumer()){
+						print("consume", type, data);
+						if(type == "end"){
+							// done!
+							print("->done");
+							self._status.value = "ready";
+						}
+						//self._consumer.consume(type: type, data:data);
+					}
+					else{
+						
 					}
 				}
 			}
 		}
-		serialQueue.sync{
-			print("bind1");
-			let castBlock:Any! = unsafeBitCast(lockedConsumerBlock, to: AnyObject.self);
-			self.context.globalObject.setObject(castBlock, forKeyedSubscript: "consumer" as (NSCopying & NSObjectProtocol)!);
-		}
+		let castBlock:Any! = unsafeBitCast(lockedConsumerBlock, to: AnyObject.self);
+		self.context.globalObject.setObject(castBlock, forKeyedSubscript: "consumer" as (NSCopying & NSObjectProtocol)!);
 		print("bind2");
-		self._bound = true;
 	}
 	
-	func unbindConsumer(){
+	private func unbindConsumer(){
 		print("unbind");
 		self.context.globalObject.setObject(nil, forKeyedSubscript: "consumer" as (NSCopying & NSObjectProtocol)!);
-		self._bound = false;
 	}
 	
-	func setConsumer(consumer:PCodeConsumer) -> PCodeRunner{
-		if(self._consumer == nil){
-			self._consumer = consumer;
+	func hasConsumer() -> Bool{
+		let c = self.context.globalObject.objectForKeyedSubscript("consumer");
+		if(c == nil || c?.toString() == "undefined"){
+			return false;
 		}
-		return self;
-	}
-	
-	func checkBind(){
-		if(self._consumer != nil && !self._bound){
-			print("run & bind!");
-			self.bindConsumer();
-		}
+		return true;
 	}
 	
 	func run(fnName:String, arg:String) {
-		if(!self._running){
-			self.checkBind();
+		print("run");
+		if(self._status.value == "ready"){
+			self._status.value = "about to run";
+			if(!self.hasConsumer()){
+				self.bindConsumer();
+			}
+			print("r2");
 			serialQueue.async{
-				self._running = true;
+				print("->running");
+				if(self._status.value == "about to run"){
+					self._status.value = "running";
+				}
 				let fn = self.context.objectForKeyedSubscript(fnName);
 				_ = fn?.call(withArguments: [arg]);
 			}
 		}
 	}
 	
+	func onStatusChange(listener:PCodeListener){
+		let handler = EventHandler(function: {
+		    (event: Event) in
+			listener.onStatusChange(status:self._status.value);
+		});
+		self._status.addEventListener("change", handler: handler);
+		print("onStatusChange added");
+	}
+	
 	func end(){
+		print("end");
 		let fn = self.context.objectForKeyedSubscript("end");
 		_ = fn?.call(withArguments: []);
 		self.unbindConsumer();
-		self._running = false;
+		self._status.value = "ready";
 	}
 	
 	func sleep(){
-		if(self._running && self._consumer != nil && self._bound){
+		if(self._status.value == "running"){
+			self._status.value = "pausing";
 			self.mutexLock.lock();
-			self._running = false;
+			self._status.value = "paused";
 		}
 	}
 	
 	func wake(){
-		if(!self._running && self._consumer != nil && self._bound){
+		if(self._status.value == "paused"){
+			self._status.value = "waking";
 			self.mutexLock.unlock();
-			self._running = true;
+			self._status.value = "running";
 		}
 	}
 }
