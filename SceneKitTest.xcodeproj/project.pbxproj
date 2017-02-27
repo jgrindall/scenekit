@@ -31,6 +31,11 @@
 		525F54571D0F47E1008C8396 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 525F54551D0F47E1008C8396 /* LaunchScreen.storyboard */; };
 		525F54591D0F4925008C8396 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525F54581D0F4925008C8396 /* ViewController.swift */; };
 		52A9C7951E5253B500082CF1 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A9C7941E5253B500082CF1 /* bg.png */; };
+		52BBDCF51E64C63B0086210A /* bg2.png in Resources */ = {isa = PBXBuildFile; fileRef = 52BBDCF31E64C63B0086210A /* bg2.png */; };
+		52BBDCF61E64C63B0086210A /* bg3.png in Resources */ = {isa = PBXBuildFile; fileRef = 52BBDCF41E64C63B0086210A /* bg3.png */; };
+		52BBDD011E64CCBD0086210A /* LogoSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BBDD001E64CCBD0086210A /* LogoSceneViewController.swift */; };
+		52BBDD031E64CD660086210A /* HUDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BBDD021E64CD660086210A /* HUDViewController.swift */; };
+		52BBDD051E64D3040086210A /* BaseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BBDD041E64D3040086210A /* BaseScene.swift */; };
 		80EE09C0196A4C4A00B77AB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EE09BF196A4C4A00B77AB0 /* AppDelegate.swift */; };
 		80EE09C7196A4C4A00B77AB0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80EE09C6196A4C4A00B77AB0 /* Images.xcassets */; };
 /* End PBXBuildFile section */
@@ -65,6 +70,11 @@
 		52861D651D29AE5D002441B7 /* shared.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shared.txt; sourceTree = "<group>"; };
 		528E52CE1D5BD2A80064489F /* geom2.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = geom2.shader; sourceTree = "<group>"; };
 		52A9C7941E5253B500082CF1 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
+		52BBDCF31E64C63B0086210A /* bg2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg2.png; sourceTree = "<group>"; };
+		52BBDCF41E64C63B0086210A /* bg3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg3.png; sourceTree = "<group>"; };
+		52BBDD001E64CCBD0086210A /* LogoSceneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoSceneViewController.swift; sourceTree = "<group>"; };
+		52BBDD021E64CD660086210A /* HUDViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUDViewController.swift; sourceTree = "<group>"; };
+		52BBDD041E64D3040086210A /* BaseScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseScene.swift; sourceTree = "<group>"; };
 		52DC7CDE1D132CB10075C2D3 /* surf.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = surf.shader; sourceTree = "<group>"; };
 		52FEBC9E1D0419D900B65511 /* geom.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = geom.shader; sourceTree = "<group>"; };
 		80EE09BA196A4C4A00B77AB0 /* SceneKitTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SceneKitTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -147,6 +157,16 @@
 			name = shaders;
 			sourceTree = "<group>";
 		};
+		52BBDCF71E64CA670086210A /* views */ = {
+			isa = PBXGroup;
+			children = (
+				52BBDD041E64D3040086210A /* BaseScene.swift */,
+				52BBDD021E64CD660086210A /* HUDViewController.swift */,
+				52BBDD001E64CCBD0086210A /* LogoSceneViewController.swift */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
 		80EE09B1196A4C4A00B77AB0 = {
 			isa = PBXGroup;
 			children = (
@@ -166,11 +186,14 @@
 		80EE09BC196A4C4A00B77AB0 /* SceneKitTest */ = {
 			isa = PBXGroup;
 			children = (
+				52BBDCF71E64CA670086210A /* views */,
 				5220B2871E637496009572D0 /* turtles */,
 				5220B27A1E637288009572D0 /* code */,
 				5220B26F1E63720F009572D0 /* utils */,
 				5220B26A1E63717E009572D0 /* js */,
 				52A9C7941E5253B500082CF1 /* bg.png */,
+				52BBDCF31E64C63B0086210A /* bg2.png */,
+				52BBDCF41E64C63B0086210A /* bg3.png */,
 				52861D611D29ADC7002441B7 /* shaders */,
 				525F54581D0F4925008C8396 /* ViewController.swift */,
 				80EE09BF196A4C4A00B77AB0 /* AppDelegate.swift */,
@@ -252,7 +275,9 @@
 			files = (
 				52A9C7951E5253B500082CF1 /* bg.png in Resources */,
 				80EE09C7196A4C4A00B77AB0 /* Images.xcassets in Resources */,
+				52BBDCF61E64C63B0086210A /* bg3.png in Resources */,
 				5220B26D1E63717E009572D0 /* build.js in Resources */,
+				52BBDCF51E64C63B0086210A /* bg2.png in Resources */,
 				525F54571D0F47E1008C8396 /* LaunchScreen.storyboard in Resources */,
 				5220B26E1E63717E009572D0 /* require.js in Resources */,
 			);
@@ -287,6 +312,7 @@
 				525F54591D0F4925008C8396 /* ViewController.swift in Sources */,
 				5220B2911E637496009572D0 /* PatchData.swift in Sources */,
 				5220B2841E63729D009572D0 /* GestureHandler.swift in Sources */,
+				52BBDD011E64CCBD0086210A /* LogoSceneViewController.swift in Sources */,
 				5220B2861E63748E009572D0 /* PGestureDelegate.swift in Sources */,
 				5220B2741E63720F009572D0 /* Assets.swift in Sources */,
 				5220B2921E637496009572D0 /* PatchNodeCache.swift in Sources */,
@@ -298,6 +324,8 @@
 				5220B2931E637496009572D0 /* PPatch.swift in Sources */,
 				5220B27F1E637288009572D0 /* CodeRunner.swift in Sources */,
 				5220B2811E637288009572D0 /* PCodeListener.swift in Sources */,
+				52BBDD031E64CD660086210A /* HUDViewController.swift in Sources */,
+				52BBDD051E64D3040086210A /* BaseScene.swift in Sources */,
 				80EE09C0196A4C4A00B77AB0 /* AppDelegate.swift in Sources */,
 				5220B2821E637288009572D0 /* PCodeRunner.swift in Sources */,
 				5220B2951E637496009572D0 /* Turtle.swift in Sources */,

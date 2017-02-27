@@ -5,88 +5,11 @@ import QuartzCore
 import JavaScriptCore
 
 public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestureDelegate, PCodeConsumer, PCodeListener {
-	
-	var maxI:Int =		50;
-	var maxJ:Int =		50;
-	var size:Float =	12;
-	var height:Float =	20;
-	
-	var sceneView:			SCNView!;
-	var scene:				SCNScene!;
-	var cameraNode:			SCNNode!;
-	var cameraOrbit:		SCNNode!;
-	var lightNode:			SCNNode!;
-	var originNode:			SCNNode!;
-	var gestureHandler:		GestureHandler!;
-	var patches:			Array<Patch>!;
-	var turtles:			Array<Turtle>!;
-	var consumer:			PCodeConsumer!;
-	var codeRunner:			PCodeRunner!;
-	var button:				UIButton!;
-	var button1:			UIButton!;
-	var label:				UILabel!
-	
-	func addScene(){
-		self.sceneView = SCNView(frame: self.view.frame);
-		self.view.addSubview(self.sceneView);
-		self.sceneView.showsStatistics = true;
-		self.sceneView.allowsCameraControl = false;
-		self.sceneView.autoenablesDefaultLighting = false;
-		self.sceneView.delegate = self;
-		self.sceneView.loops = true;
-		self.scene = SCNScene();
-		self.scene.background.contents = UIImage(named: "bg.png");
-		self.sceneView.scene = scene;
-		self.patches = [Patch]();
-		self.turtles = [Turtle]();
-	}
-	
-	func addCamera(){
-		self.cameraNode = SCNNode();
-		self.cameraNode.camera = SCNCamera();
-		self.cameraNode.camera!.xFov = 53;
-		self.cameraNode.camera!.yFov  = 53;
-		self.cameraNode.camera!.zFar = 2000;
-		self.cameraNode.camera!.zNear = 0.01;
-		self.cameraNode.position = SCNVector3(x: 0, y: 0, z: 1000);
-		self.cameraOrbit = SCNNode();
-		self.cameraOrbit.addChildNode(self.cameraNode);
-		self.scene.rootNode.addChildNode(self.cameraOrbit);
-		self.scene.rootNode.castsShadow = true;
-		self.sceneView.pointOfView = self.cameraNode;
-	}
-	
-	func addLights(){
-		let ambientLight = SCNLight();
-		ambientLight.type = SCNLight.LightType.ambient;
-		ambientLight.color = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.75)
-		let ambientLightNode = SCNNode()
-		ambientLightNode.light = ambientLight;
-		ambientLight.castsShadow = true;
-		ambientLightNode.castsShadow = true;
-		scene.rootNode.addChildNode(ambientLightNode);
-		let cNode = SCNNode();
-		cNode.transform = SCNMatrix4MakeRotation(Float(M_PI), 0, 0, 1);
-		cNode.position = SCNVector3(Float(self.maxI)*self.size/2, 150, Float(self.maxI)*self.size/2)
-		let spotLight = SCNLight();
-		spotLight.color = UIColor.white;
-		spotLight.type = SCNLight.LightType.spot;
-		spotLight.spotInnerAngle = 20.0;
-		spotLight.spotOuterAngle = 120.0;
-		spotLight.castsShadow = true;
-		let spotLightNode = SCNNode();
-		spotLightNode.castsShadow = true;
-		spotLightNode.light = spotLight;
-		let blueMaterial = SCNMaterial();
-		blueMaterial.diffuse.contents = UIColor.red;
-		cNode.addChildNode(spotLightNode);
-		self.scene.rootNode.addChildNode(cNode);
-	}
-	
-	func addGestures(){
-		self.gestureHandler = GestureHandler(target: self, camera: self.cameraNode, lights: [], delegate: self);
-		self.sceneView.delegate = self.gestureHandler;
-	}
+
+	var logoSceneController:	LogoSceneViewController!;
+	var hudController:			HUDViewController!;
+	var consumer:				PCodeConsumer!;
+	var codeRunner:				PCodeRunner!;
 	
 	func onStart(){
 		self.codeRunner.sleep();
@@ -96,56 +19,26 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 		self.codeRunner.wake();
 	}
 	
-	func addTurtles(){
-		let num:Int = 18;
-		let size:Float = 20.0;
-		let cx:Float = -Float(num) * size/2.0;
-		let cz:Float = -Float(num) * size/2.0;
-		for i in 0...num-1{
-			for j in 0...num-1{
-				let turtle:Turtle = Turtle(type: "turtle");
-				turtle.pos(p: SCNVector3Make(Float(i)*size - cx, 8.0, Float(j)*size - cz));
-				self.turtles.append(turtle);
-				self.scene.rootNode.addChildNode(turtle.getNode());
-			}
-		}
-	}
-	
-	func addPatches(){
-		let num:Int = 18;
-		let size:Float = 20.0;
-		let cx:Float = -Float(num) * size/2.0;
-		let cz:Float = -Float(num) * size/2.0;
-		for i in 0...num-1{
-			for j in 0...num-1{
-				let patch:Patch = Patch(type: "grass");
-				patch.pos(p: SCNVector3Make(Float(i)*size - cx, 0.0, Float(j)*size - cz));
-				self.patches.append(patch);
-				self.scene.rootNode.addChildNode(patch.getNode());
-			}
-		}
-	}
-	
 	func _command(data:String){
 		let d:[String:Any] = ImageUtils.convertToDictionary(text: data)!;
 		let name: String = (d["name"] as? String)!;
 		let amt:Float = (d["amount"] as? Float)!;
 		if(name == "fd"){
-			for turtle in self.turtles {
-				turtle.fd(n: amt);
-			}
+			//for turtle in self.turtles {
+				//turtle.fd(n: amt);
+			//}
 		}
 		else if(name == "rt"){
-			for turtle in self.turtles {
-				turtle.rt(n: amt);
-			}
+			//for turtle in self.turtles {
+				//turtle.rt(n: amt);
+			//}
 		}
 	}
 	
 	func updateAll(){
-		for turtle in self.turtles {
-			turtle.update();
-		}
+		//for turtle in self.turtles {
+			//turtle.update();
+		//}
 	}
 	
 	
@@ -175,47 +68,37 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 		self.codeRunner.end();
 	};
 	
-	func addUI(){
-		self.button = UIButton(type: UIButtonType.system);
-		self.button.setTitle("start", for: .normal);
-		self.button.setTitleColor(UIColor.black, for: UIControlState.normal);
-		self.view.addSubview(self.button);
-		self.button.frame = CGRect(x: 50.0, y: 100.0, width: 100.0, height: 50.0);
-		self.button.addTarget(self, action: #selector(ViewController.buttonUp), for: UIControlEvents.touchUpInside);
-		self.button.backgroundColor = UIColor.red;
-		
-		self.button1 = UIButton(type: UIButtonType.system);
-		self.button1.setTitle("end", for: .normal);
-		self.button1.setTitleColor(UIColor.black, for: UIControlState.normal);
-		self.view.addSubview(self.button1);
-		self.button1.frame = CGRect(x: 200.0, y: 100.0, width: 100.0, height: 50.0);
-		self.button1.addTarget(self, action: #selector(ViewController.buttonUp1), for: UIControlEvents.touchUpInside);
-		self.button1.backgroundColor = UIColor.green;
-		
-		self.label = UILabel(frame: CGRect(x: 450.0, y: 100.0, width: 200.0, height: 50.0));
-		self.view.addSubview(self.label);
-		self.label.text = "new";
-	}
-	
 	func onStatusChange(status:String){
 		print("status", status);
 		DispatchQueue.main.async { [unowned self] in
-			self.label.text = status;
+			//self.label.text = status;
 		}
 	}
 	
+	func addLogo(){
+		let logoView = UIView(frame: self.view.frame);
+		self.view.addSubview(logoView);
+		self.logoSceneController = LogoSceneViewController();
+		self.logoSceneController.view = logoView;
+		self.addChildViewController(self.logoSceneController);
+		self.logoSceneController.didMove(toParentViewController: self);
+	};
+	
+	func addHUD(){
+		let hudView = UIView(frame: self.view.frame);
+		self.view.addSubview(hudView);
+		self.hudController = HUDViewController();
+		self.hudController.view = hudView;
+		self.addChildViewController(self.hudController);
+		self.hudController.didMove(toParentViewController: self);
+	};
+	
+	
 	override public func viewDidLoad() {
 		super.viewDidLoad();
-		self.addScene();
-		self.addLights();
-		self.addCamera();
-		self.addGestures();
-		self.addPatches();
-		self.addTurtles();
-		self.updateAll();
-		self.sceneView.isPlaying = true;
-		self.sceneView.play(self);
-		self.addUI();
+		self.addLogo();
+		self.addHUD();
+		//self.updateAll();
 		self.codeRunner = CodeRunner(fileNames:["require", "build"], consumer:self);
 		self.codeRunner.onStatusChange(listener: self);
 	}

@@ -42,7 +42,7 @@ open class GestureHandler : NSObject, SCNSceneRendererDelegate, UIGestureRecogni
 		self._target.view.addGestureRecognizer(panGesture);
 	}
 	
-	open func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+	func onRender(){
 		let old:SCNMatrix4 = self._cameraNode.transform;
 		let dx:Float = Float(self._slideVel.x)/GestureHandler.Consts.VEL_SCALE;
 		let dy:Float = Float(self._slideVel.y)/GestureHandler.Consts.VEL_SCALE;
