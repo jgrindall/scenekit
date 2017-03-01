@@ -15,5 +15,6 @@ import UIKit
 protocol PGestureDelegate{
 	func onStart();
 	func onFinished();
+	func onTransform(t:SCNMatrix4);
 }
 

@@ -4,12 +4,11 @@ import SceneKit
 import QuartzCore
 import JavaScriptCore
 
-public class LogoSceneViewController: UIViewController, PGestureDelegate, SCNSceneRendererDelegate {
+public class LogoSceneViewController: UIViewController {
 	
 	private var base:					BaseScene!;
 	private var patches:				Array<Patch>!;
 	private var turtles:				Array<Turtle>!;
-	private var gestureHandler:			GestureHandler!;
 	
 	override public func viewDidLoad() {
 		super.viewDidLoad();
@@ -17,7 +16,8 @@ public class LogoSceneViewController: UIViewController, PGestureDelegate, SCNSce
 		self.view.addSubview(self.base.getSceneView());
 		self.patches = [Patch]();
 		self.turtles = [Turtle]();
-		self.addGestures();
+		self.addPatches();
+		self.addTurtles();
 		self.base.play();
 	}
 	
@@ -25,22 +25,12 @@ public class LogoSceneViewController: UIViewController, PGestureDelegate, SCNSce
 		return self.base.getRootNode();
 	}
 	
-	func addGestures(){
-		self.gestureHandler = GestureHandler(target: self, camera: self.base.getCameraNode(), lights: [], delegate: self);
-		self.base.getSceneView().delegate = self;
+	func getSceneView() -> SCNView{
+		return self.base.getSceneView();
 	}
 	
-	open func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-		self.gestureHandler.onRender();
-		print("render");
-	}
-	
-	func onStart(){
-		//self.codeRunner.sleep();
-	}
-	
-	func onFinished(){
-		//self.codeRunner.wake();
+	func onTransform(t:SCNMatrix4){
+		self.base.onTransform(t:t);
 	}
 	
 	func addTurtles(){

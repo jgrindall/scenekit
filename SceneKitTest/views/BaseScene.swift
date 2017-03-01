@@ -22,6 +22,16 @@ public class BaseScene {
 		self.sceneView.play(self);
 	}
 	
+	func onTransform(t:SCNMatrix4){
+		let old:SCNMatrix4 = self.cameraNode.transform;
+		self.cameraNode.transform = SCNMatrix4Mult(old, t);
+		//if(self._lights != nil){
+			//for n in self._lights{
+				//n.transform = self._transform;
+			//}
+		//}
+	}
+	
 	func getSceneView() -> SCNView{
 		return self.sceneView;
 	}

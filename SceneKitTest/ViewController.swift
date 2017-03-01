@@ -4,12 +4,13 @@ import SceneKit
 import QuartzCore
 import JavaScriptCore
 
-public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestureDelegate, PCodeConsumer, PCodeListener {
+public class ViewController: UIViewController, PCodeConsumer, PGestureDelegate, PCodeListener, SCNSceneRendererDelegate {
 
 	var logoSceneController:	LogoSceneViewController!;
 	var hudController:			HUDViewController!;
 	var consumer:				PCodeConsumer!;
 	var codeRunner:				PCodeRunner!;
+	var gestureHandler:			GestureHandler!;
 	
 	func onStart(){
 		self.codeRunner.sleep();
@@ -76,28 +77,40 @@ public class ViewController: UIViewController, SCNSceneRendererDelegate, PGestur
 	}
 	
 	func addLogo(){
-		let logoView = UIView(frame: self.view.frame);
-		self.view.addSubview(logoView);
 		self.logoSceneController = LogoSceneViewController();
-		self.logoSceneController.view = logoView;
+		self.logoSceneController.view.frame = self.view.frame;
+		self.view.addSubview(self.logoSceneController.view);
 		self.addChildViewController(self.logoSceneController);
 		self.logoSceneController.didMove(toParentViewController: self);
-	};
+		self.logoSceneController.getSceneView().delegate = self;
+	}
 	
 	func addHUD(){
-		let hudView = UIView(frame: self.view.frame);
-		self.view.addSubview(hudView);
 		self.hudController = HUDViewController();
-		self.hudController.view = hudView;
+		self.hudController.view.frame = self.view.frame;
+		self.view.addSubview(self.hudController.view);
 		self.addChildViewController(self.hudController);
 		self.hudController.didMove(toParentViewController: self);
-	};
+	}
 	
+	open func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+		self.gestureHandler.onRender();
+		print("render");
+	}
+		
+	func addGestures(){
+		self.gestureHandler = GestureHandler(target: self, delegate: self);
+	}
+	
+	func onTransform(t:SCNMatrix4){
+		self.logoSceneController.onTransform(t:t);
+	}
 	
 	override public func viewDidLoad() {
 		super.viewDidLoad();
 		self.addLogo();
 		self.addHUD();
+		self.addGestures();
 		//self.updateAll();
 		self.codeRunner = CodeRunner(fileNames:["require", "build"], consumer:self);
 		self.codeRunner.onStatusChange(listener: self);
