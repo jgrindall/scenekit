@@ -28,6 +28,13 @@
 		5220B2951E637496009572D0 /* Turtle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5220B28D1E637496009572D0 /* Turtle.swift */; };
 		5220B2961E637496009572D0 /* TurtleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5220B28E1E637496009572D0 /* TurtleData.swift */; };
 		5220B2971E637496009572D0 /* TurtleNodeCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5220B28F1E637496009572D0 /* TurtleNodeCache.swift */; };
+		524A012F1E68C882004B38EC /* ReSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 524A012E1E68C882004B38EC /* ReSwift.framework */; };
+		524A01351E68C910004B38EC /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524A01321E68C910004B38EC /* AppReducer.swift */; };
+		524A01361E68C910004B38EC /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524A01341E68C910004B38EC /* State.swift */; };
+		524A01391E68CA5F004B38EC /* BookmarkReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524A01371E68CA5F004B38EC /* BookmarkReducer.swift */; };
+		524A013A1E68CA5F004B38EC /* RepositoryReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524A01381E68CA5F004B38EC /* RepositoryReducer.swift */; };
+		524A013D1E68CAC6004B38EC /* BookmarkAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524A013B1E68CAC6004B38EC /* BookmarkAction.swift */; };
+		524A013E1E68CAC6004B38EC /* RepositoriesAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524A013C1E68CAC6004B38EC /* RepositoriesAction.swift */; };
 		525F54571D0F47E1008C8396 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 525F54551D0F47E1008C8396 /* LaunchScreen.storyboard */; };
 		525F54591D0F4925008C8396 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525F54581D0F4925008C8396 /* ViewController.swift */; };
 		52A9C7951E5253B500082CF1 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A9C7941E5253B500082CF1 /* bg.png */; };
@@ -64,6 +71,13 @@
 		5220B28F1E637496009572D0 /* TurtleNodeCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurtleNodeCache.swift; sourceTree = "<group>"; };
 		5221C7871D85F3A500B71566 /* geom3.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = geom3.shader; sourceTree = "<group>"; };
 		5237FD9A1D8F256E008651DF /* frag.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = frag.shader; sourceTree = "<group>"; };
+		524A012E1E68C882004B38EC /* ReSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReSwift.framework; path = Carthage/Build/iOS/ReSwift.framework; sourceTree = "<group>"; };
+		524A01321E68C910004B38EC /* AppReducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
+		524A01341E68C910004B38EC /* State.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
+		524A01371E68CA5F004B38EC /* BookmarkReducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkReducer.swift; sourceTree = "<group>"; };
+		524A01381E68CA5F004B38EC /* RepositoryReducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryReducer.swift; sourceTree = "<group>"; };
+		524A013B1E68CAC6004B38EC /* BookmarkAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkAction.swift; sourceTree = "<group>"; };
+		524A013C1E68CAC6004B38EC /* RepositoriesAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoriesAction.swift; sourceTree = "<group>"; };
 		525F54561D0F47E1008C8396 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		525F54581D0F4925008C8396 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		527C14701D985C2B0079D4A8 /* surf2.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = surf2.shader; sourceTree = "<group>"; };
@@ -88,6 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				524A012F1E68C882004B38EC /* ReSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +158,33 @@
 			path = turtles;
 			sourceTree = "<group>";
 		};
+		524A01301E68C910004B38EC /* actions */ = {
+			isa = PBXGroup;
+			children = (
+				524A013B1E68CAC6004B38EC /* BookmarkAction.swift */,
+				524A013C1E68CAC6004B38EC /* RepositoriesAction.swift */,
+			);
+			path = actions;
+			sourceTree = "<group>";
+		};
+		524A01311E68C910004B38EC /* reducers */ = {
+			isa = PBXGroup;
+			children = (
+				524A01371E68CA5F004B38EC /* BookmarkReducer.swift */,
+				524A01381E68CA5F004B38EC /* RepositoryReducer.swift */,
+				524A01321E68C910004B38EC /* AppReducer.swift */,
+			);
+			path = reducers;
+			sourceTree = "<group>";
+		};
+		524A01331E68C910004B38EC /* state */ = {
+			isa = PBXGroup;
+			children = (
+				524A01341E68C910004B38EC /* State.swift */,
+			);
+			path = state;
+			sourceTree = "<group>";
+		};
 		52861D611D29ADC7002441B7 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
@@ -170,6 +212,7 @@
 		80EE09B1196A4C4A00B77AB0 = {
 			isa = PBXGroup;
 			children = (
+				524A012E1E68C882004B38EC /* ReSwift.framework */,
 				80EE09BC196A4C4A00B77AB0 /* SceneKitTest */,
 				80EE09BB196A4C4A00B77AB0 /* Products */,
 			);
@@ -186,6 +229,9 @@
 		80EE09BC196A4C4A00B77AB0 /* SceneKitTest */ = {
 			isa = PBXGroup;
 			children = (
+				524A01301E68C910004B38EC /* actions */,
+				524A01311E68C910004B38EC /* reducers */,
+				524A01331E68C910004B38EC /* state */,
 				52BBDCF71E64CA670086210A /* views */,
 				5220B2871E637496009572D0 /* turtles */,
 				5220B27A1E637288009572D0 /* code */,
@@ -308,6 +354,7 @@
 			files = (
 				5220B2971E637496009572D0 /* TurtleNodeCache.swift in Sources */,
 				5220B2751E63720F009572D0 /* EventDispatcher.swift in Sources */,
+				524A013D1E68CAC6004B38EC /* BookmarkAction.swift in Sources */,
 				5220B2961E637496009572D0 /* TurtleData.swift in Sources */,
 				525F54591D0F4925008C8396 /* ViewController.swift in Sources */,
 				5220B2911E637496009572D0 /* PatchData.swift in Sources */,
@@ -315,6 +362,8 @@
 				52BBDD011E64CCBD0086210A /* LogoSceneViewController.swift in Sources */,
 				5220B2861E63748E009572D0 /* PGestureDelegate.swift in Sources */,
 				5220B2741E63720F009572D0 /* Assets.swift in Sources */,
+				524A01361E68C910004B38EC /* State.swift in Sources */,
+				524A01391E68CA5F004B38EC /* BookmarkReducer.swift in Sources */,
 				5220B2921E637496009572D0 /* PatchNodeCache.swift in Sources */,
 				5220B2791E63723B009572D0 /* SCNVector3Extensions.swift in Sources */,
 				5220B2801E637288009572D0 /* PCodeConsumer.swift in Sources */,
@@ -324,8 +373,11 @@
 				5220B2931E637496009572D0 /* PPatch.swift in Sources */,
 				5220B27F1E637288009572D0 /* CodeRunner.swift in Sources */,
 				5220B2811E637288009572D0 /* PCodeListener.swift in Sources */,
+				524A013A1E68CA5F004B38EC /* RepositoryReducer.swift in Sources */,
 				52BBDD031E64CD660086210A /* HUDViewController.swift in Sources */,
+				524A01351E68C910004B38EC /* AppReducer.swift in Sources */,
 				52BBDD051E64D3040086210A /* BaseScene.swift in Sources */,
+				524A013E1E68CAC6004B38EC /* RepositoriesAction.swift in Sources */,
 				80EE09C0196A4C4A00B77AB0 /* AppDelegate.swift in Sources */,
 				5220B2821E637288009572D0 /* PCodeRunner.swift in Sources */,
 				5220B2951E637496009572D0 /* Turtle.swift in Sources */,
@@ -442,6 +494,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = WDBW628V64;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/SceneKitTest/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -463,6 +519,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = WDBW628V64;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/SceneKitTest/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
