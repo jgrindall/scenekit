@@ -59,16 +59,6 @@ public class ViewController: UIViewController, PCodeConsumer, PGestureDelegate, 
 		}
 	}
 	
-	func buttonUp(){
-		print("run");
-		self.codeRunner.run(fnName: "run", arg: "rpt 100000 [fd 30 rt 1]");
-	};
-	
-	func buttonUp1(){
-		print("stop");
-		self.codeRunner.end();
-	};
-	
 	func onStatusChange(status:String){
 		print("status", status);
 		DispatchQueue.main.async { [unowned self] in
@@ -110,6 +100,7 @@ public class ViewController: UIViewController, PCodeConsumer, PGestureDelegate, 
 		super.viewDidLoad();
 		self.addLogo();
 		self.addHUD();
+		
 		self.addGestures();
 		//self.updateAll();
 		self.codeRunner = CodeRunner(fileNames:["require", "build"], consumer:self);

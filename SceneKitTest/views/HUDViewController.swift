@@ -43,14 +43,6 @@ public class HUDViewController: UIViewController {
 		//self.codeRunner.end();
 	};
 	
-	func onStart(){
-		//self.codeRunner.sleep();
-	}
-	
-	func onFinished(){
-		//self.codeRunner.wake();
-	}
-	
 	func onStatusChange(status:String){
 		print("status", status);
 		DispatchQueue.main.async { [unowned self] in

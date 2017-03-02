@@ -1,0 +1,103 @@
+var store = Store<State>(reducer: AppReducer(), state: nil)
+
+
+State
+------
+
+import ReSwift
+import ReSwiftRouter
+import OctoKit
+import RequestKit
+
+struct State: StateType, HasNavigationState {
+    var navigationState: NavigationState
+    var authenticationState: AuthenticationState
+    var repositories: Response<[Repository]>?
+    var bookmarks: [Bookmark]
+}
+
+typealias Bookmark = (route: [RouteElementIdentifier], routeSpecificData: Any?)
+
+In VC did appear
+---------------
+
+store.subscribe(self) { state in
+    state.bookmarks
+}
+
+Actions
+-------
+struct SetRepositories: Action {
+    let repositories: Response<[Repository]>
+}
+
+store.dispatch(SetRepositories(repositories: response))
+
+import Foundation
+import ReSwift
+import ReSwiftRouter
+
+struct CreateBookmark: Action {
+    let route: [RouteElementIdentifier]
+    let routeSpecificData: Any?
+}
+
+
+store.dispatch(
+            CreateBookmark(
+                route: [mainViewRoute, repositoryDetailRoute],
+                routeSpecificData: self.repository
+            )
+        )
+
+
+Reducers
+----------
+
+func repositoriesReducer(state: Response<[Repository]>?, action: Action) -> Response<[Repository]>? {
+    switch action {
+    case let action as SetRepositories:
+        return action.repositories
+    default:
+        return nil
+    }
+}
+
+
+func bookmarksReducer(state: [Bookmark]?, action: Action) -> [Bookmark] {
+    var state = state ?? []
+
+    switch action {
+    case let action as CreateBookmark:
+        let bookmark = (route: action.route, routeSpecificData: action.routeSpecificData)
+        state.append(bookmark)
+        return state
+    default:
+        return state
+    }
+}
+
+
+
+AppReducer
+----------
+
+import ReSwift
+import ReSwiftRouter
+
+struct AppReducer: Reducer {
+
+    func handleAction(action: Action, state: State?) -> State {
+        return State(
+            repositories: repositoriesReducer(state: state?.repositories, action: action),
+            bookmarks: bookmarksReducer(state: state?.bookmarks, action: action)
+        )
+    }
+
+}
+
+
+
+
+
+
