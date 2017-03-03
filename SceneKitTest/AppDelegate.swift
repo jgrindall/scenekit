@@ -8,8 +8,14 @@
 
 import UIKit
 import ReSwift
+import RxSwift
 
-var store = Store<State>(reducer: AppReducer(), state: nil)
+var store = Store<State>(reducer: AppReducer(), state: State());
+let rx = RxObserver<State>(store: store);
+
+//let _ = rx.state.asObservable().subscribeNext { state in
+	//print(state);
+//}
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

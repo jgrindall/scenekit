@@ -8,7 +8,7 @@ import ReSwift
 typealias Bookmark = (route: String, data: Any?)
 
 struct State: StateType {
-	var repositories: [Int]?
-	var bookmarks: [Bookmark]?
+	var repositories: [Int] = [];
+	var bookmarks: [Bookmark] = [];
 }
 

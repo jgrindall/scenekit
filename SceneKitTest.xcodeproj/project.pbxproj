@@ -35,6 +35,8 @@
 		524A013A1E68CA5F004B38EC /* RepositoryReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524A01381E68CA5F004B38EC /* RepositoryReducer.swift */; };
 		524A013D1E68CAC6004B38EC /* BookmarkAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524A013B1E68CAC6004B38EC /* BookmarkAction.swift */; };
 		524A013E1E68CAC6004B38EC /* RepositoriesAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524A013C1E68CAC6004B38EC /* RepositoriesAction.swift */; };
+		524A01401E6A1F13004B38EC /* RxObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524A013F1E6A1F13004B38EC /* RxObserver.swift */; };
+		524A01421E6A1F51004B38EC /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 524A01411E6A1F51004B38EC /* RxSwift.framework */; };
 		525F54571D0F47E1008C8396 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 525F54551D0F47E1008C8396 /* LaunchScreen.storyboard */; };
 		525F54591D0F4925008C8396 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525F54581D0F4925008C8396 /* ViewController.swift */; };
 		52A9C7951E5253B500082CF1 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A9C7941E5253B500082CF1 /* bg.png */; };
@@ -78,6 +80,8 @@
 		524A01381E68CA5F004B38EC /* RepositoryReducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryReducer.swift; sourceTree = "<group>"; };
 		524A013B1E68CAC6004B38EC /* BookmarkAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkAction.swift; sourceTree = "<group>"; };
 		524A013C1E68CAC6004B38EC /* RepositoriesAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoriesAction.swift; sourceTree = "<group>"; };
+		524A013F1E6A1F13004B38EC /* RxObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxObserver.swift; sourceTree = "<group>"; };
+		524A01411E6A1F51004B38EC /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		525F54561D0F47E1008C8396 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		525F54581D0F4925008C8396 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		527C14701D985C2B0079D4A8 /* surf2.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = surf2.shader; sourceTree = "<group>"; };
@@ -102,6 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				524A01421E6A1F51004B38EC /* RxSwift.framework in Frameworks */,
 				524A012F1E68C882004B38EC /* ReSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -121,6 +126,7 @@
 		5220B26F1E63720F009572D0 /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				524A013F1E6A1F13004B38EC /* RxObserver.swift */,
 				5220B2851E63748E009572D0 /* PGestureDelegate.swift */,
 				5220B2831E63729D009572D0 /* GestureHandler.swift */,
 				5220B2781E63723B009572D0 /* SCNVector3Extensions.swift */,
@@ -212,6 +218,7 @@
 		80EE09B1196A4C4A00B77AB0 = {
 			isa = PBXGroup;
 			children = (
+				524A01411E6A1F51004B38EC /* RxSwift.framework */,
 				524A012E1E68C882004B38EC /* ReSwift.framework */,
 				80EE09BC196A4C4A00B77AB0 /* SceneKitTest */,
 				80EE09BB196A4C4A00B77AB0 /* Products */,
@@ -364,6 +371,7 @@
 				5220B2741E63720F009572D0 /* Assets.swift in Sources */,
 				524A01361E68C910004B38EC /* State.swift in Sources */,
 				524A01391E68CA5F004B38EC /* BookmarkReducer.swift in Sources */,
+				524A01401E6A1F13004B38EC /* RxObserver.swift in Sources */,
 				5220B2921E637496009572D0 /* PatchNodeCache.swift in Sources */,
 				5220B2791E63723B009572D0 /* SCNVector3Extensions.swift in Sources */,
 				5220B2801E637288009572D0 /* PCodeConsumer.swift in Sources */,
