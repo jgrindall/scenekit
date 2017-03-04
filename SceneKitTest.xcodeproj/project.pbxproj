@@ -28,7 +28,6 @@
 		5220B2951E637496009572D0 /* Turtle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5220B28D1E637496009572D0 /* Turtle.swift */; };
 		5220B2961E637496009572D0 /* TurtleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5220B28E1E637496009572D0 /* TurtleData.swift */; };
 		5220B2971E637496009572D0 /* TurtleNodeCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5220B28F1E637496009572D0 /* TurtleNodeCache.swift */; };
-		524A012F1E68C882004B38EC /* ReSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 524A012E1E68C882004B38EC /* ReSwift.framework */; };
 		524A01351E68C910004B38EC /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524A01321E68C910004B38EC /* AppReducer.swift */; };
 		524A01361E68C910004B38EC /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524A01341E68C910004B38EC /* State.swift */; };
 		524A01391E68CA5F004B38EC /* BookmarkReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524A01371E68CA5F004B38EC /* BookmarkReducer.swift */; };
@@ -36,20 +35,24 @@
 		524A013D1E68CAC6004B38EC /* BookmarkAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524A013B1E68CAC6004B38EC /* BookmarkAction.swift */; };
 		524A013E1E68CAC6004B38EC /* RepositoriesAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524A013C1E68CAC6004B38EC /* RepositoriesAction.swift */; };
 		524A01401E6A1F13004B38EC /* RxObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524A013F1E6A1F13004B38EC /* RxObserver.swift */; };
-		524A01421E6A1F51004B38EC /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 524A01411E6A1F51004B38EC /* RxSwift.framework */; };
 		525F54571D0F47E1008C8396 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 525F54551D0F47E1008C8396 /* LaunchScreen.storyboard */; };
 		525F54591D0F4925008C8396 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525F54581D0F4925008C8396 /* ViewController.swift */; };
 		52A9C7951E5253B500082CF1 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A9C7941E5253B500082CF1 /* bg.png */; };
+		52B23AF31E6B299E00D74EAF /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B23AF21E6B299E00D74EAF /* RxSwift.framework */; };
+		52B23AF51E6B29B600D74EAF /* ReSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B23AF41E6B29B600D74EAF /* ReSwift.framework */; };
+		52B23AF71E6B29B900D74EAF /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B23AF61E6B29B900D74EAF /* RxCocoa.framework */; };
 		52BBDCF51E64C63B0086210A /* bg2.png in Resources */ = {isa = PBXBuildFile; fileRef = 52BBDCF31E64C63B0086210A /* bg2.png */; };
 		52BBDCF61E64C63B0086210A /* bg3.png in Resources */ = {isa = PBXBuildFile; fileRef = 52BBDCF41E64C63B0086210A /* bg3.png */; };
 		52BBDD011E64CCBD0086210A /* LogoSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BBDD001E64CCBD0086210A /* LogoSceneViewController.swift */; };
 		52BBDD031E64CD660086210A /* HUDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BBDD021E64CD660086210A /* HUDViewController.swift */; };
 		52BBDD051E64D3040086210A /* BaseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BBDD041E64D3040086210A /* BaseScene.swift */; };
+		6692C5A1EFD66041F13E501B /* Pods_SceneKitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD258FA9369239AC0AF9306 /* Pods_SceneKitTest.framework */; };
 		80EE09C0196A4C4A00B77AB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EE09BF196A4C4A00B77AB0 /* AppDelegate.swift */; };
 		80EE09C7196A4C4A00B77AB0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80EE09C6196A4C4A00B77AB0 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		502272A43A442A2473A9C0F4 /* Pods-SceneKitTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SceneKitTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SceneKitTest/Pods-SceneKitTest.debug.xcconfig"; sourceTree = "<group>"; };
 		5220B26B1E63717E009572D0 /* build.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = build.js; sourceTree = "<group>"; };
 		5220B26C1E63717E009572D0 /* require.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = require.js; sourceTree = "<group>"; };
 		5220B2701E63720F009572D0 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
@@ -73,7 +76,6 @@
 		5220B28F1E637496009572D0 /* TurtleNodeCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurtleNodeCache.swift; sourceTree = "<group>"; };
 		5221C7871D85F3A500B71566 /* geom3.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = geom3.shader; sourceTree = "<group>"; };
 		5237FD9A1D8F256E008651DF /* frag.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = frag.shader; sourceTree = "<group>"; };
-		524A012E1E68C882004B38EC /* ReSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReSwift.framework; path = Carthage/Build/iOS/ReSwift.framework; sourceTree = "<group>"; };
 		524A01321E68C910004B38EC /* AppReducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
 		524A01341E68C910004B38EC /* State.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 		524A01371E68CA5F004B38EC /* BookmarkReducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkReducer.swift; sourceTree = "<group>"; };
@@ -81,13 +83,15 @@
 		524A013B1E68CAC6004B38EC /* BookmarkAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkAction.swift; sourceTree = "<group>"; };
 		524A013C1E68CAC6004B38EC /* RepositoriesAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoriesAction.swift; sourceTree = "<group>"; };
 		524A013F1E6A1F13004B38EC /* RxObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxObserver.swift; sourceTree = "<group>"; };
-		524A01411E6A1F51004B38EC /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		525F54561D0F47E1008C8396 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		525F54581D0F4925008C8396 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		527C14701D985C2B0079D4A8 /* surf2.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = surf2.shader; sourceTree = "<group>"; };
 		52861D651D29AE5D002441B7 /* shared.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shared.txt; sourceTree = "<group>"; };
 		528E52CE1D5BD2A80064489F /* geom2.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = geom2.shader; sourceTree = "<group>"; };
 		52A9C7941E5253B500082CF1 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
+		52B23AF21E6B299E00D74EAF /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = "Pods/../build/Debug-iphoneos/RxSwift/RxSwift.framework"; sourceTree = "<group>"; };
+		52B23AF41E6B29B600D74EAF /* ReSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReSwift.framework; path = "Pods/../build/Debug-iphoneos/ReSwift/ReSwift.framework"; sourceTree = "<group>"; };
+		52B23AF61E6B29B900D74EAF /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = "Pods/../build/Debug-iphoneos/RxCocoa/RxCocoa.framework"; sourceTree = "<group>"; };
 		52BBDCF31E64C63B0086210A /* bg2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg2.png; sourceTree = "<group>"; };
 		52BBDCF41E64C63B0086210A /* bg3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg3.png; sourceTree = "<group>"; };
 		52BBDD001E64CCBD0086210A /* LogoSceneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoSceneViewController.swift; sourceTree = "<group>"; };
@@ -99,6 +103,8 @@
 		80EE09BE196A4C4A00B77AB0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		80EE09BF196A4C4A00B77AB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		80EE09C6196A4C4A00B77AB0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		839104444324D0BAA3522A84 /* Pods-SceneKitTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SceneKitTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-SceneKitTest/Pods-SceneKitTest.release.xcconfig"; sourceTree = "<group>"; };
+		EBD258FA9369239AC0AF9306 /* Pods_SceneKitTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SceneKitTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,8 +112,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				524A01421E6A1F51004B38EC /* RxSwift.framework in Frameworks */,
-				524A012F1E68C882004B38EC /* ReSwift.framework in Frameworks */,
+				52B23AF71E6B29B900D74EAF /* RxCocoa.framework in Frameworks */,
+				52B23AF51E6B29B600D74EAF /* ReSwift.framework in Frameworks */,
+				52B23AF31E6B299E00D74EAF /* RxSwift.framework in Frameworks */,
+				6692C5A1EFD66041F13E501B /* Pods_SceneKitTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,13 +223,24 @@
 			path = views;
 			sourceTree = "<group>";
 		};
+		606E71974DDF21B6D07D89C3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				52B23AF61E6B29B900D74EAF /* RxCocoa.framework */,
+				52B23AF41E6B29B600D74EAF /* ReSwift.framework */,
+				52B23AF21E6B299E00D74EAF /* RxSwift.framework */,
+				EBD258FA9369239AC0AF9306 /* Pods_SceneKitTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		80EE09B1196A4C4A00B77AB0 = {
 			isa = PBXGroup;
 			children = (
-				524A01411E6A1F51004B38EC /* RxSwift.framework */,
-				524A012E1E68C882004B38EC /* ReSwift.framework */,
 				80EE09BC196A4C4A00B77AB0 /* SceneKitTest */,
 				80EE09BB196A4C4A00B77AB0 /* Products */,
+				E7D3C1D5BFD04E3C8131DB79 /* Pods */,
+				606E71974DDF21B6D07D89C3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -265,6 +284,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		E7D3C1D5BFD04E3C8131DB79 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				502272A43A442A2473A9C0F4 /* Pods-SceneKitTest.debug.xcconfig */,
+				839104444324D0BAA3522A84 /* Pods-SceneKitTest.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -272,10 +300,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 80EE09D6196A4C4A00B77AB0 /* Build configuration list for PBXNativeTarget "SceneKitTest" */;
 			buildPhases = (
+				D0842840478AB034E5067BA4 /* [CP] Check Pods Manifest.lock */,
 				80EE09B6196A4C4A00B77AB0 /* Sources */,
 				80EE09B7196A4C4A00B77AB0 /* Frameworks */,
 				80EE09B8196A4C4A00B77AB0 /* Resources */,
 				52A9C79C1E550C0000082CF1 /* ShellScript */,
+				B5F6181D96C8DC2E4055A7C6 /* [CP] Embed Pods Frameworks */,
+				33C8F2BF94BC6156AA3462EE /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -339,6 +370,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		33C8F2BF94BC6156AA3462EE /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SceneKitTest/Pods-SceneKitTest-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		52A9C79C1E550C0000082CF1 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -351,6 +397,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "WORKING_DIR=$(pwd)\ncd $SRCROOT\"/js\"\npython build.py\ncd $WORKING_DIR";
+		};
+		B5F6181D96C8DC2E4055A7C6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SceneKitTest/Pods-SceneKitTest-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D0842840478AB034E5067BA4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -447,7 +523,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				METAL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -496,6 +572,7 @@
 		};
 		80EE09D7196A4C4A00B77AB0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 502272A43A442A2473A9C0F4 /* Pods-SceneKitTest.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -505,6 +582,9 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/RxSwift",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/ReSwift",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/RxCocoa",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/SceneKitTest/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -521,6 +601,7 @@
 		};
 		80EE09D8196A4C4A00B77AB0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 839104444324D0BAA3522A84 /* Pods-SceneKitTest.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -530,6 +611,9 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/RxSwift",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/ReSwift",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/RxCocoa",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/SceneKitTest/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

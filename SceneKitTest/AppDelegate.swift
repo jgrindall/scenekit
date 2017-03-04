@@ -8,7 +8,6 @@
 
 import UIKit
 import ReSwift
-import RxSwift
 
 var store = Store<State>(reducer: AppReducer(), state: State());
 let rx = RxObserver<State>(store: store);
