@@ -85,7 +85,6 @@ public class ViewController: UIViewController, PCodeConsumer, PGestureDelegate, 
 	
 	open func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
 		self.gestureHandler.onRender();
-		print("render");
 	}
 		
 	func addGestures(){
@@ -105,5 +104,12 @@ public class ViewController: UIViewController, PCodeConsumer, PGestureDelegate, 
 		//self.updateAll();
 		self.codeRunner = CodeRunner(fileNames:["require", "build"], consumer:self);
 		self.codeRunner.onStatusChange(listener: self);
+		
+		DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+			Singleton.sharedInstance.store.dispatch(BookmarkAction(route: "123"));
+		}
+		
+		
+		
 	}
 }

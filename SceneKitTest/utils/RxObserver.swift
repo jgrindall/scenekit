@@ -2,22 +2,24 @@ import ReSwift
 import RxSwift
 
 class RxObserver<T>: StoreSubscriber {
-	typealias StoreSubscriberStateType = State
-
-	
-	var state: Variable<T?> = Variable(nil)
+	typealias StoreSubscriberStateType = State;
+	var observedState: Variable<T?> = Variable(nil);
 	private var store: Store<State>;
 	
 	init(store: Store<State>) {
-		self.store = store
-		//self.store.subscribe(self)
+		print("init");
+		self.store = store;
+		self.store.subscribe(self);
 	}
 	
 	deinit {
-		self.store.unsubscribe(self)
+		print("de init!!");
+		self.store.unsubscribe(self);
 	}
 	
-	func newState(state newState: State) {
-		state.value = newState as? T
+	func newState(state: State) {
+		print("new state1!", state);
+		self.observedState.value = state as? T;
+		print("new state2!", state);
 	}
 }

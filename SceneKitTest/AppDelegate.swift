@@ -8,13 +8,7 @@
 
 import UIKit
 import ReSwift
-
-var store = Store<State>(reducer: AppReducer(), state: State());
-let rx = RxObserver<State>(store: store);
-
-//let _ = rx.state.asObservable().subscribeNext { state in
-	//print(state);
-//}
+import RxSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,16 +16,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var window: UIWindow?
 	var navController: UINavigationController?
 	
-	
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-		navController = UINavigationController()
-		let viewController: ViewController = ViewController()
-		self.navController!.pushViewController(viewController, animated: false)
-		self.window = UIWindow(frame: UIScreen.main.bounds)
-		self.window!.rootViewController = navController
-		self.window!.backgroundColor = UIColor.white
-		self.window!.makeKeyAndVisible()
-		return true
+		//print(store.state.bookmarks);
+		//print(store.state.repositories);
+		
+		
+		navController = UINavigationController();
+		let viewController: ViewController = ViewController();
+		self.navController!.pushViewController(viewController, animated: false);
+		self.window = UIWindow(frame: UIScreen.main.bounds);
+		self.window!.rootViewController = navController;
+		self.window!.backgroundColor = UIColor.white;
+		self.window!.makeKeyAndVisible();
+		
+		Singleton.sharedInstance.rx.observedState.asObservable().subscribe(onNext: { n in
+			print("First \(n)");
+		});
+		
+		return true;
 	}
 	
 	func applicationWillResignActive(_ application: UIApplication) {

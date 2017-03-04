@@ -2,7 +2,6 @@
 import Foundation
 import ReSwift
 
-struct CreateBookmark: Action {
+struct BookmarkAction: Action {
 	let route: String;
-	let data: Any?
 }

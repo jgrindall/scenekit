@@ -78,7 +78,6 @@ open class GestureHandler : NSObject, SCNSceneRendererDelegate, UIGestureRecogni
 	}
 	
 	func onRender(){
-		print("r", self._slideVel);
 		let dx:Float = Float(self._slideVel.x)/GestureHandler.Consts.VEL_SCALE;
 		let dy:Float = Float(self._slideVel.y)/GestureHandler.Consts.VEL_SCALE;
 		let rX:SCNMatrix4 = SCNMatrix4MakeRotation(-dx, 0, 1, 0);
@@ -91,7 +90,6 @@ open class GestureHandler : NSObject, SCNSceneRendererDelegate, UIGestureRecogni
 	
 	@objc open func handlePanGesture(_ panGesture: UIPanGestureRecognizer){
 		self._slideVel = panGesture.velocity(in: self._target.view);
-		print("v", panGesture, self._slideVel);
 	}
 
 }

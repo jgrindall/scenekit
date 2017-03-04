@@ -5,10 +5,8 @@ import QuartzCore
 import JavaScriptCore
 import ReSwift
 
-typealias Bookmark = (route: String, data: Any?)
-
 struct State: StateType {
-	var repositories: [Int] = [];
-	var bookmarks: [Bookmark] = [];
+	var repositories: [Int] = [1, 2, 3];
+	var bookmarks: [String] = ["a", "b", "c"];
 }
 

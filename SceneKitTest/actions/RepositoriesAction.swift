@@ -2,6 +2,6 @@
 import Foundation
 import ReSwift
 
-struct SetRepositories: Action {
+struct RepositoriesAction: Action {
 	let repositories: [Int]
 }
