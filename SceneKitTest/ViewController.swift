@@ -3,8 +3,9 @@ import UIKit
 import SceneKit
 import QuartzCore
 import JavaScriptCore
+import ReSwift
 
-public class ViewController: UIViewController, PCodeConsumer, PGestureDelegate, PCodeListener, SCNSceneRendererDelegate {
+public class ViewController: UIViewController, StoreSubscriber, PCodeConsumer, PGestureDelegate, PCodeListener, SCNSceneRendererDelegate {
 
 	var logoSceneController:	LogoSceneViewController!;
 	var hudController:			HUDViewController!;
@@ -95,8 +96,14 @@ public class ViewController: UIViewController, PCodeConsumer, PGestureDelegate, 
 		self.logoSceneController.onTransform(t:t);
 	}
 	
+	public func newState(state: State) {
+		print("s", state);
+	}
+	
 	override public func viewDidLoad() {
 		super.viewDidLoad();
+		
+		Singleton.sharedInstance.store.subscribe(self);
 		self.addLogo();
 		self.addHUD();
 		

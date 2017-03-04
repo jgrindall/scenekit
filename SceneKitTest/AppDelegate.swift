@@ -17,10 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var navController: UINavigationController?
 	
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-		//print(store.state.bookmarks);
-		//print(store.state.repositories);
-		
-		
 		navController = UINavigationController();
 		let viewController: ViewController = ViewController();
 		self.navController!.pushViewController(viewController, animated: false);
