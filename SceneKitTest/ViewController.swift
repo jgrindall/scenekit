@@ -13,6 +13,10 @@ public class ViewController: UIViewController, StoreSubscriber, PCodeConsumer, P
 	var codeRunner:				PCodeRunner!;
 	var gestureHandler:			GestureHandler!;
 	
+	
+	public typealias SubState = ([Int]);
+	
+	
 	func onStart(){
 		self.codeRunner.sleep();
 	}
@@ -96,14 +100,20 @@ public class ViewController: UIViewController, StoreSubscriber, PCodeConsumer, P
 		self.logoSceneController.onTransform(t:t);
 	}
 	
-	public func newState(state: State) {
+	public func newState(state: SubState) {
 		print("s", state);
 	}
 	
 	override public func viewDidLoad() {
 		super.viewDidLoad();
 		
-		Singleton.sharedInstance.store.subscribe(self);
+		Singleton.sharedInstance.store.subscribe(self) {
+			(
+				$0.repositories
+			)
+		}
+		
+		
 		self.addLogo();
 		self.addHUD();
 		
@@ -120,3 +130,23 @@ public class ViewController: UIViewController, StoreSubscriber, PCodeConsumer, P
 		
 	}
 }
+
+
+
+/*
+
+
+mainStore.subscribe(self) {
+(
+$0.participants,
+$0.invitePressed
+)
+}
+
+typealias ParticipantsViewSubState = (participants : [Participant]?, inviteTapped: Bool)
+
+func newState(state: ParticipantsViewSubState) {
+//handle state change
+}
+
+*/
