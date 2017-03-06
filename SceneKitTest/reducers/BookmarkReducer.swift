@@ -1,14 +1,13 @@
 import Foundation
 import ReSwift
 
-func bookmarksReducer(state: [String]?, action: Action) -> [String] {
-	var newState = (state != nil) ? state! : [];
+func bookmarksReducer(bookmarks: [String]?, action: Action) -> [String] {
+	var newBookmarks = (bookmarks != nil) ? bookmarks! : [];
 	switch action {
 	case let action as BookmarkAction:
-		newState.append(action.route);
-		print("new state!", newState);
-		return newState;
+		newBookmarks.append(action.route);
+		return newBookmarks;
 	default:
-		return newState;
+		return newBookmarks;
 	}
 }

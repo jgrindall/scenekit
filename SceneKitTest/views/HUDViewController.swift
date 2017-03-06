@@ -3,8 +3,12 @@ import UIKit
 import SceneKit
 import QuartzCore
 import JavaScriptCore
+import ReSwift
+import RxSwift
 
-public class HUDViewController: UIViewController {
+public class HUDViewController: UIViewController, StoreSubscriber {
+	
+	public typealias StoreSubscriberStateType = State;
 	
 	var button:				UIButton!;
 	var button1:			UIButton!;
@@ -33,6 +37,23 @@ public class HUDViewController: UIViewController {
 		self.label.text = "new";
 	}
 	
+	override public func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated);
+		Singleton.sharedInstance.store.subscribe(self);
+	}
+	
+	override public func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated);
+	}
+	
+	public func newState(state: State) {
+		print("s", state);
+		self.button.isEnabled = (state.codeStatus == "new");
+		DispatchQueue.main.async { [unowned self] in
+			self.label.text = state.codeStatus;
+		}
+	}
+	
 	func buttonUp(){
 		print("run");
 		//self.codeRunner.run(fnName: "run", arg: "rpt 100000 [fd 30 rt 1]");
@@ -43,10 +64,4 @@ public class HUDViewController: UIViewController {
 		//self.codeRunner.end();
 	};
 	
-	func onStatusChange(status:String){
-		print("status", status);
-		DispatchQueue.main.async { [unowned self] in
-			self.label.text = status;
-		}
-	}
 }

@@ -1,6 +1,6 @@
 import ReSwift
 
-func repositoriesReducer(state: [Int]?, action: Action) -> [Int]? {
+func repositoriesReducer(repositories: SubState?, action: Action) -> SubState? {
 	switch action {
 	case let action as RepositoriesAction:
 		return action.repositories

@@ -19,6 +19,5 @@ protocol PCodeRunner {
 	func sleep();
 	func end();
 	func wake();
-	func onStatusChange(listener:PCodeListener);
 }
 

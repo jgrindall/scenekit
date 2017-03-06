@@ -18,8 +18,6 @@ class RxObserver<T>: StoreSubscriber {
 	}
 	
 	func newState(state: State) {
-		print("new state1!", state);
 		self.observedState.value = state as? T;
-		print("new state2!", state);
 	}
 }

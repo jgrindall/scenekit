@@ -3,8 +3,10 @@ import ReSwift
 struct AppReducer: Reducer {
 	
 	func handleAction(action: Action, state: State?) -> State {
-		let newRep = repositoriesReducer(state: state?.repositories, action: action)
-		let newB = bookmarksReducer(state: state?.bookmarks, action: action);
-		return State(repositories:newRep!, bookmarks:newB);
+		return State(
+			repositories:repositoriesReducer(repositories: state?.repositories, action: action)!,
+			bookmarks:bookmarksReducer(bookmarks: state?.bookmarks, action: action),
+			status:statusReducer(status: (state?.status)!, action: action),
+			codeStatus:codeStatusReducer(status: (state?.codeStatus)!, action: action));
 	}
 }

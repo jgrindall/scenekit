@@ -15,12 +15,11 @@ import UIKit
 @objc
 class CodeRunner : NSObject, PCodeRunner {
 	
-	var context: JSContext!
+	private var context: JSContext!
 	let serialQueue = DispatchQueue(label: "codeRunnerSerialQueue" + UUID().uuidString);
 	let mutexLock = Mutex();
 	var _consumer:PCodeConsumer!;
-	var _status:DispatchingValue<String> = DispatchingValue("new");
-
+	private var _status:String = "new";
 	enum CodeRunnerError : Error {
 		case RuntimeError(String)
 	}
@@ -30,7 +29,12 @@ class CodeRunner : NSObject, PCodeRunner {
 		self.makeContext(fileNames: fileNames);
 		self.loadFiles(fileNames: fileNames);
 		self._consumer = consumer;
-		self._status.value = "ready";
+		self.setStatus(s: "ready");
+	}
+	
+	private func setStatus(s:String){
+		self._status = s;
+		Singleton.sharedInstance.store.dispatch(CodeStatusAction(status: s));
 	}
 	
 	private func loadFile(fileName:String){
@@ -64,14 +68,14 @@ class CodeRunner : NSObject, PCodeRunner {
 	private func bindConsumer(){
 		let lockedConsumerBlock:@convention(block)(String, String) ->Void = {type, data in
 			let allowedStates:[String] = ["running", "pausing", "paused", "waking"];
-			if(allowedStates.index(of: self._status.value) == nil){
-				print("broken...", self._status.value);
+			if(allowedStates.index(of: self._status) == nil){
+				print("broken...", self._status);
 			}
 			else{
 				self.mutexLock.locked {
-					if(self._status.value == "running" && self.hasConsumer()){
+					if(self._status == "running" && self.hasConsumer()){
 						if(type == "end"){
-							self._status.value = "ready";
+							self._status = "ready";
 						}
 						else{
 							self._consumer.consume(type: type, data:data);
@@ -97,14 +101,14 @@ class CodeRunner : NSObject, PCodeRunner {
 	}
 	
 	func run(fnName:String, arg:String) {
-		if(self._status.value == "ready"){
-			self._status.value = "about to run";
+		if(self._status == "ready"){
+			self.setStatus(s: "about to run");
 			if(!self.hasConsumer()){
 				self.bindConsumer();
 			}
 			serialQueue.async{
-				if(self._status.value == "about to run"){
-					self._status.value = "running";
+				if(self._status == "about to run"){
+					self.setStatus(s: "running");
 				}
 				let fn = self.context.objectForKeyedSubscript(fnName);
 				_ = fn?.call(withArguments: [arg]);
@@ -112,34 +116,26 @@ class CodeRunner : NSObject, PCodeRunner {
 		}
 	}
 	
-	func onStatusChange(listener:PCodeListener){
-		let handler = EventHandler(function: {
-		    (event: Event) in
-			listener.onStatusChange(status:self._status.value);
-		});
-		self._status.addEventListener("change", handler: handler);
-	}
-	
 	func end(){
 		let fn = self.context.objectForKeyedSubscript("end");
 		_ = fn?.call(withArguments: []);
 		self.unbindConsumer();
-		self._status.value = "ready";
+		self.setStatus(s: "ready");
 	}
 	
 	func sleep(){
-		if(self._status.value == "running"){
-			self._status.value = "pausing";
+		if(self._status == "running"){
+			self.setStatus(s: "pausing");
 			self.mutexLock.lock();
-			self._status.value = "paused";
+			self.setStatus(s: "paused");
 		}
 	}
 	
 	func wake(){
-		if(self._status.value == "paused"){
-			self._status.value = "waking";
+		if(self._status == "paused"){
+			self.setStatus(s: "waking");
 			self.mutexLock.unlock();
-			self._status.value = "running";
+			self.setStatus(s: "running");
 		}
 	}
 }

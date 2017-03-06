@@ -3,5 +3,5 @@ import Foundation
 import ReSwift
 
 struct RepositoriesAction: Action {
-	let repositories: [Int]
+	let repositories: SubState
 }

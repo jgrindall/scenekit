@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5209E1441E6B593200395476 /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5209E1431E6B593200395476 /* Singleton.swift */; };
+		5209E1511E6CD21B00395476 /* StatusAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5209E1501E6CD21B00395476 /* StatusAction.swift */; };
+		5209E1531E6CD25400395476 /* StatusReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5209E1521E6CD25400395476 /* StatusReducer.swift */; };
 		5220B26D1E63717E009572D0 /* build.js in Resources */ = {isa = PBXBuildFile; fileRef = 5220B26B1E63717E009572D0 /* build.js */; };
 		5220B26E1E63717E009572D0 /* require.js in Resources */ = {isa = PBXBuildFile; fileRef = 5220B26C1E63717E009572D0 /* require.js */; };
 		5220B2741E63720F009572D0 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5220B2701E63720F009572D0 /* Assets.swift */; };
@@ -47,6 +49,9 @@
 		52BBDD011E64CCBD0086210A /* LogoSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BBDD001E64CCBD0086210A /* LogoSceneViewController.swift */; };
 		52BBDD031E64CD660086210A /* HUDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BBDD021E64CD660086210A /* HUDViewController.swift */; };
 		52BBDD051E64D3040086210A /* BaseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BBDD041E64D3040086210A /* BaseScene.swift */; };
+		52C19DEE1E6E10F7006FB572 /* CodeStatusAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C19DED1E6E10F7006FB572 /* CodeStatusAction.swift */; };
+		52C19DF01E6E136A006FB572 /* CodeStatusReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C19DEF1E6E136A006FB572 /* CodeStatusReducer.swift */; };
+		52C19DF21E6E170D006FB572 /* StateTypeAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C19DF11E6E170D006FB572 /* StateTypeAlias.swift */; };
 		6692C5A1EFD66041F13E501B /* Pods_SceneKitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD258FA9369239AC0AF9306 /* Pods_SceneKitTest.framework */; };
 		80EE09C0196A4C4A00B77AB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EE09BF196A4C4A00B77AB0 /* AppDelegate.swift */; };
 		80EE09C7196A4C4A00B77AB0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80EE09C6196A4C4A00B77AB0 /* Images.xcassets */; };
@@ -55,6 +60,8 @@
 /* Begin PBXFileReference section */
 		502272A43A442A2473A9C0F4 /* Pods-SceneKitTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SceneKitTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SceneKitTest/Pods-SceneKitTest.debug.xcconfig"; sourceTree = "<group>"; };
 		5209E1431E6B593200395476 /* Singleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Singleton.swift; sourceTree = "<group>"; };
+		5209E1501E6CD21B00395476 /* StatusAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusAction.swift; sourceTree = "<group>"; };
+		5209E1521E6CD25400395476 /* StatusReducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusReducer.swift; sourceTree = "<group>"; };
 		5220B26B1E63717E009572D0 /* build.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = build.js; sourceTree = "<group>"; };
 		5220B26C1E63717E009572D0 /* require.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = require.js; sourceTree = "<group>"; };
 		5220B2701E63720F009572D0 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
@@ -99,6 +106,9 @@
 		52BBDD001E64CCBD0086210A /* LogoSceneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoSceneViewController.swift; sourceTree = "<group>"; };
 		52BBDD021E64CD660086210A /* HUDViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUDViewController.swift; sourceTree = "<group>"; };
 		52BBDD041E64D3040086210A /* BaseScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseScene.swift; sourceTree = "<group>"; };
+		52C19DED1E6E10F7006FB572 /* CodeStatusAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeStatusAction.swift; sourceTree = "<group>"; };
+		52C19DEF1E6E136A006FB572 /* CodeStatusReducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeStatusReducer.swift; sourceTree = "<group>"; };
+		52C19DF11E6E170D006FB572 /* StateTypeAlias.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateTypeAlias.swift; sourceTree = "<group>"; };
 		52DC7CDE1D132CB10075C2D3 /* surf.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = surf.shader; sourceTree = "<group>"; };
 		52FEBC9E1D0419D900B65511 /* geom.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = geom.shader; sourceTree = "<group>"; };
 		80EE09BA196A4C4A00B77AB0 /* SceneKitTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SceneKitTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -177,6 +187,8 @@
 		524A01301E68C910004B38EC /* actions */ = {
 			isa = PBXGroup;
 			children = (
+				52C19DED1E6E10F7006FB572 /* CodeStatusAction.swift */,
+				5209E1501E6CD21B00395476 /* StatusAction.swift */,
 				524A013B1E68CAC6004B38EC /* BookmarkAction.swift */,
 				524A013C1E68CAC6004B38EC /* RepositoriesAction.swift */,
 			);
@@ -186,6 +198,8 @@
 		524A01311E68C910004B38EC /* reducers */ = {
 			isa = PBXGroup;
 			children = (
+				52C19DEF1E6E136A006FB572 /* CodeStatusReducer.swift */,
+				5209E1521E6CD25400395476 /* StatusReducer.swift */,
 				524A01371E68CA5F004B38EC /* BookmarkReducer.swift */,
 				524A01381E68CA5F004B38EC /* RepositoryReducer.swift */,
 				524A01321E68C910004B38EC /* AppReducer.swift */,
@@ -196,6 +210,7 @@
 		524A01331E68C910004B38EC /* state */ = {
 			isa = PBXGroup;
 			children = (
+				52C19DF11E6E170D006FB572 /* StateTypeAlias.swift */,
 				524A01341E68C910004B38EC /* State.swift */,
 			);
 			path = state;
@@ -445,17 +460,21 @@
 				525F54591D0F4925008C8396 /* ViewController.swift in Sources */,
 				5220B2911E637496009572D0 /* PatchData.swift in Sources */,
 				5220B2841E63729D009572D0 /* GestureHandler.swift in Sources */,
+				52C19DF01E6E136A006FB572 /* CodeStatusReducer.swift in Sources */,
 				52BBDD011E64CCBD0086210A /* LogoSceneViewController.swift in Sources */,
 				5220B2861E63748E009572D0 /* PGestureDelegate.swift in Sources */,
 				5220B2741E63720F009572D0 /* Assets.swift in Sources */,
 				524A01361E68C910004B38EC /* State.swift in Sources */,
 				524A01391E68CA5F004B38EC /* BookmarkReducer.swift in Sources */,
+				52C19DEE1E6E10F7006FB572 /* CodeStatusAction.swift in Sources */,
 				524A01401E6A1F13004B38EC /* RxObserver.swift in Sources */,
 				5220B2921E637496009572D0 /* PatchNodeCache.swift in Sources */,
 				5220B2791E63723B009572D0 /* SCNVector3Extensions.swift in Sources */,
 				5220B2801E637288009572D0 /* PCodeConsumer.swift in Sources */,
 				5220B2941E637496009572D0 /* PTurtle.swift in Sources */,
 				5220B2771E63720F009572D0 /* Mutex.swift in Sources */,
+				5209E1511E6CD21B00395476 /* StatusAction.swift in Sources */,
+				52C19DF21E6E170D006FB572 /* StateTypeAlias.swift in Sources */,
 				5220B2901E637496009572D0 /* Patch.swift in Sources */,
 				5220B2931E637496009572D0 /* PPatch.swift in Sources */,
 				5220B27F1E637288009572D0 /* CodeRunner.swift in Sources */,
@@ -463,6 +482,7 @@
 				524A013A1E68CA5F004B38EC /* RepositoryReducer.swift in Sources */,
 				52BBDD031E64CD660086210A /* HUDViewController.swift in Sources */,
 				524A01351E68C910004B38EC /* AppReducer.swift in Sources */,
+				5209E1531E6CD25400395476 /* StatusReducer.swift in Sources */,
 				52BBDD051E64D3040086210A /* BaseScene.swift in Sources */,
 				524A013E1E68CAC6004B38EC /* RepositoriesAction.swift in Sources */,
 				80EE09C0196A4C4A00B77AB0 /* AppDelegate.swift in Sources */,
@@ -527,7 +547,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				METAL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";

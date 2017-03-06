@@ -90,8 +90,16 @@
       "scale" : "2x"
     },
     {
-      "idiom" : "ipad",
       "size" : "83.5x83.5",
+      "idiom" : "ipad",
+      "filename" : "AppIcon2@App-1.png",
+      "scale" : "2x"
+    },
+    {
+      "size" : "83.5x83.5",
+      "idiom" : "ipad",
+      "filename" : "AppIcon2@App.png",
+      "unassigned" : true,
       "scale" : "2x"
     }
   ],

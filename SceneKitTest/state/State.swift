@@ -6,7 +6,9 @@ import JavaScriptCore
 import ReSwift
 
 public struct State: StateType {
-	var repositories: [Int] = [1, 2, 3];
+	var repositories: SubState = [1, 2, 3];
 	var bookmarks: [String] = ["a", "b", "c"];
+	var status:RState = false;
+	var codeStatus:CStatus = "new";
 }
 

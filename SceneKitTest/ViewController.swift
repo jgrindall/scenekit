@@ -13,11 +13,8 @@ public class ViewController: UIViewController, StoreSubscriber, PCodeConsumer, P
 	var codeRunner:				PCodeRunner!;
 	var gestureHandler:			GestureHandler!;
 	
-	
-	public typealias SubState = ([Int]);
-	
-	
 	func onStart(){
+		//Singleton.sharedInstance.store.dispatch(<#T##action: Action##Action#>)
 		self.codeRunner.sleep();
 	}
 	
@@ -68,6 +65,7 @@ public class ViewController: UIViewController, StoreSubscriber, PCodeConsumer, P
 		print("status", status);
 		DispatchQueue.main.async { [unowned self] in
 			//self.label.text = status;
+			print(self);
 		}
 	}
 	
@@ -108,9 +106,7 @@ public class ViewController: UIViewController, StoreSubscriber, PCodeConsumer, P
 		super.viewDidLoad();
 		
 		Singleton.sharedInstance.store.subscribe(self) {
-			(
-				$0.repositories
-			)
+			($0.repositories)
 		}
 		
 		
@@ -120,10 +116,25 @@ public class ViewController: UIViewController, StoreSubscriber, PCodeConsumer, P
 		self.addGestures();
 		//self.updateAll();
 		self.codeRunner = CodeRunner(fileNames:["require", "build"], consumer:self);
-		self.codeRunner.onStatusChange(listener: self);
+		
+		DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+			Singleton.sharedInstance.store.dispatch(BookmarkAction(route: "123"));
+		}
 		
 		DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-			Singleton.sharedInstance.store.dispatch(BookmarkAction(route: "123"));
+			Singleton.sharedInstance.store.dispatch(StatusAction(status: true));
+		}
+		
+		DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
+			Singleton.sharedInstance.store.dispatch(StatusAction(status: true));
+		}
+		
+		DispatchQueue.main.asyncAfter(deadline: .now() + 7) {
+			Singleton.sharedInstance.store.dispatch(StatusAction(status: true));
+		}
+		
+		DispatchQueue.main.asyncAfter(deadline: .now() + 8) {
+			Singleton.sharedInstance.store.dispatch(StatusAction(status: false));
 		}
 		
 		
@@ -132,21 +143,3 @@ public class ViewController: UIViewController, StoreSubscriber, PCodeConsumer, P
 }
 
 
-
-/*
-
-
-mainStore.subscribe(self) {
-(
-$0.participants,
-$0.invitePressed
-)
-}
-
-typealias ParticipantsViewSubState = (participants : [Participant]?, inviteTapped: Bool)
-
-func newState(state: ParticipantsViewSubState) {
-//handle state change
-}
-
-*/
