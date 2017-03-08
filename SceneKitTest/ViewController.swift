@@ -5,23 +5,13 @@ import QuartzCore
 import JavaScriptCore
 import ReSwift
 
-public class ViewController: UIViewController, StoreSubscriber, PCodeConsumer, PGestureDelegate, PCodeListener, SCNSceneRendererDelegate {
+public class ViewController: UIViewController, StoreSubscriber, PCodeConsumer, PCodeListener, SCNSceneRendererDelegate {
 
 	var logoSceneController:	LogoSceneViewController!;
 	var hudController:			HUDViewController!;
 	var consumer:				PCodeConsumer!;
 	var codeRunner:				PCodeRunner!;
 	var gestureHandler:			GestureHandler!;
-	
-	func onStart(){
-		Singleton.sharedInstance.store.dispatch(GestureStatusAction(status: true));
-		self.codeRunner.sleep();
-	}
-	
-	func onFinished(){
-		Singleton.sharedInstance.store.dispatch(GestureStatusAction(status: false));
-		self.codeRunner.wake();
-	}
 	
 	func _command(data:String){
 		let d:[String:Any] = ImageUtils.convertToDictionary(text: data)!;
@@ -92,11 +82,28 @@ public class ViewController: UIViewController, StoreSubscriber, PCodeConsumer, P
 	}
 		
 	func addGestures(){
-		self.gestureHandler = GestureHandler(target: self, delegate: self, onState:);
-	}
-	
-	func onTransform(t:SCNMatrix4){
-		self.logoSceneController.onTransform(t:t);
+		self.gestureHandler = GestureHandler(target: self);
+		_ = self.gestureHandler.events
+		.addEventListener("start", handler: EventHandler(
+			function: {
+				(event: Event) in
+				Singleton.sharedInstance.store.dispatch(GestureStatusAction(status: true));
+				//self.codeRunner.sleep();
+			})
+		)
+		.addEventListener("end", handler: EventHandler(
+			function: {
+				(event: Event) in
+				Singleton.sharedInstance.store.dispatch(GestureStatusAction(status: false));
+				//self.codeRunner.wake();
+			})
+		)
+		.addEventListener("transform", handler: EventHandler(
+			function: {
+				(event: Event) in
+				//self.logoSceneController.onTransform(t:t);
+			})
+		);
 	}
 	
 	public func newState(state: SubState) {

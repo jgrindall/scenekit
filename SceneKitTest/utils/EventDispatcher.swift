@@ -26,7 +26,7 @@ import UIKit
 
 protocol EventDispatcher: class
 {
-	func addEventListener(_ type: String, handler: EventHandler)
+	func addEventListener(_ type: String, handler: EventHandler) -> EventDispatcher
 	
 	func removeEventListener(_ type: String, handler: EventHandler)
 	
@@ -35,7 +35,7 @@ protocol EventDispatcher: class
 
 extension EventDispatcher
 {
-	func addEventListener(_ type: String, handler: EventHandler)
+	func addEventListener(_ type: String, handler: EventHandler) -> EventDispatcher
 	{
 		var eventListeners: EventListeners
 		
@@ -62,6 +62,7 @@ extension EventDispatcher
 		                         &EventDispatcherKey.eventDispatcher,
 		                         eventListeners,
 		                         objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+		return self;
 	}
 	
 	func removeEventListener(_ type: String, handler: EventHandler)
@@ -128,10 +129,15 @@ class EventListeners
 	var listeners: [String: Set<EventHandler>] = [:]
 }
 
-struct Event
-{
-	let type: String
-	let target: EventDispatcher
+struct Event{
+	var type: String
+	var target: EventDispatcher? = nil;
+	var data:Any? = nil;
+	init(type: String, target:EventDispatcher? = nil, data:Any? = nil) {
+		self.type = type;
+		self.target = target;
+		self.data = data;
+	}
 }
 
 // Wrapper to make T dispatch a change event
@@ -146,7 +152,7 @@ class DispatchingValue<T>: EventDispatcher
 		{
 		didSet
 		{
-			dispatchEvent(Event(type: "change", target: self))
+			dispatchEvent(Event(type: "change", target: self, data:nil))
 		}
 	}
 }

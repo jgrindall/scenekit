@@ -12,13 +12,13 @@ import QuartzCore
 
 @objc
 
-open class GestureHandler : NSObject, SCNSceneRendererDelegate, UIGestureRecognizerDelegate{
+open class GestureHandler : NSObject, SCNSceneRendererDelegate, UIGestureRecognizerDelegate, EventDispatcher{
 	
-	fileprivate var _slideVel:CGPoint = CGPoint.zero;
-	fileprivate var _target:UIViewController!;
-	fileprivate var _delegate:PGestureDelegate!;
-	fileprivate var _still:Bool = true;
-	fileprivate var _transform:SCNMatrix4!;
+	private var _slideVel:CGPoint = CGPoint.zero;
+	private var _target:UIViewController!;
+	private var _still:Bool = true;
+	private var _transform:SCNMatrix4!;
+	public var events:Vent!;
 	
 	struct Consts {
 		static let VEL_SCALE:Float = 12000.0;
@@ -26,10 +26,10 @@ open class GestureHandler : NSObject, SCNSceneRendererDelegate, UIGestureRecogni
 		static let INCREMENT_FACTOR:CGFloat = 0.5;
 	}
 	
-	init(target:UIViewController, delegate:PGestureDelegate){
+	init(target:UIViewController){
 		super.init();
+		self.events = Vent();
 		self._target = target;
-		self._delegate = delegate;
 		self.add();
 	}
 	
@@ -40,10 +40,6 @@ open class GestureHandler : NSObject, SCNSceneRendererDelegate, UIGestureRecogni
 		panGesture.delegate = self;
 		panGesture.cancelsTouchesInView = false;
 		self._target.view.addGestureRecognizer(panGesture);
-	}
-	
-	func onTransform(t:SCNMatrix4){
-		self._delegate.onTransform(t:t);
 	}
 	
 	func _guard(){
@@ -66,13 +62,13 @@ open class GestureHandler : NSObject, SCNSceneRendererDelegate, UIGestureRecogni
 		if(self._slideVel.x == 0 && self._slideVel.y == 0){
 			if(self._still == false){
 				self._still = true;
-				self._delegate.onFinished();
+				self.events.dispatchEvent(Event(type: "end"));
 			}
 		}
 		else{
 			if(self._still == true){
 				self._still = false;
-				self._delegate.onStart();
+				self.events.dispatchEvent(Event(type: "start"));
 			}
 		}
 	}
@@ -83,7 +79,7 @@ open class GestureHandler : NSObject, SCNSceneRendererDelegate, UIGestureRecogni
 		let rX:SCNMatrix4 = SCNMatrix4MakeRotation(-dx, 0, 1, 0);
 		let rY:SCNMatrix4 = SCNMatrix4MakeRotation(-dy, 1, 0, 0);
 		let netRot:SCNMatrix4 = SCNMatrix4Mult(rX, rY);
-		self._delegate.onTransform(t: netRot);
+		self.events.dispatchEvent(Event(type: "transform", target: self, data: netRot));
 		self._guard();
 		self.checkVelocity();
 	}
