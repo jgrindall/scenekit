@@ -14,11 +14,12 @@ public class ViewController: UIViewController, StoreSubscriber, PCodeConsumer, P
 	var gestureHandler:			GestureHandler!;
 	
 	func onStart(){
-		//Singleton.sharedInstance.store.dispatch(<#T##action: Action##Action#>)
+		Singleton.sharedInstance.store.dispatch(GestureStatusAction(status: true));
 		self.codeRunner.sleep();
 	}
 	
 	func onFinished(){
+		Singleton.sharedInstance.store.dispatch(GestureStatusAction(status: false));
 		self.codeRunner.wake();
 	}
 	
@@ -91,7 +92,7 @@ public class ViewController: UIViewController, StoreSubscriber, PCodeConsumer, P
 	}
 		
 	func addGestures(){
-		self.gestureHandler = GestureHandler(target: self, delegate: self);
+		self.gestureHandler = GestureHandler(target: self, delegate: self, onState:);
 	}
 	
 	func onTransform(t:SCNMatrix4){
@@ -104,15 +105,11 @@ public class ViewController: UIViewController, StoreSubscriber, PCodeConsumer, P
 	
 	override public func viewDidLoad() {
 		super.viewDidLoad();
-		
 		Singleton.sharedInstance.store.subscribe(self) {
 			($0.repositories)
 		}
-		
-		
 		self.addLogo();
 		self.addHUD();
-		
 		self.addGestures();
 		//self.updateAll();
 		self.codeRunner = CodeRunner(fileNames:["require", "build"], consumer:self);

@@ -10,6 +10,8 @@
 		5209E1441E6B593200395476 /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5209E1431E6B593200395476 /* Singleton.swift */; };
 		5209E1511E6CD21B00395476 /* StatusAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5209E1501E6CD21B00395476 /* StatusAction.swift */; };
 		5209E1531E6CD25400395476 /* StatusReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5209E1521E6CD25400395476 /* StatusReducer.swift */; };
+		521D9B1D1E709C1800532A9D /* GestureStatusAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D9B1C1E709C1800532A9D /* GestureStatusAction.swift */; };
+		521D9B1F1E709C1D00532A9D /* GestureStatusReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521D9B1E1E709C1D00532A9D /* GestureStatusReducer.swift */; };
 		5220B26D1E63717E009572D0 /* build.js in Resources */ = {isa = PBXBuildFile; fileRef = 5220B26B1E63717E009572D0 /* build.js */; };
 		5220B26E1E63717E009572D0 /* require.js in Resources */ = {isa = PBXBuildFile; fileRef = 5220B26C1E63717E009572D0 /* require.js */; };
 		5220B2741E63720F009572D0 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5220B2701E63720F009572D0 /* Assets.swift */; };
@@ -62,6 +64,8 @@
 		5209E1431E6B593200395476 /* Singleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Singleton.swift; sourceTree = "<group>"; };
 		5209E1501E6CD21B00395476 /* StatusAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusAction.swift; sourceTree = "<group>"; };
 		5209E1521E6CD25400395476 /* StatusReducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusReducer.swift; sourceTree = "<group>"; };
+		521D9B1C1E709C1800532A9D /* GestureStatusAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GestureStatusAction.swift; sourceTree = "<group>"; };
+		521D9B1E1E709C1D00532A9D /* GestureStatusReducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GestureStatusReducer.swift; sourceTree = "<group>"; };
 		5220B26B1E63717E009572D0 /* build.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = build.js; sourceTree = "<group>"; };
 		5220B26C1E63717E009572D0 /* require.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = require.js; sourceTree = "<group>"; };
 		5220B2701E63720F009572D0 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
@@ -187,6 +191,7 @@
 		524A01301E68C910004B38EC /* actions */ = {
 			isa = PBXGroup;
 			children = (
+				521D9B1C1E709C1800532A9D /* GestureStatusAction.swift */,
 				52C19DED1E6E10F7006FB572 /* CodeStatusAction.swift */,
 				5209E1501E6CD21B00395476 /* StatusAction.swift */,
 				524A013B1E68CAC6004B38EC /* BookmarkAction.swift */,
@@ -198,6 +203,7 @@
 		524A01311E68C910004B38EC /* reducers */ = {
 			isa = PBXGroup;
 			children = (
+				521D9B1E1E709C1D00532A9D /* GestureStatusReducer.swift */,
 				52C19DEF1E6E136A006FB572 /* CodeStatusReducer.swift */,
 				5209E1521E6CD25400395476 /* StatusReducer.swift */,
 				524A01371E68CA5F004B38EC /* BookmarkReducer.swift */,
@@ -455,6 +461,7 @@
 			files = (
 				5220B2971E637496009572D0 /* TurtleNodeCache.swift in Sources */,
 				5220B2751E63720F009572D0 /* EventDispatcher.swift in Sources */,
+				521D9B1F1E709C1D00532A9D /* GestureStatusReducer.swift in Sources */,
 				524A013D1E68CAC6004B38EC /* BookmarkAction.swift in Sources */,
 				5220B2961E637496009572D0 /* TurtleData.swift in Sources */,
 				525F54591D0F4925008C8396 /* ViewController.swift in Sources */,
@@ -478,6 +485,7 @@
 				5220B2901E637496009572D0 /* Patch.swift in Sources */,
 				5220B2931E637496009572D0 /* PPatch.swift in Sources */,
 				5220B27F1E637288009572D0 /* CodeRunner.swift in Sources */,
+				521D9B1D1E709C1800532A9D /* GestureStatusAction.swift in Sources */,
 				5220B2811E637288009572D0 /* PCodeListener.swift in Sources */,
 				524A013A1E68CA5F004B38EC /* RepositoryReducer.swift in Sources */,
 				52BBDD031E64CD660086210A /* HUDViewController.swift in Sources */,

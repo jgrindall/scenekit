@@ -10,5 +10,6 @@ public struct State: StateType {
 	var bookmarks: [String] = ["a", "b", "c"];
 	var status:RState = false;
 	var codeStatus:CStatus = "new";
+	var gStatus:GState = false;
 }
 

@@ -7,6 +7,7 @@ import ReSwift
 
 public typealias SubState = ([Int]);
 public typealias RState = (Bool);
+public typealias GState = (Bool);
 public typealias CStatus = (String);
 
 

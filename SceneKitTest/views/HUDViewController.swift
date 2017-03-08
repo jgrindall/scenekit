@@ -47,10 +47,13 @@ public class HUDViewController: UIViewController, StoreSubscriber {
 	}
 	
 	public func newState(state: State) {
-		print("s", state);
-		self.button.isEnabled = (state.codeStatus == "new");
+		let gStatus = state.gStatus;
 		DispatchQueue.main.async { [unowned self] in
-			self.label.text = state.codeStatus;
+			self.label.text =			state.codeStatus;
+			self.button.isEnabled =		!gStatus;
+			self.button.alpha =			gStatus ? 0.3 : 1;
+			self.button1.isEnabled =	!gStatus;
+			self.button1.alpha =		gStatus ? 0.3 : 1;
 		}
 	}
 	
