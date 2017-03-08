@@ -10,12 +10,19 @@ public class HUDViewController: UIViewController, StoreSubscriber {
 	
 	public typealias StoreSubscriberStateType = State;
 	
-	var button:				UIButton!;
-	var button1:			UIButton!;
-	var label:				UILabel!;
+	private var button:				UIButton!;
+	private var button1:			UIButton!;
+	private var label:				UILabel!;
+	
+	public var events:Vent!;
 	
 	override public func viewDidLoad() {
 		super.viewDidLoad();
+		self.events = Vent();
+		self.addUI();
+	}
+	
+	private func addUI(){
 		self.button = UIButton(type: UIButtonType.system);
 		self.button.setTitle("start", for: .normal);
 		self.button.setTitleColor(UIColor.black, for: UIControlState.normal);
@@ -47,24 +54,24 @@ public class HUDViewController: UIViewController, StoreSubscriber {
 	}
 	
 	public func newState(state: State) {
-		let gStatus = state.gStatus;
+		print(state);
+		let startEnabled = (state.codeStatus == "ready" && !state.gStatus);
+		let endEnabled = (state.codeStatus == "running" && !state.gStatus);
 		DispatchQueue.main.async { [unowned self] in
 			self.label.text =			state.codeStatus;
-			self.button.isEnabled =		!gStatus;
-			self.button.alpha =			gStatus ? 0.3 : 1;
-			self.button1.isEnabled =	!gStatus;
-			self.button1.alpha =		gStatus ? 0.3 : 1;
+			self.button.isEnabled =		startEnabled;
+			self.button.alpha =			startEnabled ? 1 : 0.25;
+			self.button1.isEnabled =	endEnabled;
+			self.button1.alpha =		endEnabled ? 1 : 0.25;
 		}
 	}
 	
 	func buttonUp(){
-		print("run");
-		//self.codeRunner.run(fnName: "run", arg: "rpt 100000 [fd 30 rt 1]");
+		self.events.dispatchEvent(Event(type: "start"));
 	};
 	
 	func buttonUp1(){
-		print("stop");
-		//self.codeRunner.end();
+		self.events.dispatchEvent(Event(type: "stop"));
 	};
 	
 }

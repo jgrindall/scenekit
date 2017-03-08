@@ -21,6 +21,45 @@ public class LogoSceneViewController: UIViewController {
 		self.base.play();
 	}
 	
+	func _command(data:String){
+		let d:[String:Any] = ImageUtils.convertToDictionary(text: data)!;
+		let name: String = (d["name"] as? String)!;
+		let amt:Float = (d["amount"] as? Float)!;
+		if(name == "fd"){
+			for turtle in self.turtles {
+			    turtle.fd(n: amt);
+			}
+		}
+		else if(name == "rt"){
+			for turtle in self.turtles {
+				turtle.rt(n: amt);
+			}
+		}
+	}
+	
+	private func updateAll(){
+		for turtle in self.turtles {
+			turtle.update();
+		}
+	}
+	
+	
+	private func command(data:String){
+		self._command(data: data);
+		SCNTransaction.begin();
+		self.updateAll();
+		SCNTransaction.commit();
+	}
+	
+	public func consume(type:String, data:String){
+		if(type == "message"){
+			print(data);
+		}
+		else if(type == "command"){
+			self.command(data:data);
+		}
+	}
+	
 	func getRootNode() -> SCNNode{
 		return self.base.getRootNode();
 	}
@@ -33,7 +72,7 @@ public class LogoSceneViewController: UIViewController {
 		self.base.onTransform(t:t);
 	}
 	
-	func addTurtles(){
+	private func addTurtles(){
 		let num:Int = 8;
 		let size:Float = 40.0;
 		let cx:Float = -Float(num) * size/2.0;
@@ -48,7 +87,7 @@ public class LogoSceneViewController: UIViewController {
 		}
 	}
 	
-	func addPatches(){
+	private func addPatches(){
 		let num:Int = 8;
 		let size:Float = 40.0;
 		let cx:Float = -Float(num) * size/2.0;

@@ -34,7 +34,6 @@ open class GestureHandler : NSObject, SCNSceneRendererDelegate, UIGestureRecogni
 	}
 	
 	func add(){
-		print("add", self._target, self._target.view);
 		self._target.view.isUserInteractionEnabled = true;
 		let panGesture = UIPanGestureRecognizer(target: self, action:#selector(self.handlePanGesture(_:)));
 		panGesture.delegate = self;

@@ -24,11 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		self.window!.rootViewController = navController;
 		self.window!.backgroundColor = UIColor.white;
 		self.window!.makeKeyAndVisible();
-		
-		Singleton.sharedInstance.rx.observedState.asObservable().subscribe(onNext: { n in
-			print("First \(n)");
-		});
-		
+		//Singleton.sharedInstance.rx.observedState.asObservable().subscribe(onNext: { n in
+			//print("First \(n)");
+		//});
 		return true;
 	}
 	

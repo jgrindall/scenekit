@@ -14,18 +14,22 @@ import UIKit
 
 @objc
 class CodeRunner : NSObject, PCodeRunner {
-	
+
+	internal var events: EventDispatcher?
+
 	private var context: JSContext!
-	let serialQueue = DispatchQueue(label: "codeRunnerSerialQueue" + UUID().uuidString);
-	let mutexLock = Mutex();
-	var _consumer:PCodeConsumer!;
+	private let serialQueue = DispatchQueue(label: "codeRunnerSerialQueue" + UUID().uuidString);
+	private let mutexLock = Mutex();
+	private var _consumer:PCodeConsumer!;
 	private var _status:String = "new";
+	
 	enum CodeRunnerError : Error {
 		case RuntimeError(String)
 	}
 	
 	required init(fileNames:[String], consumer:PCodeConsumer){
 		super.init();
+		self.events = Vent();
 		self.makeContext(fileNames: fileNames);
 		self.loadFiles(fileNames: fileNames);
 		self._consumer = consumer;
@@ -34,7 +38,7 @@ class CodeRunner : NSObject, PCodeRunner {
 	
 	private func setStatus(s:String){
 		self._status = s;
-		Singleton.sharedInstance.store.dispatch(CodeStatusAction(status: s));
+		self.events?.dispatchEvent(Event(type: "change:status", data:s));
 	}
 	
 	private func loadFile(fileName:String){
@@ -75,7 +79,7 @@ class CodeRunner : NSObject, PCodeRunner {
 				self.mutexLock.locked {
 					if(self._status == "running" && self.hasConsumer()){
 						if(type == "end"){
-							self._status = "ready";
+							self.setStatus(s:"ready");
 						}
 						else{
 							self._consumer.consume(type: type, data:data);
@@ -92,7 +96,7 @@ class CodeRunner : NSObject, PCodeRunner {
 		self.context.globalObject.setObject(nil, forKeyedSubscript: "consumer" as (NSCopying & NSObjectProtocol)!);
 	}
 	
-	func hasConsumer() -> Bool{
+	private func hasConsumer() -> Bool{
 		let c = self.context.globalObject.objectForKeyedSubscript("consumer");
 		if(c == nil || c?.toString() == "undefined"){
 			return false;
@@ -100,7 +104,7 @@ class CodeRunner : NSObject, PCodeRunner {
 		return true;
 	}
 	
-	func run(fnName:String, arg:String) {
+	public func run(fnName:String, arg:String) {
 		if(self._status == "ready"){
 			self.setStatus(s: "about to run");
 			if(!self.hasConsumer()){
@@ -116,22 +120,25 @@ class CodeRunner : NSObject, PCodeRunner {
 		}
 	}
 	
-	func end(){
+	public func end(){
 		let fn = self.context.objectForKeyedSubscript("end");
 		_ = fn?.call(withArguments: []);
 		self.unbindConsumer();
 		self.setStatus(s: "ready");
 	}
 	
-	func sleep(){
+	public func sleep(){
 		if(self._status == "running"){
 			self.setStatus(s: "pausing");
+			print("1");
 			self.mutexLock.lock();
+			print("2");
 			self.setStatus(s: "paused");
+			print("3");
 		}
 	}
 	
-	func wake(){
+	public func wake(){
 		if(self._status == "paused"){
 			self.setStatus(s: "waking");
 			self.mutexLock.unlock();

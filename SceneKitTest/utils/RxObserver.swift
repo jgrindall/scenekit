@@ -7,13 +7,11 @@ class RxObserver<T>: StoreSubscriber {
 	private var store: Store<State>;
 	
 	init(store: Store<State>) {
-		print("init");
 		self.store = store;
 		self.store.subscribe(self);
 	}
 	
 	deinit {
-		print("de init!!");
 		self.store.unsubscribe(self);
 	}
 	

@@ -13,7 +13,7 @@ import JavaScriptCore
 import UIKit
 
 protocol PCodeRunner {
-	
+	var events: EventDispatcher? { get }
 	init(fileNames:[String], consumer:PCodeConsumer);
 	func run(fnName:String, arg:String);
 	func sleep();

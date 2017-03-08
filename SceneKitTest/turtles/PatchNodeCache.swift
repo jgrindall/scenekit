@@ -10,7 +10,6 @@ class PatchNodeCache {
 	
 	static func get(type:String) -> SCNNode{
 		if(_dict[type] == nil){
-			print("make a new one");
 			_dict[type] = _make(type: type);
 		}
 		return (_dict[type]?.clone())!;

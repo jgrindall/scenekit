@@ -22,7 +22,6 @@
 		5220B2791E63723B009572D0 /* SCNVector3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5220B2781E63723B009572D0 /* SCNVector3Extensions.swift */; };
 		5220B27F1E637288009572D0 /* CodeRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5220B27B1E637288009572D0 /* CodeRunner.swift */; };
 		5220B2801E637288009572D0 /* PCodeConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5220B27C1E637288009572D0 /* PCodeConsumer.swift */; };
-		5220B2811E637288009572D0 /* PCodeListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5220B27D1E637288009572D0 /* PCodeListener.swift */; };
 		5220B2821E637288009572D0 /* PCodeRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5220B27E1E637288009572D0 /* PCodeRunner.swift */; };
 		5220B2841E63729D009572D0 /* GestureHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5220B2831E63729D009572D0 /* GestureHandler.swift */; };
 		5220B2901E637496009572D0 /* Patch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5220B2881E637496009572D0 /* Patch.swift */; };
@@ -76,7 +75,6 @@
 		5220B2781E63723B009572D0 /* SCNVector3Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCNVector3Extensions.swift; sourceTree = "<group>"; };
 		5220B27B1E637288009572D0 /* CodeRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeRunner.swift; sourceTree = "<group>"; };
 		5220B27C1E637288009572D0 /* PCodeConsumer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCodeConsumer.swift; sourceTree = "<group>"; };
-		5220B27D1E637288009572D0 /* PCodeListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCodeListener.swift; sourceTree = "<group>"; };
 		5220B27E1E637288009572D0 /* PCodeRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCodeRunner.swift; sourceTree = "<group>"; };
 		5220B2831E63729D009572D0 /* GestureHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GestureHandler.swift; sourceTree = "<group>"; };
 		5220B2881E637496009572D0 /* Patch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Patch.swift; sourceTree = "<group>"; };
@@ -167,7 +165,6 @@
 			children = (
 				5220B27B1E637288009572D0 /* CodeRunner.swift */,
 				5220B27C1E637288009572D0 /* PCodeConsumer.swift */,
-				5220B27D1E637288009572D0 /* PCodeListener.swift */,
 				5220B27E1E637288009572D0 /* PCodeRunner.swift */,
 			);
 			path = code;
@@ -486,7 +483,6 @@
 				5220B2931E637496009572D0 /* PPatch.swift in Sources */,
 				5220B27F1E637288009572D0 /* CodeRunner.swift in Sources */,
 				521D9B1D1E709C1800532A9D /* GestureStatusAction.swift in Sources */,
-				5220B2811E637288009572D0 /* PCodeListener.swift in Sources */,
 				524A013A1E68CA5F004B38EC /* RepositoryReducer.swift in Sources */,
 				52BBDD031E64CD660086210A /* HUDViewController.swift in Sources */,
 				524A01351E68C910004B38EC /* AppReducer.swift in Sources */,
